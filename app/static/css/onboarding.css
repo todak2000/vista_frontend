@@ -1,0 +1,105 @@
+.onboarding-background{
+    /* background-color: aqua; */
+    height:90vh;
+    width: 80%;
+    margin: 5vh auto;
+    text-align: center;
+    font-family: poppins;
+}
+.span-login{
+  color:#4B1378;
+}
+.alert-purple{
+  background-color: #4B137810;
+}
+.onboarding-button{
+  background-color: #4B1378;
+  height:45px;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  font-family: poppins;
+  font-size:1rem;
+  line-height: 2rem;
+  margin:auto;
+  border:0;
+  border-radius: 0;
+}
+#message_one, #message{
+    display: none;
+}
+.onboarding_footer{
+    font-family: Poppins;
+    font-size: 0.9rem;
+}
+a{
+  color: #4B1378;
+}
+.onboarding_form_input{
+    background-color: #4B137810;
+    border-radius: 0;
+    height:50px;
+    margin-bottom: 10px;
+    border:1px solid transparent;
+    font-family: Poppins;
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+/* SPINEER */
+/* spineer */
+#spinner{
+    display: none;
+    width: 80px;
+    height: 80px;
+    border: 4px solid #f3f3f3;
+    border-top:6px solid  #4B1378;;
+    border-radius: 100%;
+  
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right: 0;
+    margin: auto;
+  
+    animation: spin 1s infinite linear;
+  }
+  
+  @keyframes spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+  }
+  
+  #spinner.show {
+    visibility: visible;
+  }
+  .server_message_error, .server_message_success, .server_message{
+      font-family: Poppins;
+      font-size:0.85rem!important;
+      /* border-radius:20px; */
+      padding:0.2rem;
+  }
+
+  .code {
+    margin: 0 5px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 50px;
+    border: solid 1px #ccc;
+    box-shadow: 0 0 5px #ccc inset;
+    outline: none;
+    width: 50%;
+    transition: all .2s ease-in-out;
+    border-radius: 3px;
+  }
+  .code::selection {
+    background: transparent;
+  }
+  .code:focus {
+    border-color: #4B1378;
+    box-shadow: 0 0 5px #4B1378 inset;
+  }

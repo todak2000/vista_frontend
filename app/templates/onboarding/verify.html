@@ -1,0 +1,30 @@
+{% extends "onboarding/base.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="onboarding-background">
+    <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left " style="color:#464646;"  onclick="window.history.back();"></i></div>
+    <img src="{% static 'img/vista.svg' %}" class="img-fluid vista-logo">
+    <p class="splashtext-bottom mt-2 mb-5" >You are almost done!</p>
+    <p class="splashtext-bottom mt-2 mb-3 mt-5" >Please enter the 4-digit code sent to your email/phone number</p>
+    <!-- verify form -->
+    <div class="text-primary server_message_success" id="server_message_success" role="alert"></div>
+    <div class="text-danger server_message_error" id="server_message_error" role="alert"></div>
+    <div>
+        <form class="onboarding_form mt-2" action="#" id="verify_form" method="POST" autocomplete="off">
+            
+            {% csrf_token %}
+            <input type="text" maxLength="4" size="4" min="0" max="9" pattern="[0-9]{4}" id="code_verify" class="code"/>
+            <input type="button" value="Verify Account" class="form-control onboarding-button mt-5" id="verify_submit">
+
+            
+        </form>
+        <form action="#" id="verify_form" method="POST" autocomplete="off">{% csrf_token %}
+            <input type="text" id="user_id_verify"   class="onboarding_form_input form-control mb-3" value="{{id}}"  hidden/>
+        </form>
+        <p class="onboarding_footer mt-2 mb-1 text-center">Did not get the code?<span class="span-login" id="resend_submit"> Send again</span></p>
+    </div>
+</section>
+
+{% endblock %}

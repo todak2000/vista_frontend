@@ -1,0 +1,56 @@
+.background{
+    background-color: #fff;
+    height:100vh;
+    width: 100%;
+    align-items: center;
+    font-family: poppins;
+}
+.logo-div{
+    height:60vh;
+    width: 100%;
+    /* background-color: #ff0; */
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+}
+.vista-button{
+    background-color: #4B1378;
+    height:45px;
+    color: #fff;
+    width: 90%;
+    text-align: center;
+    font-family: poppins;
+    font-size:1rem;
+    line-height: 2rem;
+    margin:auto;
+    border:0;
+    border-radius: 0;
+}
+.bottom-div{
+    display: flex;
+    flex-direction: column;
+    /* background-color: #f00; */
+    justify-content:center;
+}
+.p-splash{
+    margin-bottom:0.1rem; 
+    margin-top:0.5rem; 
+    text-align: center;
+}
+.span-login{
+    color:#4B1378;
+}
+@media screen and (min-width: 762px) {
+    
+}
+/* MOBILE RESPONSIVENES */
+@media screen and (max-width: 760px) {
+    .background{
+        width:100%;
+        height:100vh;
+    }
+}
+textarea:focus, input:focus{
+    outline: none;
+}

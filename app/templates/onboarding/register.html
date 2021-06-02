@@ -1,0 +1,104 @@
+{% extends "onboarding/base.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="onboarding-background">
+    <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left " style="color:#464646;" ></i></div>
+    <img src="{% static 'img/vista.svg' %}" class="img-fluid vista-logo">
+    <p class="splashtext-bottom mt-2 mb-3" id="lets-get">Let’s get you started</p>
+    <!-- <p class="splashtext-bottom mt-2 mb-3" id="complete">Complete the form</p> -->
+    <!-- reg form -->
+    <div>
+        <div class="span-login server_message_success" id="server_message_success" role="alert"></div>
+        <div class="text-danger server_message_error" id="server_message_error" role="alert"></div>
+        <p id="message_one"  class="text-danger">Sorry! there are empty fields. Kindly fill the form</p> 
+        <p id="message" class="text-danger"></p>  
+        <form class="onboarding_form mt-2" action="#" id="sign_up_form" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <div id="form-part-one">
+                <input type="text" id="firstname"  class="onboarding_form_input form-control" placeholder="First Name">
+                <input type="text" id="lastname"  class="onboarding_form_input form-control" placeholder="Last Name">
+                <input type="text" id="phonenumber"   class="onboarding_form_input form-control" placeholder="Phone Number">
+                <input type="email" id="email"   class="onboarding_form_input form-control" placeholder="Email">
+                <div class="form-group2">
+                    <div style="display: flex; justify-content: left;">
+                        <input type="password" 
+                    class="onboarding_form_input form-control" 
+                    name="password" 
+                    id="password"
+                    placeholder="Password"
+                    required
+                    />
+                    <i class="fas fa-eye"  style="margin-left:-13%;margin-top: 4%; color: #ccc;" onclick="showPassword()"></i>
+                    </div>
+                </div>
+                <input type="password" id="confirm_password"   class="onboarding_form_input form-control" placeholder="Confirm Password">
+                  
+                             
+                <input type="button" value="Next" class="form-control onboarding-button mt-1" id="signup_next">
+            </div>
+            <div id="form-part-two">
+                
+                <input type="text" id="address" placeholder="4, Kingsville street, KA"  class="onboarding_form_input form-control">
+                <!-- <input type="text" id="state" placeholder="State"  class="onboarding_form_input form-control"> -->
+                <select id="state" class="onboarding_form_input form-control">
+                    <option disabled selected>--Select State--</option>
+                    <option value="Abia">Abia</option>
+                    <option value="Adamawa">Adamawa</option>
+                    <option value="Akwa Ibom">Akwa Ibom</option>
+                    <option value="Anambra">Anambra</option>
+                    <option value="Bauchi">Bauchi</option>
+                    <option value="Bayelsa">Bayelsa</option>
+                    <option value="Benue">Benue</option>
+                    <option value="Borno">Borno</option>
+                    <option value="Cross Rive">Cross River</option>
+                    <option value="Delta">Delta</option>
+                    <option value="Ebonyi">Ebonyi</option>
+                    <option value="Edo">Edo</option>
+                    <option value="Ekiti">Ekiti</option>
+                    <option value="Enugu">Enugu</option>
+                    <option value="FCT">Federal Capital Territory</option>
+                    <option value="Gombe">Gombe</option>
+                    <option value="Imo">Imo</option>
+                    <option value="Jigawa">Jigawa</option>
+                    <option value="Kaduna">Kaduna</option>
+                    <option value="Kano">Kano</option>
+                    <option value="Katsina">Katsina</option>
+                    <option value="Kebbi">Kebbi</option>
+                    <option value="Kogi">Kogi</option>
+                    <option value="Kwara">Kwara</option>
+                    <option value="Lagos">Lagos</option>
+                    <option value="Nasarawa">Nasarawa</option>
+                    <option value="Niger">Niger</option>
+                    <option value="Ogun">Ogun</option>
+                    <option value="Ondo">Ondo</option>
+                    <option value="Osun">Osun</option>
+                    <option value="Oyo">Oyo</option>
+                    <option value="Plateau">Plateau</option>
+                    <option value="Rivers">Rivers</option>
+                    <option value="Sokoto">Sokoto</option>
+                    <option value="Taraba">Taraba</option>
+                    <option value="Yobe">Yobe</option>
+                    <option value="Zamfara">Zamfara</option>
+                </select>
+                <select id="role" class="onboarding_form_input form-control" style="border:0.1px solid #fff; width:100%">
+                    <option value="" selected>ROLE</option>
+                    <option value="service_provider" >Service Provider</option>
+                    <option value="client">Client</option>
+                </select>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text1">
+                        <input type="checkbox" id="terms_conditions">
+                      </div>
+                    </div>
+                    <p class="ml-2" style="font-size: 0.8rem; padding-top:2px; width: 80%;">I agree to Vista's <a href="#">Terms and Conditions</a></p>
+                </div>
+                <input type="submit" value="Create account" class="form-control onboarding-button mt-5 mb-1" id="signup_submit_button">
+            </div>
+            <p class="onboarding_footer mt-2 mb-1 text-center">Already have an account? <span class="span-login"><a href="{% url 'signin' %}">Sign in</span></a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}
