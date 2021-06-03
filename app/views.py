@@ -97,11 +97,51 @@ def client_dashboard(request, token):
     json_data = json.loads(response)
     print(response)
     if json_data["success"] == True and  json_data["status"] == 200:
-        return_data = json_data
-        return render(request,"main/home.html", return_data)
+        return_data = {
+            "token": token,
+            "data":json_data
+        } 
+        return render(request,"client/home.html", return_data)
     return render(request,"onboarding/login.html")
 
+def sp_dashboard(request, token):
+    url= base_url+"/dashboard?token="+token  
+    response = requests.get(url).text
+    json_data = json.loads(response)
+    print(response)
+    if json_data["success"] == True and  json_data["status"] == 200:
+        return_data = {
+            "token": token,
+            "data":json_data
+        }
+        return render(request,"sp/home.html", return_data)
+    return render(request,"onboarding/login.html")
 
+def client_profile(request, token):
+    url= base_url+"/profile?token="+token  
+    response = requests.get(url).text
+    json_data = json.loads(response)
+    print(response)
+    if json_data["success"] == True and  json_data["status"] == 200:
+        return_data = {
+            "token": token,
+            "data":json_data
+        } 
+        return render(request,"client/profile.html", return_data)
+    return render(request,"onboarding/login.html")
+
+def sp_profile(request, token):
+    url= base_url+"/profile?token="+token  
+    response = requests.get(url).text
+    json_data = json.loads(response)
+    print(response)
+    if json_data["success"] == True and  json_data["status"] == 200:
+        return_data = {
+            "token": token,
+            "data":json_data
+        }
+        return render(request,"sp/profile.html", return_data)
+    return render(request,"onboarding/login.html")
 
 
 

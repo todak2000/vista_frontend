@@ -96,7 +96,7 @@ $(function(){
             // headers: {"Authorization": localStorage.getItem('token')},
             data:JSON.stringify(data),
             success:function(response){
-                // document.getElementById("spinner").style.display = "none";
+                
                 
                 if(response.status == 205){
                     window.location.href = '/verify/'+response.user_id;
@@ -107,21 +107,18 @@ $(function(){
                     sessionStorage.setItem("user_id", response.user_id);
                     token = sessionStorage.getItem("token");
                     console.log(response);
-                    window.location.href = '/client_dashboard/'+token;
-                    // document.getElementById('p_id').innerHTML = response.address;
-                    // localStorage.setItem('token', response.token);
-                    // document.getElementById('server_message_error').classList.add("alert-danger");
-                    // document.getElementById('server_message_error').innerHTML = response.message;
-                    // document.getElementById("server_message_error").style.display = "block";
-                    // setTimeout(function(){ 
-                    //     document.getElementById("server_message_error").style.display = "none";   
-                    // }, 3000);
+                    if (response.role == 1){
+                        window.location.href = '/client_dashboard/'+token;
+                    }
+                    else{
+                        window.location.href = '/sp_dashboard/'+token;
+                    }
+                    document.getElementById("spinner").style.display = "none";
                     
                 }
                 else{
                     document.getElementById('server_message_error').innerHTML = response.message;
                 }
-                // console.log(response.user_id);
             },
             error:function(e){
                 console.log(e);
@@ -159,8 +156,13 @@ $(function(){
                     }, 3000);  
                 }
                 else{
-                    window.location.href = '/dashboard/'+user_id;
+                    if (response.role == 1){
+                        window.location.href = '/client_dashboard/'+user_id;
                     document.getElementById('p_id').innerHTML = user_id;
+                    }else{
+                        window.location.href = '/sp_dashboard/'+user_id;
+                    }
+                    
                     // window.location.href = '/signin';
                     // document.getElementById('server_message_success').innerHTML = response.message;
                 }
@@ -354,6 +356,23 @@ $(function(){
         
     });
 });
+
+// SP home
+function sp_home(token) {
+    window.location.href = '/sp_dashboard/'+token;
+}
+// SP Profile
+function sp_profile(token) {
+    window.location.href = '/sp_profile/'+token;
+}
+// Client home
+function client_home(token) {
+    window.location.href = '/client_dashboard/'+token;
+}
+// Client profile
+function client_profile(token) {
+    window.location.href = '/client_profile/'+token;
+}
 // // ************
 // //edit bio REUEST API
 // $(function(){

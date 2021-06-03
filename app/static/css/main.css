@@ -1,5 +1,8 @@
+body{
+    font-family: 'Poppins';
+}
 .footer{
-    height: 100px!important;
+    height: 50px!important;
     background-color: #fff;
     width: 100%;
     position: fixed;
@@ -27,6 +30,10 @@
     font-size: 3.5em!important;
     margin-top: -5vh!important;
 }
+.fa-2xa {
+    font-size: 2.5em!important;
+    color:#fff;
+}
 .fa-3xa {
     font-size: 3.5em!important;
     color:#fff;
@@ -41,7 +48,7 @@
     color:#fff;
     background-color: #4B1378;
     display: flex;
-    width: 70%;
+    /* width: 70%; */
     padding:0.5rem 1rem;
     border-radius: 3rem 0 3rem 3rem;
     /* justify-content: space-between; */
@@ -50,14 +57,108 @@
     overflow-y: scroll;
     flex-wrap: wrap;
     display: flex;
-    height:60vh;
+    height:70vh;
     justify-content: space-around;
 }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.work_div::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.work_div {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 .cardy{
-    /* width: 20%; */
-    /* height:20%; */
     margin:0.4rem;
     border-radius: 1rem;
     padding:1rem;
-    background-color: #4B137850;
+    width: 8rem;
+    height: 8rem;
+    color:#fff;
+    /* background-color: #4B137850; */
+}
+#sp_top_div{
+    background-color: #70296382;
+    color:#fff;
+    display: flex;
+    flex-direction: row;
+    padding:1rem;
+    justify-content: space-around;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+.sp_top_p{
+    color:#4B1378;  
+}
+#sp_wallet_div{
+    border: 1px solid #4B1378;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding:1rem;
+}
+#sp_wallet_inner{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin-top:-1.5rem;
+    background-color: #fff;
+    
+}
+#sp_balance{
+    background-color: #fff;
+    padding:0.5rem;
+    width: 40%;
+    font-weight: bold;
+    text-align: center;
+    margin-top:-2rem;
+    color:#4B1378;
+}
+#naira{
+    color:#E5E5E5;
+}
+#amount{
+    font-weight: 100;
+    color:#17282F;
+}
+#flexy_row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.flexy_row_between{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.trans_p{
+    font-weight: bold;
+}
+.down{
+    margin-top:-1.2rem;
+}
+.trans_p2{
+    color:#D1D4DC;
+}
+#circle_red{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    padding:1.5rem;
+    color:#EE776D;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(238, 119, 109, 0.25);
+}
+#circle_green{
+    width: 70px;
+    height: 70px;
+    padding:1.5rem;
+    color:#3EBC91;
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(62, 188, 145, 0.25);
 }

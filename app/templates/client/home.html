@@ -1,0 +1,59 @@
+{% extends "onboarding/base.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="onboarding-background">
+    <div id="home_address">
+        <i class="fas fa-street-view fa-2x"></i>
+        <p id="p_id">{{data.user_details.address}}, {{data.user_details.state}}</p>
+        <!-- <p id="p_id">4B, Ajelade street, Akoso, Ogun State</p> -->
+        
+    </div>
+    <p style="color: #7D38B5; text-align: left; margin-top:0.5rem;">Available Services</p>
+    <div class="work_div">
+        <div class="cardy" style="background-color: #2BB2AD;">
+            <p>Carpentry</p>
+            <i class="fas fa-eraser fa-2xa"></i>
+        </div>
+        <div class="cardy" style="background-color: #F6AC56;">
+            <p>Electrician</p>
+            <i class="fas fa-plug fa-2xa"></i>
+        </div>
+        <div class="cardy" style="background-color: #5086ED;">
+            <p>Photography</p>
+            <i class="fas fa-camera fa-2xa"></i>
+        </div>
+        <div class="cardy" style="background-color: #6F7BF0;">
+            <p>Tailoring</p>
+            <i class="fas fa-pause fa-2xa"></i>
+        </div>
+        <div class="cardy" style="background-color: #EE776D;">
+            <p>Welding</p>
+            <i class="fas fa-wrench fa-2xa"></i>
+        </div>
+        <div class="cardy" style="background-color: #7DC3C9;">
+            <p>Mason</p>
+            <i class="fas fa-cubes fa-2xa"></i>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <a>
+        <i class="fas fa-th-large fa-2x  active-icon"></i>
+        <!-- <p style="margin-top:-60px; color:#4B1378;">Home</p> -->
+    </a>
+    <a id={{token}} onClick="client_profile(this.id)">
+        <i class="fas fa-user fa-2x "></i>
+        <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
+    </a>
+    <a href="{% url 'signin' %}">
+        <i class="fas fa-wallet fa-2x "></i>
+        <!-- <p style="margin-top:-60px; color:#4B137830;">Wallet</p> -->
+    </a>
+    <a href="{% url 'signin' %}">
+        <i class="fas fa-briefcase fa-2x "></i>
+        <!-- <p style="margin-top:-60px; color:#4B137830;">Jobs</p> -->
+    </a>
+</footer>
+{% endblock %}
