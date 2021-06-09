@@ -1,16 +1,25 @@
 .onboarding-background{
-    /* background-color: aqua; */
     height:90vh;
     width: 80%;
     margin: 5vh auto;
     text-align: center;
     font-family: poppins;
 }
+.profile-background{
+  height:60vh;
+  width: 80%;
+  margin: 30vh auto;
+  text-align: center;
+  font-family: poppins;
+}
 .span-login{
   color:#4B1378;
 }
 .alert-purple{
   background-color: #4B137810;
+}
+.text-primary{
+  color:#4B1378!important;
 }
 .onboarding-button{
   background-color: #4B1378;
@@ -55,7 +64,7 @@ textarea:focus, input:focus{
     border: 4px solid #f3f3f3;
     border-top:6px solid  #4B1378;;
     border-radius: 100%;
-  
+    z-index: 5000;
     position: absolute;
     top:0;
     bottom:0;

@@ -16,6 +16,7 @@ urlpatterns = [
     # client
      path('client_dashboard/<token>', views.client_dashboard, name='dashboard'),
      path('client_profile/<token>', views.client_profile, name='profile'),
+     path('client_wallet/<token>', views.client_wallet, name='wallet'),
 
 
     #  service provider

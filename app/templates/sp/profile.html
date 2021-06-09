@@ -3,10 +3,50 @@
 {% load static %}
 
 {% block body%}
-<section class="onboarding-background">
-    <p class="sp_top_p text-left">Profile! {{data.user_details.firstname}}</p>
-    
+<div class="profile_top_div">
+    <h4>{{data.user_details.firstname}} {{data.user_details.lastname}}</h4>
+</div>
+<div class="profile_circle">
+    <i class="fas fa-user fa-3xap"></i>
+</div>
+<section class="profile-background">
+    <div class="flexy_row_between">
+        <div class="flexi">
+            <i class="fas fa-phone fa-3xar mr-5"></i>
+            <p>{{data.user_details.phonenumber}}</p>
+        </div>
+        <i class="fas fa-edit fa-3xar" data-toggle="modal" data-target="#bioModal"></i>
+    </div>
+    <div class="flexi">
+        <i class="fas fa-briefcase fa-3xar mr-5"></i>
+        <p>{{data.user_details.address}}, {{data.user_details.state}}</p>
+    </div>
+    <h5 class="text-left mt-3">Payment Details</h5>
+    <div class="flexi">
+        <i class="fas fa-credit-card fa-3xar mr-5"></i>
+            {% if data.user_details.accountno %}
+            <p class="purple_p" data-toggle="modal" data-target="#accountModal">{{data.user_details.accountno}}</p>
+                {% else %}
+            <p class="purple_p" data-toggle="modal" data-target="#accountModal">Add Account Details</p> 
+            {% endif %}
+    </div>
+    <h5 class="text-left mt-3">Security</h5>
+    <div class="flexi">
+        <i class="fas fa-key fa-3xar mr-5"></i>
+        <p class="purple_p" data-toggle="modal" data-target="#passwordModal">Change Password</p>
+    </div>
+    <div class="flexi">
+        <i class="fas fa-power-off fa-3xar mr-5"></i>
+        <p class="purple_p" onClick="signout()">Signout</p>
+    </div>
+
+    <!-- <h5 class="text-left mt-3">Verification</h5>
+    <div class="flexi">
+        <i class="fas fa-check-circle fa-3xar mr-5 text-danger"></i>
+        <p class="text-danger">Yet to be verified</p>
+    </div> -->
 </section>
+
 <footer class="footer">
     <a id={{token}}>
         <i class="fas fa-briefcase fa-2x "></i>
@@ -21,4 +61,5 @@
         <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
     </a>
 </footer>
+
 {% endblock %}

@@ -38,6 +38,163 @@
     <div id="spinner"></div> 
     {% block javascript%}
     {% endblock %}
-    
+    <input id="edit_phone" value="{{data.user_details.phonenumber}}"/>
+    <!-- Edit Bio Modal -->
+<div class="modal fade" id="bioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin:0;">
+    <div class="modal-content" style="height:100vh; border-radius:0;">
+      <div class="modal-body">
+          <div style="display: flex; flex-direction: row;"><i class="fas fa-chevron-left close" data-dismiss="modal"></i><p class="text-center mb-5" style="width: 100%;">Edit Profile</p></div>
+          <div class="text-primary server_message_success py-1 text-center" id="edit_bio_success" role="alert"></div>
+          <div class="text-danger server_message_error py-1 text-center" id="edit_bio_error" role="alert"></div>
+
+          <form class="onboarding_form mt-2"   method="POST" autocomplete="off">
+              {% csrf_token %}
+                  <input type="text" id="edit_address" name="email"  class="onboarding_form_input form-control mb-3" value="{{data.user_details.address}}">
+                  <select id="edit_state" class="onboarding_form_input form-control mb-5">
+                      <option value="{{data.user_details.state}}" selected>{{data.user_details.state}}</option>
+                      <option value="Abia">Abia</option>
+                      <option value="Adamawa">Adamawa</option>
+                      <option value="Akwa Ibom">Akwa Ibom</option>
+                      <option value="Anambra">Anambra</option>
+                      <option value="Bauchi">Bauchi</option>
+                      <option value="Bayelsa">Bayelsa</option>
+                      <option value="Benue">Benue</option>
+                      <option value="Borno">Borno</option>
+                      <option value="Cross Rive">Cross River</option>
+                      <option value="Delta">Delta</option>
+                      <option value="Ebonyi">Ebonyi</option>
+                      <option value="Edo">Edo</option>
+                      <option value="Ekiti">Ekiti</option>
+                      <option value="Enugu">Enugu</option>
+                      <option value="FCT">Federal Capital Territory</option>
+                      <option value="Gombe">Gombe</option>
+                      <option value="Imo">Imo</option>
+                      <option value="Jigawa">Jigawa</option>
+                      <option value="Kaduna">Kaduna</option>
+                      <option value="Kano">Kano</option>
+                      <option value="Katsina">Katsina</option>
+                      <option value="Kebbi">Kebbi</option>
+                      <option value="Kogi">Kogi</option>
+                      <option value="Kwara">Kwara</option>
+                      <option value="Lagos">Lagos</option>
+                      <option value="Nasarawa">Nasarawa</option>
+                      <option value="Niger">Niger</option>
+                      <option value="Ogun">Ogun</option>
+                      <option value="Ondo">Ondo</option>
+                      <option value="Osun">Osun</option>
+                      <option value="Oyo">Oyo</option>
+                      <option value="Plateau">Plateau</option>
+                      <option value="Rivers">Rivers</option>
+                      <option value="Sokoto">Sokoto</option>
+                      <option value="Taraba">Taraba</option>
+                      <option value="Yobe">Yobe</option>
+                      <option value="Zamfara">Zamfara</option>
+                  </select>
+                  <input type="submit" value="Update" class="form-control onboarding-button mt-5" id="update_bio_submit_button">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Account Modal -->
+<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin:0;">
+    <div class="modal-content" style="height:100vh; border-radius:0;">
+      <div class="modal-body">
+          <div style="display: flex; flex-direction: row;"><i class="fas fa-chevron-left close" data-dismiss="modal"></i><p class="text-center mb-5" style="width: 100%;">Edit/Add Account Details</p></div>
+          <div class="text-primary server_message_success py-1 text-center" id="edit_acc_success" role="alert"></div>
+          <div class="text-danger server_message_error py-1 text-center" id="edit_acc_error" role="alert"></div>
+          <form class="onboarding_form mt-2"   method="POST" autocomplete="off">
+              {% csrf_token %}
+                  <input type="text" id="edit_acc_name"  class="onboarding_form_input form-control mb-3" value="{{data.user_details.accountname}}">
+                  <input type="text" id="edit_acc_no"  class="onboarding_form_input form-control mb-3" value="{{data.user_details.accountno}}">
+                  <select class="onboarding_form_input form-control mb-3" id="edit_bank">
+                      <option value="{{data.user_details.bank}}" selected>{{data.user_details.bank}}</option>
+                      <option value="Access Bank">Access Bank</option>
+                      <option value="Citibank">Citibank</option>
+                      <option value="Access (Diamond)">Access (Diamond)</option>
+                      <option value="Ecobank">Ecobank</option>
+                      <option value="Fidelity Bank">Fidelity Bank</option>
+                      <option value="First Bank">First Bank</option>
+                      <option value="FCMB">First City Monument Bank (FCMB)</option>
+                      <option value="GTB">Guaranty Trust Bank (GTB)</option>
+                      <option value="Heritage Bank">Heritage Bank</option>
+                      <option value="Jaiz Bank">Jaiz Bank</option>
+                      <option value="Keystone Bank">Keystone Bank</option>
+                      <option value="Kuda Bank">Kuda Bank</option>
+                      <option value="Polaris Bank">Polaris Bank</option>
+                      <option value="Providus Bank">Providus Bank</option>
+                      <option value="Stanbic IBTC Bank">Stanbic IBTC Bank</option>
+                      <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                      <option value="Sterling Bank">Sterling Bank</option>
+                      <option value="Union Bank">Union Bank</option>
+                      <option value="UBA">United Bank for Africa (UBA)</option>
+                      <option value="Unity Bank">Unity Bank</option>
+                      <option value="Wema Bank">Wema Bank</option>
+                      <option value="Zenith Bank">Zenith Bank</option>
+                  </select>
+                  <input type="submit" value="Update Account" class="form-control onboarding-button mt-5" id="update_acc_submit_button">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin:0;">
+    <div class="modal-content" style="height:100vh; border-radius:0;">
+      <div class="modal-body">
+          <div style="display: flex; flex-direction: row;"><i class="fas fa-chevron-left close" data-dismiss="modal"></i><p class="text-center mb-5" style="width: 100%;">Change Password</p></div>
+          <div class="text-primary server_message_success py-1 text-center" id="edit_pass_success" role="alert"></div>
+          <div class="text-danger server_message_error py-1 text-center" id="edit_pass_error" role="alert"></div>
+          <form class="onboarding_form mt-2"   method="POST" autocomplete="off">
+              {% csrf_token %}
+              <input type="password" id="edit_old_password"  class="onboarding_form_input form-control mb-3" placeholder="Old Password">
+              <input type="password" id="edit_new_password"  class="onboarding_form_input form-control mb-3" placeholder="New Password">
+              <input type="password" id="edit_confirm_new_password"  class="onboarding_form_input form-control mb-3" placeholder="Confirm New Password">
+              <input type="submit" value="Update" class="form-control onboarding-button mt-5" id="update_pass_submit_button">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Withdraw Modal -->
+<div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin:0;">
+    <div class="modal-content" style="height:100vh; border-radius:0;">
+      <div class="modal-body">
+          <div style="display: flex; flex-direction: row;"><i class="fas fa-chevron-left close" data-dismiss="modal"></i><p class="text-center mb-5" style="width: 100%;">Withdraw Fund</p></div>
+          <form class="onboarding_form mt-2"   method="POST" autocomplete="off">
+              {% csrf_token %}
+              <input type="text" id="withdraw_amount"  class="onboarding_form_input form-control mb-3" placeholder="Enter Amount eg. 10000">
+              
+              <input type="submit" value="Withdraw Now" class="form-control onboarding-button mt-5" id="withdraw_submit_button">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fund Modal -->
+<div class="modal fade" id="fundModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin:0;">
+    <div class="modal-content" style="height:100vh; border-radius:0;">
+      <div class="modal-body">
+          <div style="display: flex; flex-direction: row;"><i class="fas fa-chevron-left close" data-dismiss="modal"></i><p class="text-center mb-5" style="width: 100%;">Fund Wallet</p></div>
+          <form class="onboarding_form mt-2"   method="POST" autocomplete="off">
+              {% csrf_token %}
+              <input type="text" id="fund_amount"  class="onboarding_form_input form-control mb-3" placeholder="Enter Amount eg. 10000">
+              
+              <input type="submit" value="Fund Now" class="form-control onboarding-button mt-5" id="fund_submit_button">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

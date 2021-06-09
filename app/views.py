@@ -145,6 +145,19 @@ def sp_profile(request, token):
 
 
 
+def client_wallet(request, token):
+    url= base_url+"/dashboard?token="+token  
+    response = requests.get(url).text
+    json_data = json.loads(response)
+    print(response)
+    if json_data["success"] == True and  json_data["status"] == 200:
+        return_data = {
+            "token": token,
+            "data":json_data
+        } 
+        return render(request,"client/wallet.html", return_data)
+    return render(request,"onboarding/login.html")
+
 
 
 # RESEND VERIFICATION CODE API

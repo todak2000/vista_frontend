@@ -327,7 +327,7 @@ $(function(){
             },
             success:function(response){
                 document.getElementById("spinner").style.display = "none";
-                if(response.error == true){
+                if(response.success == false){
                     document.getElementById('server_message_error').classList.add("alert-danger");
                     document.getElementById('server_message_error').innerHTML = response.message;
                     document.getElementById("server_message_error").style.display = "block";
@@ -357,6 +357,148 @@ $(function(){
     });
 });
 
+// EDIT BIO API
+$(function(){
+    $('#update_bio_submit_button').on('click', function (e) {
+        e.preventDefault();
+        let edit_state = document.getElementById("edit_state").value;
+        let edit_address = document.getElementById("edit_address").value;
+        let edit_phone = document.getElementById("edit_phone").value;
+        document.getElementById("spinner").style.display = "block";
+        $.ajax({
+            url:base_url+'/edit_bio',
+            type:'PUT',
+            data:{
+                state: edit_state,
+                address: edit_address,
+                phone: edit_phone,
+            },
+            success:function(response){
+                document.getElementById("spinner").style.display = "none";
+                if(response.success == false){
+                    document.getElementById('edit_bio_error').classList.add("alert-danger");
+                    document.getElementById('edit_bio_error').innerHTML = response.message;
+                    document.getElementById("edit_bio_error").style.display = "block";
+                    setTimeout(function(){ 
+                        document.getElementById("edit_bio_error").style.display = "none"; 
+                    }, 3000);
+                    
+                }
+                else{
+                    document.getElementById('edit_bio_success').classList.add("alert-purple");
+                    document.getElementById('edit_bio_success').innerHTML = response.message;
+                    document.getElementById("edit_bio_success").style.display = "block";
+                }
+                console.log(response);
+            },
+            error:function(e){
+                $("#spinner").hide();
+                console.log(e);
+            },
+        });
+        
+        
+    });
+});
+
+// EDIT ACCOUNT API
+$(function(){
+    $('#update_acc_submit_button').on('click', function (e) {
+        e.preventDefault();
+        let edit_phone = document.getElementById("edit_phone").value;
+        let edit_acc_name = document.getElementById("edit_acc_name").value;
+        let edit_acc_no = document.getElementById("edit_acc_no").value;
+        let edit_bank = document.getElementById("edit_bank").value;
+        document.getElementById("spinner").style.display = "block";
+        $.ajax({
+            url:base_url+'/edit_account',
+            type:'PUT',
+            data:{
+                bank: edit_bank,
+                acc_no: edit_acc_no,
+                acc_name: edit_acc_name,
+                phone: edit_phone,
+            },
+            success:function(response){
+                document.getElementById("spinner").style.display = "none";
+                if(response.success == false){
+                    document.getElementById('edit_acc_error').classList.add("alert-danger");
+                    document.getElementById('edit_acc_error').innerHTML = response.message;
+                    document.getElementById("edit_acc_error").style.display = "block";
+                    setTimeout(function(){ 
+                        document.getElementById("edit_acc_error").style.display = "none"; 
+                    }, 3000);
+                    
+                }
+                else{
+                    document.getElementById('edit_acc_success').classList.add("alert-purple");
+                    document.getElementById('edit_acc_success').innerHTML = response.message;
+                    document.getElementById("edit_acc_success").style.display = "block";
+                }
+                console.log(response);
+            },
+            error:function(e){
+                $("#spinner").hide();
+                console.log(e);
+            },
+        });
+        
+        
+    });
+});
+
+// EDIT PASSOWRD API
+$(function(){
+    $('#update_pass_submit_button').on('click', function (e) {
+        e.preventDefault();
+        let edit_phone = document.getElementById("edit_phone").value;
+        let old_password = document.getElementById("edit_old_password").value;
+        let new_password = document.getElementById("edit_new_password").value;
+        let confirm_password = document.getElementById("edit_confirm_new_password").value;
+        document.getElementById("spinner").style.display = "block";
+        if (new_password != confirm_password){
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("edit_pass_error").classList.add("alert-danger");
+            document.getElementById('edit_pass_error').innerHTML = "Sorry! New Password do not match";
+            document.getElementById("edit_pass_error").style.display = "block";
+            setTimeout(function(){ 
+                document.getElementById("edit_pass_error").style.display = "none"; 
+            }, 2000);
+       }
+       else{
+            $.ajax({
+                url:base_url+'/edit_password',
+                type:'PUT',
+                data:{
+                    old_password: old_password,
+                    new_password: new_password,
+                    phone: edit_phone,
+                },
+                success:function(response){
+                    console.log(response);
+                    document.getElementById("spinner").style.display = "none";
+                    if(response.success == true){
+                        document.getElementById("edit_pass_success").classList.add("alert-purple");
+                        document.getElementById('edit_pass_success').innerHTML = response.message;
+                        document.getElementById("edit_pass_success").style.display = "block";        
+                    }
+                    else{
+                        document.getElementById("edit_pass_error").classList.add("alert-danger");
+                        document.getElementById('edit_pass_error').innerHTML = response.message;
+                        document.getElementById("edit_pass_error").style.display = "block";
+                        setTimeout(function(){ 
+                            document.getElementById("edit_pass_error").style.display = "none"; 
+                        }, 2000);
+                    }
+                },
+                error:function(e){
+                    document.getElementById("spinner").style.display = "none";
+                    console.log(e);
+                },
+            });
+       }
+    });  
+});
 // SP home
 function sp_home(token) {
     window.location.href = '/sp_dashboard/'+token;
@@ -372,6 +514,15 @@ function client_home(token) {
 // Client profile
 function client_profile(token) {
     window.location.href = '/client_profile/'+token;
+}
+// Client Wallet
+function client_wallet(token) {
+    window.location.href = '/client_wallet/'+token;
+} 
+
+function signout() {
+    sessionStorage.clear()
+    window.location.href = '/signin';
 }
 // // ************
 // //edit bio REUEST API
@@ -2117,4 +2268,4 @@ function client_profile(token) {
         
         
 //     });
-// });
+// })
