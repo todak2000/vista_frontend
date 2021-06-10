@@ -62,7 +62,7 @@ textarea:focus, input:focus{
     width: 80px;
     height: 80px;
     border: 4px solid #f3f3f3;
-    border-top:6px solid  #4B1378;;
+    border-top:6px solid  #4B1378;
     border-radius: 100%;
     z-index: 5000;
     position: absolute;
