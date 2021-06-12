@@ -117,6 +117,7 @@ $(function(){
                     
                 }
                 else{
+                    document.getElementById("spinner").style.display = "none";
                     document.getElementById('server_message_error').innerHTML = response.message;
                 }
             },
