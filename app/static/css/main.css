@@ -212,3 +212,33 @@ body{
     max-height: 30vh;
     overflow-y: scroll;
 }
+
+.job-background{
+    height:60vh;
+    width: 90%;
+    margin:auto;
+    font-family: poppins;
+}
+.each_jobs{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #E5E5E530;
+    margin-top:5px;
+    margin-bottom:5px;
+    padding: 0.5rem 1rem; 
+
+}
+.job_p{
+    margin:0;
+}
+#declined-job{
+    color:#EE776D;
+}
+#ongoing-job{
+    color:#F7B222;
+}
+#completed-job{
+    color:#3EBC91;
+}

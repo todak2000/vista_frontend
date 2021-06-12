@@ -4,7 +4,7 @@
 
 {% block body%}
 <section class="onboarding-background">
-    <p class="sp_top_p text-left">Welcome! {{user_details.firstname}}</p>
+    <p class="sp_top_p text-left">Welcome! {{data.user_details.firstname}}</p>
     <div id="sp_top_div">
         <i class="fas fa-building fa-3xa mt-2"></i>
         <div>
@@ -58,7 +58,7 @@
 
 </section>
 <footer class="footer">
-    <a id={{token}}>
+    <a id="{{token}}" onClick="sp_job(this.id)">
         <i class="fas fa-briefcase fa-2x "></i>
         <!-- <p style="margin-top:-60px; color:#4B137830;">Jobs</p> -->
     </a>
@@ -66,7 +66,7 @@
         <i class="fas fa-th-large fa-2x  active-icon"></i>
         <!-- <p style="margin-top:-60px; color:#4B1378;">Home</p> -->
     </a>
-    <a id={{token}} onClick="sp_profile(this.id)">
+    <a id="{{token}}" onClick="sp_profile(this.id)">
         <i class="fas fa-user fa-2x "></i>
         <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
     </a>

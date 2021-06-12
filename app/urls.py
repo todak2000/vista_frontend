@@ -17,11 +17,12 @@ urlpatterns = [
      path('client_dashboard/<token>', views.client_dashboard, name='dashboard'),
      path('client_profile/<token>', views.client_profile, name='profile'),
      path('client_wallet/<token>', views.client_wallet, name='wallet'),
-
+     path('client_job/<token>', views.client_job, name='job'),
 
     #  service provider
     path('sp_dashboard/<token>', views.sp_dashboard, name='sp_dashboard'),
     path('sp_profile/<token>', views.sp_profile, name='sp_profile'),
+    path('sp_job/<token>', views.sp_job, name='sp_job'),
     # USERS APIS
     # path('signin_api', views.login_api, name='signin_api'),
     # path('resend_code', views.resend_code_api, name='resend_code'),

@@ -8,6 +8,7 @@
       name="description"
       content="Vista is a e-hailing service platform connecting service providers with available jobs"
     />
+    
     {% load static %}
     <!-- CSS FILES -->
     <link rel="stylesheet" href="{% static 'bootstrap-4.5.2/css/bootstrap.css' %}">
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/splashscreen.css' %}">  
     <link rel="stylesheet" href="{% static 'css/onboarding.css' %}"> 
     <link rel="stylesheet" href="{% static 'css/main.css' %}">  
-
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
      <!-- GOOGLE FONTS -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
@@ -38,9 +39,9 @@
     <div id="spinner"></div> 
     {% block javascript%}
     {% endblock %}
-    <input id="edit_balance" value="{{data.user_details.balance|floatformat:2}}"/>
-    <input id="edit_phone" value="{{data.user_details.phonenumber}}"/>
-    <input id="edit_email" value="{{data.user_details.email}}"/>
+    <input id="edit_balance" value="{{data.user_details.balance|floatformat:2}}" hidden/>
+    <input id="edit_phone" value="{{data.user_details.phonenumber}}" hidden/>
+    <input id="edit_email" value="{{data.user_details.email}}" hidden/>
     <!-- Edit Bio Modal -->
 <div class="modal fade" id="bioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" style="margin:0;">

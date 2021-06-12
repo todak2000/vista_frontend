@@ -143,7 +143,46 @@ def sp_profile(request, token):
         return render(request,"sp/profile.html", return_data)
     return render(request,"onboarding/login.html")
 
+# def sp_job(request, token):
+#     url= base_url+"/job?token="+token  
+#     response = requests.get(url).text
+#     json_data = json.loads(response)
+#     print(response)
+#     if json_data["success"] == True and  json_data["status"] == 200:
+#         return_data = {
+#             "token": token,
+#             "data":json_data
+#         }
+#         return render(request,"sp/jobs.html", return_data)
+#     return render(request,"onboarding/login.html")
+def sp_job(request, token):
+    if token:
+        return_data = {
+            "token": token,
+        }
+        return render(request,"sp/jobs.html", return_data)
+    return render(request,"onboarding/login.html")
 
+def client_job(request, token):
+    if token:
+        return_data = {
+            "token": token,
+        }
+        return render(request,"client/jobs.html", return_data)
+    return render(request,"onboarding/login.html")
+    
+# def client_job(request, token):
+#     url= base_url+"/job?token="+token  
+#     response = requests.get(url).text
+#     json_data = json.loads(response)
+#     print(response)
+#     if json_data["success"] == True and  json_data["status"] == 200:
+#         return_data = {
+#             "token": token,
+#             "data":json_data
+#         }
+#         return render(request,"client/jobs.html", return_data)
+#     return render(request,"onboarding/login.html")
 
 def client_wallet(request, token):
     url= base_url+"/dashboard?token="+token  

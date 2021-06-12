@@ -604,6 +604,10 @@ function sp_home(token) {
 function sp_profile(token) {
     window.location.href = '/sp_profile/'+token;
 }
+// SP Jobs
+function sp_job(token) {
+    window.location.href = '/sp_job/'+token;
+}
 // Client home
 function client_home(token) {
     window.location.href = '/client_dashboard/'+token;
@@ -615,6 +619,10 @@ function client_profile(token) {
 // Client Wallet
 function client_wallet(token) {
     window.location.href = '/client_wallet/'+token;
+} 
+// Client Job
+function client_job(token) {
+    window.location.href = '/client_job/'+token;
 } 
 
 function signout() {
