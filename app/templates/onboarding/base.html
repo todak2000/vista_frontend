@@ -296,13 +296,13 @@
 
 <!-- Request Job Modal (Client) -->
 <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="margin:0;">
+  <div class="modal-dialog" role="document" style="margin:0; background-color: #fff;">
     <div class="modal-content" style="height:100vh; border-radius:0;">
       <div class="modal-body">
         <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left " style="color:#464646;" data-dismiss="modal"></i></div>
         <h5 class="text-center"> Service Request Form</h5>
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
-          <form class="onboarding_form"   method="POST" autocomplete="off">
+          <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
               {% csrf_token %}
                   <p class="text-purple">Type</p>
                   <input type="text" id="service_type"  class="onboarding_form_input form-control mb-1" disabled>
