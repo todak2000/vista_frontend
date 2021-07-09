@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 from django.db.models import Sum, Q
-from app.models import (User,Verification)
-from CustomCode import (password_functions, string_generator, validator)
+# from app.models import (User,Verification)
+# from CustomCode import (password_functions, string_generator, validator)
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
