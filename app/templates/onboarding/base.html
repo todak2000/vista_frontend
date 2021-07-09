@@ -301,24 +301,18 @@
       <div class="modal-body">
         <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left " style="color:#464646;" data-dismiss="modal"></i></div>
         <h5 class="text-center"> Service Request Form</h5>
-          <!-- <div style="display: flex; flex-direction: row;"><i class="fas fa-chevron-left close" data-dismiss="modal"></i><p class="text-center mb-5" style="width: 100%;">Edit/Add Account Details</p></div>
-          <div class="text-primary server_message_success py-1 text-center" id="edit_acc_success" role="alert"></div>-->
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
           <form class="onboarding_form"   method="POST" autocomplete="off">
               {% csrf_token %}
                   <p class="text-purple">Type</p>
-                  <input type="text" id="service_type"  class="onboarding_form_input form-control mb-3" disabled>
+                  <input type="text" id="service_type"  class="onboarding_form_input form-control mb-1" disabled>
                   <p class="text-purple">Details</p>
-                  <textarea id="details"  class="onboarding_form_input form-control mb-3" placeholder="I need the Service Provider to create a Dinning table" style="height:120px"></textarea>
+                  <textarea id="details"  class="onboarding_form_input form-control mb-1" placeholder="I need the Service Provider to create a Dinning table" style="height:120px"></textarea>
                   <p class="text-purple">Possible tools Required</p>
-                  <textarea id="tools"  class="onboarding_form_input form-control mb-3" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
+                  <textarea id="tools"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
                   <p class="text-purple">Budget</p>
-                  <input type="text" id="budget"  class="onboarding_form_input form-control mb-3" placeholder="12000">
-                  <!-- <select class="onboarding_form_input form-control mb-3" id="service_type">
-                      <option value="{{data.user_details.bank}}" selected>{{data.user_details.bank}}</option>
-                      
-                  </select> -->
-                  <input type="submit" value="Submit Request" class="form-control onboarding-button mt-5" id="request_submit_button">
+                  <input type="text" id="budget"  class="onboarding_form_input form-control mb-1" placeholder="12000">
+                  <input type="submit" value="Submit Request" class="form-control onboarding-button mt-3" id="request_submit_button">
           </form>
       </div>
     </div>
