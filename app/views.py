@@ -2,60 +2,18 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 
-from django.db.models import Sum, Q
-# from app.models import (User,Verification)
-# from CustomCode import (password_functions, string_generator, validator)
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django.http import JsonResponse
-
-from pysendpulse.pysendpulse import PySendPulse
 
 from decouple import config
 import json
 import requests
 
 base_url = config("base_url")
-# REST_API_ID = config("REST_API_ID")
-# REST_API_SECRET = config("REST_API_SECRET")
-# TOKEN_STORAGE = config("TOKEN_STORAGE")
-# MEMCACHED_HOST = config("MEMCACHED_HOST")
-# SPApiProxy = PySendPulse(REST_API_ID, REST_API_SECRET, TOKEN_STORAGE, memcached_host=MEMCACHED_HOST)
-
 
 def index(request):
-    # try:
-    #     if 'user_id' in request.session:
-    #         user_id = request.session['user_id']
-    #         user_data = User.objects.get(user_id=user_id)
-    #         if user_data.role == "artisan":
-
-    #             return_data = {
-    #                 "error": False,
-    #                 "profileComplete": user_data.profile_complete,
-    #                 "user_name": f"{user_data.firstname}"
-    #             }
-    #             return render(request,"artisan/home/home.html", return_data) 
-    #         elif user_data.role == "client":
-    #             return_data = {
-    #                 "error": False,
-    #                 "profileComplete": user_data.profile_complete,
-    #                 "user_name": f"{user_data.firstname}"
-    #             }
-    #             return render(request,"client/home/home.html", return_data) 
-    #         else:
-    #             return render(request,"onboarding/splashscreen.html") 
-    # except Exception as e:
-    #     return_data = {
-    #         "error": True,
-    #         "profileComplete": user_data.profile_complete,
-    #         "user_name": f"{user_data.firstname}",
-    #         "message": "Something went wrong!"
-    #     }
-    #     return render(request,"onboarding/splashscreen.html") 
-    
     return render(request,"onboarding/splashscreen.html") 
 
 def register_page(request):
@@ -143,46 +101,34 @@ def sp_profile(request, token):
         return render(request,"sp/profile.html", return_data)
     return render(request,"onboarding/login.html")
 
-# def sp_job(request, token):
-#     url= base_url+"/job?token="+token  
-#     response = requests.get(url).text
-#     json_data = json.loads(response)
-#     print(response)
-#     if json_data["success"] == True and  json_data["status"] == 200:
-#         return_data = {
-#             "token": token,
-#             "data":json_data
-#         }
-#         return render(request,"sp/jobs.html", return_data)
-#     return render(request,"onboarding/login.html")
 def sp_job(request, token):
     if token:
-        return_data = {
-            "token": token,
-        }
-        return render(request,"sp/jobs.html", return_data)
+        url= base_url+"/services?token="+token  
+        response = requests.get(url).text
+        json_data = json.loads(response)
+        print(response)
+        if json_data["success"] == True and  json_data["status"] == 200:
+            return_data = {
+                "token": token,
+                "data":json_data
+            }
+            return render(request,"sp/jobs.html", return_data)
     return render(request,"onboarding/login.html")
 
 def client_job(request, token):
     if token:
-        return_data = {
-            "token": token,
-        }
-        return render(request,"client/jobs.html", return_data)
+        url= base_url+"/services?token="+token  
+        response = requests.get(url).text
+        json_data = json.loads(response)
+        print(response)
+        if json_data["success"] == True and  json_data["status"] == 200:
+            return_data = {
+                "token": token,
+                "data":json_data
+            }
+            return render(request,"client/jobs.html", return_data)
     return render(request,"onboarding/login.html")
-    
-# def client_job(request, token):
-#     url= base_url+"/job?token="+token  
-#     response = requests.get(url).text
-#     json_data = json.loads(response)
-#     print(response)
-#     if json_data["success"] == True and  json_data["status"] == 200:
-#         return_data = {
-#             "token": token,
-#             "data":json_data
-#         }
-#         return render(request,"client/jobs.html", return_data)
-#     return render(request,"onboarding/login.html")
+
 
 def client_wallet(request, token):
     url= base_url+"/dashboard?token="+token  
@@ -212,18 +158,6 @@ def resend_code_api(request):
                 firstName = userData.firstname
                 code = verificationData.code
                 if code:
-                    # Resend mail using SMTP
-                    # mail_subject = 'Activate Code Sent again for your Fida account.'
-                    # resentEmail = {
-                    #     'subject': mail_subject,
-                    #     'html': '<h4>Hello, '+firstName+'!</h4><p>Kindly find the Verification Code below sent again to activate your Fida Account</p> <h1>'+code+'</h1>',
-                    #     'text': 'Hello, '+firstName+'!\nKindly find the Verification Code below sent againto activate your Fida Account',
-                    #     'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
-                    #     'to': [
-                    #         {'name': firstName, 'email': email}
-                    #     ]
-                    # }
-                    # SPApiProxy.smtp_send_mail(resentEmail)
                     return_data = {
                         "error": False,
                         "message": "Verfication Code sent again!"
@@ -246,8 +180,8 @@ def resend_code_api(request):
     except Exception as e:
         return_data = {
             "error": True,
-            "message": str(e)
-            # "message": "Something went wrong!"
+            # "message": str(e)
+            "message": "Something went wrong!"
         }
     return Response(return_data)
 

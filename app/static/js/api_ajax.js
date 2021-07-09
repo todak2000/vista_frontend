@@ -707,11 +707,21 @@ $(function(){
         e.preventDefault();
         document.getElementById("spinner").style.display = "block";
         document.getElementById("request_submit_button").style.display = "none";
+        if (document.getElementById("request_final_div").style.display = "block"){
+            document.getElementById("request_final_div").style.display = "none";
+            document.getElementById("r_success_div").style.display = "none"; 
+            document.getElementById("sp_name").innerHTML = "";
+            document.getElementById("sp_address").innerHTML = ""
+            document.getElementById("sp_phone").innerHTML = ""
+            document.getElementById("sp_id").innerHTML = ""
+            document.getElementById("rating_divi").innerHTML = ""
+        };
         let service_type = document.getElementById("service_type").value;
         let details = document.getElementById("details").value;
         let tools = document.getElementById("tools").value;
         let budget = document.getElementById("budget").value;
         let balance = document.getElementById("edit_balance").value;
+        let phone = document.getElementById("edit_phone").value;
 
         if ( budget === "" || budget === null ){
             document.getElementById("spinner").style.display = "none";
@@ -739,24 +749,57 @@ $(function(){
                     details: details,
                     tools: tools,
                     budget: budget,
+                    phone: phone,
                 },
                 success:function(response){
                     document.getElementById("spinner").style.display = "none";
                     console.log(response);
-                    // if(response.success == false){
-                    //     document.getElementById("verification_div2").style.display = "block";
-                    //     document.getElementById("failure_div2").style.display = "block";
-                    //     document.getElementById("error_p").innerHTML = response.message;
-                    //     document.getElementById("saving").style.display = "none"; 
-                    // }
-                    // if(response.success == true){
-                    //     document.getElementById("verification_div2").style.display = "block";
-                    //   document.getElementById("success_div2").style.display = "block"; 
-                    //   document.getElementById("saving").style.display = "none";          
-                    // }
-                    // setTimeout(function(){ 
-                    //     window.location.reload();  
-                    // }, 2000);
+                    if(response.success == false){
+                        document.getElementById("request_final_div").style.display = "block";
+                        document.getElementById("r_message").innerHTML = response.message;
+                        document.getElementById("r_failure_div").style.display = "block";
+                        setTimeout(function(){ 
+                            window.location.reload();
+                        }, 3000);
+                    }
+                    else if(response.success == true && response.message){
+                        document.getElementById("map_search").style.display = "block";
+                        document.getElementById("map_search_h1").style.display = "block";
+                        document.getElementById("request_final_div").style.display = "block";
+                        setTimeout(function(){ 
+                            document.getElementById("map_search").style.display = "none";
+                            document.getElementById("map_search_h1").style.display = "none";
+                            document.getElementById("r_message").innerHTML = response.message;
+                            document.getElementById("r_failure_div").style.display = "block";
+                        }, 5000);
+                        setTimeout(function(){ 
+                            window.location.reload();
+                        }, 5000);
+                        
+                    }
+                    else if(response.success == true && response.status == 200){
+                        document.getElementById("map_search").style.display = "block";
+                        document.getElementById("map_search_h1").style.display = "block";
+                        document.getElementById("request_final_div").style.display = "block";
+                        setTimeout(function(){ 
+                            document.getElementById("map_search_h1").style.display = "none";
+                            document.getElementById("map_search").style.display = "none";
+                            document.getElementById("sp_name").innerHTML = response.serviceProviders[0].sp_firstname +" "+ response.serviceProviders[0].sp_lastname ;
+                            document.getElementById("sp_address").innerHTML = response.serviceProviders[0].sp_address+", "+response.serviceProviders[0].sp_state
+                            document.getElementById("sp_phone").innerHTML = response.serviceProviders[0].sp_phone
+                            document.getElementById("sp_id").value = response.serviceProviders[0].sp_id
+                            document.getElementById("job_id").value = response.job_id
+                            let i=0,length=response.serviceProviders[0].sp_ratings;
+                            for(i; i<=length-1;i++){
+                                $('.rating_div').append($('<span class="fa fa-star" style="color:#FFDF8C;"></span>')); 
+                            }
+                            document.getElementById("r_success_div").style.display = "block"; 
+                            document.getElementById("request_submit_button").style.display = "block";
+                            document.getElementById("request_submit_button").value = "Find Another" 
+                        }, 5000);
+                                 
+                    }
+                    else{}
                 },
                 error:function(e){
                     console.log(e);
@@ -766,3 +809,36 @@ $(function(){
 
     })
 });
+
+// client accept sp update function
+$(function(){
+    $('#client_accept_sp_submit_button').on('click', function (e) {
+        e.preventDefault();
+        document.getElementById("spinner").style.display = "block";
+        let sp_id = document.getElementById("sp_id").value;
+        let job_id = document.getElementById("job_id").value;
+        console.log(sp_id)
+        console.log(job_id)
+        $.ajax({
+            url:base_url+'/accept_sp',
+            type:'POST',
+            data:{
+                sp_id: sp_id,
+                job_id: job_id
+            },
+            success:function(response){
+                
+                document.getElementById("spinner").style.display = "none";
+                if(response.success == false){
+                    console.log(response);
+                }
+                if(response.success == true){
+                    token = sessionStorage.getItem("token");
+                    window.location.href = '/client_job/'+token;       
+                }
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+    })})
