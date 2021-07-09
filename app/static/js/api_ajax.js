@@ -713,7 +713,15 @@ $(function(){
         let budget = document.getElementById("budget").value;
         let balance = document.getElementById("edit_balance").value;
 
-        if ( parseFloat(budget) > parseFloat(balance)){
+        if ( budget === "" || budget === null ){
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("request_submit_button").style.display = "block";
+            document.getElementById("request_error").innerHTML = "Sorry! Kindly fill the budget amount to proceed";
+            setTimeout(function(){ 
+                document.getElementById("request_error").innerHTML = "";
+              }, 4000);
+        }
+        else if ( parseFloat(budget) > parseFloat(balance) ){
             document.getElementById("spinner").style.display = "none";
             document.getElementById("request_submit_button").style.display = "block";
             document.getElementById("request_error").innerHTML = "Sorry! you have N"+parseFloat(balance)+" and it is Insufficient to proceed. Kindly top up your balance";
@@ -721,6 +729,7 @@ $(function(){
                 document.getElementById("request_error").innerHTML = "";
               }, 4000);
         }
+        
         else{
             $.ajax({
                 url:base_url+'/request',
