@@ -38,10 +38,24 @@
     {% endblock %}
     <div id="spinner"></div> 
     {% block javascript%}
+    <script>
+      $(function () {
+        $("#role").change(function() {
+          let val = $(this).val();
+          if(val === "service_provider") {
+              $("#sp_jobs").show();
+          }
+          else if(val === "client") {
+              $("#sp_jobs").hide();
+          }
+        });
+      });
+    </script>
     {% endblock %}
     <input id="edit_balance" value="{{data.user_details.balance|floatformat:2}}" hidden/>
     <input id="edit_phone" value="{{data.user_details.phonenumber}}" hidden/>
     <input id="edit_email" value="{{data.user_details.email}}" hidden/>
+
     <!-- Edit Bio Modal -->
 <div class="modal fade" id="bioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" style="margin:0;">
@@ -188,7 +202,57 @@
           <form class="onboarding_form mt-2"   method="POST" autocomplete="off">
               {% csrf_token %}
               <input type="text" id="withdraw_amount"  class="onboarding_form_input form-control mb-3" placeholder="Enter Amount eg. 10000">
-              
+              {% if data.user_details.role == '1' %}
+              <input class="onboarding_form_input form-control mb-3" style="background-color: #C91B3010;" type="text" id="withdraw_accountname_filled" value="{{data.user_details.accountname}}" hidden/>
+                {% if data.user_details.bank != 'Bank' %}
+                  <p class="mb-3">Kindly Confirm payment should be made to:</p>
+                  <p style="margin:0" >Account Name</p>
+                  <input class="onboarding_form_input form-control mb-3" style="background-color: #C91B3010;" type="text"  value="{{data.user_details.accountname}}" disabled/>
+                  <p style="margin:0" >Account Number</p>
+                  <input class="onboarding_form_input form-control mb-3" style="background-color: #C91B3010;"  type="text"  value="{{data.user_details.accountno}}" disabled/>
+                  <p style="margin:0" >Bank</p>
+                  <input class="onboarding_form_input form-control mb-3" style="background-color: #C91B3010;" type="text"  value="{{data.user_details.bank}}" disabled/>
+                {% else %}
+                <p class="mb-3">Kindly Enter account details payment should be made to:</p>
+                
+                  <input class="onboarding_form_input form-control mb-3" style="background-color: #1bc9b210;" type="text" id="withdraw_accountname" placeholder="Enter Account Name" />
+                  <input class="onboarding_form_input form-control mb-3" style="background-color: #1bc9b210;" type="text" id="withdraw_accountno" placeholder="Enter Account Number"/>
+                  <select class="onboarding_form_input form-control mb-3" id="withdraw_bank" style="background-color: #1bc9b210;">
+                    <option value="" disabled selected>Select Bank </option>
+                    <option value="Access Bank">Access Bank</option>
+                    <option value="Citibank">Citibank</option>
+                    <option value="Access (Diamond)">Access (Diamond)</option>
+                    <option value="Ecobank">Ecobank</option>
+                    <option value="Fidelity Bank">Fidelity Bank</option>
+                    <option value="First Bank">First Bank</option>
+                    <option value="FCMB">First City Monument Bank (FCMB)</option>
+                    <option value="GTB">Guaranty Trust Bank (GTB)</option>
+                    <option value="Heritage Bank">Heritage Bank</option>
+                    <option value="Jaiz Bank">Jaiz Bank</option>
+                    <option value="Keystone Bank">Keystone Bank</option>
+                    <option value="Kuda Bank">Kuda Bank</option>
+                    <option value="Polaris Bank">Polaris Bank</option>
+                    <option value="Providus Bank">Providus Bank</option>
+                    <option value="Stanbic IBTC Bank">Stanbic IBTC Bank</option>
+                    <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                    <option value="Sterling Bank">Sterling Bank</option>
+                    <option value="Union Bank">Union Bank</option>
+                    <option value="UBA">United Bank for Africa (UBA)</option>
+                    <option value="Unity Bank">Unity Bank</option>
+                    <option value="Wema Bank">Wema Bank</option>
+                    <option value="Zenith Bank">Zenith Bank</option>
+                </select>
+                  <div class="input-group mb-3" id="saving">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text1">
+                        <input type="checkbox" id="save_bank_details">
+                      </div>
+                    </div>
+                    <p class="ml-2" style="font-size: 0.8rem; padding-top:2px; width: 80%;">I want my account details saved</p>
+                </div>
+                {% endif %}
+              {% else %}
+              {% endif %}
               <input type="submit" value="Withdraw Now" class="form-control onboarding-button mt-5" id="withdraw_submit_button">
           </form>
       </div>
@@ -229,6 +293,38 @@
     </div>
   </div>
 </div>
+
+<!-- Request Job Modal (Client) -->
+<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin:0;">
+    <div class="modal-content" style="height:100vh; border-radius:0;">
+      <div class="modal-body">
+        <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left " style="color:#464646;" data-dismiss="modal"></i></div>
+        <h5 class="text-center"> Service Request Form</h5>
+          <!-- <div style="display: flex; flex-direction: row;"><i class="fas fa-chevron-left close" data-dismiss="modal"></i><p class="text-center mb-5" style="width: 100%;">Edit/Add Account Details</p></div>
+          <div class="text-primary server_message_success py-1 text-center" id="edit_acc_success" role="alert"></div>-->
+          <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
+          <form class="onboarding_form"   method="POST" autocomplete="off">
+              {% csrf_token %}
+                  <p class="text-purple">Type</p>
+                  <input type="text" id="service_type"  class="onboarding_form_input form-control mb-3" disabled>
+                  <p class="text-purple">Details</p>
+                  <textarea id="details"  class="onboarding_form_input form-control mb-3" placeholder="I need the Service Provider to create a Dinning table" style="height:120px"></textarea>
+                  <p class="text-purple">Possible tools Required</p>
+                  <textarea id="tools"  class="onboarding_form_input form-control mb-3" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
+                  <p class="text-purple">Budget</p>
+                  <input type="text" id="budget"  class="onboarding_form_input form-control mb-3" placeholder="12000">
+                  <!-- <select class="onboarding_form_input form-control mb-3" id="service_type">
+                      <option value="{{data.user_details.bank}}" selected>{{data.user_details.bank}}</option>
+                      
+                  </select> -->
+                  <input type="submit" value="Submit Request" class="form-control onboarding-button mt-5" id="request_submit_button">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
   function getAmount(input1) {

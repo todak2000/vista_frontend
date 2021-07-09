@@ -9,11 +9,12 @@ $(function(){
         let email = document.getElementById("email").value;
         let phonenumber = document.getElementById("phonenumber").value;
         let password = document.getElementById("password").value;
-        
+        let service = null;
         let address = document.getElementById("address").value;
         let role = document.getElementById("role").value;
         if (role =="service_provider"){
             enumRole = 0;
+            service = document.getElementById("sp_jobs").value;
         }
         else{ enumRole = 1}
 
@@ -29,6 +30,7 @@ $(function(){
             address: address,
             role: enumRole,
             state: state,
+            service: service
         }
         document.getElementById("spinner").style.display = "block";
         if (terms_conditions.checked == false){
@@ -510,6 +512,67 @@ $(function(){
         let edit_phone = document.getElementById("edit_phone").value;
         let amount = document.getElementById("withdraw_amount").value;
         let balance = document.getElementById("edit_balance").value;
+        
+        let withdraw_accountname_filled = document.getElementById("withdraw_accountname_filled").value;
+        if (withdraw_accountname_filled === "Account Name"){
+            withdraw_accountname = document.getElementById("withdraw_accountname").value;
+            withdraw_accountno = document.getElementById("withdraw_accountno").value;
+            withdraw_bank = document.getElementById("withdraw_bank").value;
+            save_bank_details = document.getElementById("save_bank_details");
+            if (save_bank_details.checked == true && withdraw_accountname == "" || withdraw_accountno == "" || withdraw_bank == ""){
+                document.getElementById("withdraw_submit_button").style.display = "block";
+                document.getElementById("spinner").style.display = "none";
+                document.getElementById("edit_withdraw_error").innerHTML = "Sorry! Your account details is incomplete. Kindly fill the account form again and save again";
+                setTimeout(function(){ 
+                    document.getElementById("edit_withdraw_error").innerHTML = "";
+                    }, 2000);
+            }
+            else if (save_bank_details.checked == false && withdraw_accountname == "" || withdraw_accountno == "" || withdraw_bank == ""){
+                document.getElementById("withdraw_submit_button").style.display = "block";
+                document.getElementById("spinner").style.display = "none";
+                document.getElementById("edit_withdraw_error").innerHTML = "Please! Kindly enter your account details";
+                setTimeout(function(){ 
+                    document.getElementById("edit_withdraw_error").innerHTML = "";
+                    }, 2000);
+            }
+            
+            else{
+                console.log(save_bank_details.checked)
+                $.ajax({
+                    url:base_url+'/withdrawal',
+                    type:'POST',
+                    data:{
+                        phone: edit_phone,
+                        amount: amount,
+                        account_name: withdraw_accountname,
+                        account_no: withdraw_accountno,
+                        bank: withdraw_bank,
+                        save_account_details:save_bank_details.checked
+                    },
+                    success:function(response){
+                        document.getElementById("spinner").style.display = "none";
+                        console.log(response);
+                        if(response.success == false){
+                            document.getElementById("verification_div2").style.display = "block";
+                            document.getElementById("failure_div2").style.display = "block";
+                            document.getElementById("error_p").innerHTML = response.message;
+                            document.getElementById("saving").style.display = "none"; 
+                        }
+                        if(response.success == true){
+                            document.getElementById("verification_div2").style.display = "block";
+                          document.getElementById("success_div2").style.display = "block"; 
+                          document.getElementById("saving").style.display = "none";          
+                        }
+                        setTimeout(function(){ 
+                            window.location.reload();  
+                        }, 2000);
+                    },
+                    error:function(e){
+                        console.log(e);
+                    },
+                });
+            }
+        }
         if ( parseFloat(amount) > parseFloat(balance)){
             document.getElementById("spinner").style.display = "none";
             document.getElementById("withdraw_submit_button").style.display = "block";
@@ -526,7 +589,9 @@ $(function(){
                 document.getElementById("edit_withdraw_error").innerHTML = "";
               }, 2000);
         }
-        else{
+        
+        else if (withdraw_accountname_filled !== "Account Name"){
+            
             $.ajax({
                 url:base_url+'/withdrawal',
                 type:'POST',
@@ -556,7 +621,6 @@ $(function(){
             });
             
         }
-        // console.log(e);
         
     });
 });
@@ -631,3 +695,65 @@ function signout() {
     window.location.href = '/signin';
 }
 
+function request_form(id) {
+    console.log(id);
+    document.getElementById('service_type').value = id;
+    $('#requestModal').modal('show');
+}
+
+// job request function
+$(function(){
+    $('#request_submit_button').on('click', function (e) {
+        e.preventDefault();
+        document.getElementById("spinner").style.display = "block";
+        document.getElementById("request_submit_button").style.display = "none";
+        let service_type = document.getElementById("service_type").value;
+        let details = document.getElementById("details").value;
+        let tools = document.getElementById("tools").value;
+        let budget = document.getElementById("budget").value;
+        let balance = document.getElementById("edit_balance").value;
+
+        if ( parseFloat(budget) > parseFloat(balance)){
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("request_submit_button").style.display = "block";
+            document.getElementById("request_error").innerHTML = "Sorry! you have N"+parseFloat(balance)+" and it is Insufficient to proceed. Kindly top up your balance";
+            setTimeout(function(){ 
+                document.getElementById("request_error").innerHTML = "";
+              }, 4000);
+        }
+        else{
+            $.ajax({
+                url:base_url+'/request',
+                type:'POST',
+                data:{
+                    service_type: service_type,
+                    details: details,
+                    tools: tools,
+                    budget: budget,
+                },
+                success:function(response){
+                    document.getElementById("spinner").style.display = "none";
+                    console.log(response);
+                    // if(response.success == false){
+                    //     document.getElementById("verification_div2").style.display = "block";
+                    //     document.getElementById("failure_div2").style.display = "block";
+                    //     document.getElementById("error_p").innerHTML = response.message;
+                    //     document.getElementById("saving").style.display = "none"; 
+                    // }
+                    // if(response.success == true){
+                    //     document.getElementById("verification_div2").style.display = "block";
+                    //   document.getElementById("success_div2").style.display = "block"; 
+                    //   document.getElementById("saving").style.display = "none";          
+                    // }
+                    // setTimeout(function(){ 
+                    //     window.location.reload();  
+                    // }, 2000);
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+        }
+
+    })
+});

@@ -40,8 +40,7 @@
             </div>
             <div id="form-part-two">
                 
-                <input type="text" id="address" placeholder="4, Kingsville street, KA"  class="onboarding_form_input form-control">
-                <!-- <input type="text" id="state" placeholder="State"  class="onboarding_form_input form-control"> -->
+                <input type="text" id="address" placeholder="Enter your Address"  class="onboarding_form_input form-control">
                 <select id="state" class="onboarding_form_input form-control">
                     <option disabled selected>--Select State--</option>
                     <option value="Abia">Abia</option>
@@ -83,9 +82,21 @@
                     <option value="Zamfara">Zamfara</option>
                 </select>
                 <select id="role" class="onboarding_form_input form-control" style="border:0.1px solid #fff; width:100%">
-                    <option value="" selected>ROLE</option>
+                    <option value="" disabled selected>SELECT ROLE</option>
                     <option value="service_provider" >Service Provider</option>
                     <option value="client">Client</option>
+                </select>
+                <select id="sp_jobs" class="onboarding_form_input form-control" style="border:0.1px solid #fff; width:100%; display: none;">
+                    <option value="" disabled selected>Services Offered</option>
+                    <option value="Carpentry" >Carpentry</option>
+                    <option value="Electrician">Electrician</option>
+                    <option value="Photography" >Photography</option>
+                    <option value="Tailoring">Tailoring</option>
+                    <option value="Mason" >Mason</option>
+                    <option value="Welding">Welding</option>
+                    <option value="Makeup" >Makeup</option>
+                    <option value="Cleaners">Cleaners</option>
+                    <option value="others">Others</option>
                 </select>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
