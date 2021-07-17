@@ -701,6 +701,50 @@ function request_form(id) {
     $('#requestModal').modal('show');
 }
 
+function job_details(id) {
+    console.log(id);
+    $.ajax({
+        url:base_url+'/job_details/'+id,
+        type:'GET',
+        success:function(response){
+            // console.log(response);
+            document.getElementById('d_service_type').value = response.job_details.service_type;
+            document.getElementById('d_details').value = response.job_details.details;
+            document.getElementById('d_tools').value = response.job_details.tools;
+            document.getElementById('d_budget').value = response.job_details.budget;
+
+            document.getElementById('d_job_id').value = response.job_details.job_id;
+            document.getElementById('d_client_id').value = response.job_details.client_id;
+            document.getElementById('d_sp_id').value = response.job_details.sp_id;
+            if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false){
+                document.getElementById('request_details_button').value = "Cancel";
+                document.getElementById("note").innerHTML = "Kindly wait for the Service Provider to Accept the Job";
+                document.getElementById("request_details_button").style.background = "red";
+            }
+            else if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === true){
+                document.getElementById("request_details_button").style.display = "none";
+                document.getElementById("note").style.color = "red";
+                document.getElementById("note").innerHTML = "Sorry, the job has been rejected/canceled by the Service Provider";
+            }
+            else if(response.job_details.isTaken === true && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false){
+                document.getElementById('request_details_button').value = "Confirm Job Completed";
+                document.getElementById("note").innerHTML = "";
+                document.getElementById("star_div").style.display = "flex";
+                document.getElementById("request_details_button").style.background = "#3EBC91";
+            }
+            else if(response.job_details.isTaken === true && response.job_details.isCompleted === true && response.job_details.isRejectedSP === false){
+                document.getElementById("request_details_button").style.display = "none";
+                document.getElementById("note").style.color = "#3EBC91";
+                document.getElementById("note").innerHTML = "Job done!";
+            }
+            $('#detailsModal').modal('show');
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+    
+}
 // job request function
 $(function(){
     $('#request_submit_button').on('click', function (e) {
@@ -842,3 +886,149 @@ $(function(){
             },
         });
     })})
+
+    // star ratings click function
+    $(function(){
+     
+        // star rating
+        $('#star_one').on('click', function (e) {
+            e.preventDefault();
+            console.log("star_one");
+            document.getElementById("star_one").style.color = "orange";
+            document.getElementById("d_rating").value =1;
+        
+            // make them unclicable 
+            document.getElementById("star_one").style.pointerEvents = "none";
+            document.getElementById("star_two").style.pointerEvents = "none";
+            document.getElementById("star_three").style.pointerEvents = "none";
+            document.getElementById("star_four").style.pointerEvents = "none";
+            document.getElementById("star_five").style.pointerEvents = "none";
+        });
+        $('#star_two').on('click', function (e) {
+            e.preventDefault();
+            console.log("star_two");
+            document.getElementById("star_one").style.color = "orange";
+            document.getElementById("star_two").style.color = "orange";
+            document.getElementById("d_rating").value =2;
+        
+            // make them unclicable 
+            document.getElementById("star_one").style.pointerEvents = "none";
+            document.getElementById("star_two").style.pointerEvents = "none";
+            document.getElementById("star_three").style.pointerEvents = "none";
+            document.getElementById("star_four").style.pointerEvents = "none";
+            document.getElementById("star_five").style.pointerEvents = "none";
+        });
+        $('#star_three').on('click', function (e) {
+            e.preventDefault();
+            console.log("star_three");
+            document.getElementById("star_one").style.color = "orange";
+            document.getElementById("star_two").style.color = "orange";
+            document.getElementById("star_three").style.color = "orange";
+            document.getElementById("d_rating").value =3;
+        
+            // make them unclicable 
+            document.getElementById("star_one").style.pointerEvents = "none";
+            document.getElementById("star_two").style.pointerEvents = "none";
+            document.getElementById("star_three").style.pointerEvents = "none";
+            document.getElementById("star_four").style.pointerEvents = "none";
+            document.getElementById("star_five").style.pointerEvents = "none";
+        });
+        $('#star_four').on('click', function (e) {
+            e.preventDefault();
+            console.log("star_four");
+            document.getElementById("star_one").style.color = "orange";
+            document.getElementById("star_two").style.color = "orange";
+            document.getElementById("star_three").style.color = "orange";
+            document.getElementById("star_four").style.color = "orange";
+            document.getElementById("d_rating").value =4;
+        
+            // make them unclicable 
+            document.getElementById("star_one").style.pointerEvents = "none";
+            document.getElementById("star_two").style.pointerEvents = "none";
+            document.getElementById("star_three").style.pointerEvents = "none";
+            document.getElementById("star_four").style.pointerEvents = "none";
+            document.getElementById("star_five").style.pointerEvents = "none";
+        });
+        $('#star_five').on('click', function (e) {
+            e.preventDefault();
+            console.log("star_five");
+            document.getElementById("star_one").style.color = "orange";
+            document.getElementById("star_two").style.color = "orange";
+            document.getElementById("star_three").style.color = "orange";
+            document.getElementById("star_four").style.color = "orange";
+            document.getElementById("star_five").style.color = "orange";
+            document.getElementById("d_rating").value =5;
+        
+            // make them unclicable 
+            document.getElementById("star_one").style.pointerEvents = "none";
+            document.getElementById("star_two").style.pointerEvents = "none";
+            document.getElementById("star_three").style.pointerEvents = "none";
+            document.getElementById("star_four").style.pointerEvents = "none";
+            document.getElementById("star_five").style.pointerEvents = "none";
+        });
+    });
+
+    // client job update function
+$(function(){
+    $('#request_details_button').on('click', function (e) {
+        e.preventDefault();
+        let button = document.getElementById("request_details_button")
+        let sp_id = document.getElementById("d_sp_id").value;
+        let job_id = document.getElementById("d_job_id").value;
+        let client_id = document.getElementById("d_client_id").value;
+        if(button.value === "Cancel"){
+            button.disabled
+            $.ajax({
+                url:base_url+'/client_cancel',
+                type:'POST',
+                data:{
+                    client_id: client_id,
+                    job_id: job_id,
+                    sp_id: sp_id,
+                },
+                success:function(response){
+                    console.log(response);
+                    if(response.success == false){
+                        button.enabled
+                        // button.value === "Cancel"
+                    }
+                    if(response.success == true){
+                        token = sessionStorage.getItem("token");
+                        window.location.href = '/client_job/'+token;       
+                    }
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+        }
+        else if(button.value === "Confirm Job Completed"){
+            let ratings = document.getElementById("d_rating").value;
+            button.value === "Confirming Job Completion ..."
+            $.ajax({
+                url:base_url+'/client_confirm',
+                type:'POST',
+                data:{
+                    client_id: client_id,
+                    job_id: job_id,
+                    sp_id: sp_id,
+                    ratings: ratings
+                },
+                success:function(response){
+                    if(response.success == false){
+                        console.log(response);
+                        button.value === "Confirm Job Completed"
+                    }
+                    if(response.success == true){
+                        token = sessionStorage.getItem("token");
+                        window.location.href = '/client_job/'+token;       
+                    }
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+        }else{}
+    })})
+
+    // create sp job details from job details funtion above

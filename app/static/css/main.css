@@ -233,12 +233,15 @@ body{
 .job_p{
     margin:0;
 }
-#declined-job{
+.declined-job{
     color:#EE776D;
 }
-#ongoing-job{
+.pending-job{
     color:#F7B222;
 }
-#completed-job{
+.ongoing-job{
+    color:#8806c4;
+}
+.completed-job{
     color:#3EBC91;
 }
