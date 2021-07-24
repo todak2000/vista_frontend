@@ -976,6 +976,7 @@ $(function(){
         let sp_id = document.getElementById("d_sp_id").value;
         let job_id = document.getElementById("d_job_id").value;
         let client_id = document.getElementById("d_client_id").value;
+        document.getElementById("spinner").style.display = "block";
         if(button.value === "Cancel"){
             button.disabled
             $.ajax({
@@ -987,6 +988,7 @@ $(function(){
                     sp_id: sp_id,
                 },
                 success:function(response){
+                    document.getElementById("spinner").style.display = "none";
                     console.log(response);
                     if(response.success == false){
                         button.enabled
@@ -999,6 +1001,7 @@ $(function(){
                 },
                 error:function(e){
                     console.log(e);
+                    document.getElementById("spinner").style.display = "none";
                 },
             });
         }
@@ -1015,6 +1018,7 @@ $(function(){
                     ratings: ratings
                 },
                 success:function(response){
+                    document.getElementById("spinner").style.display = "none";
                     if(response.success == false){
                         console.log(response);
                         button.value === "Confirm Job Completed"
@@ -1025,6 +1029,7 @@ $(function(){
                     }
                 },
                 error:function(e){
+                    document.getElementById("spinner").style.display = "none";
                     console.log(e);
                 },
             });
@@ -1032,3 +1037,152 @@ $(function(){
     })})
 
     // create sp job details from job details funtion above
+
+    function sp_job_details(id) {
+        console.log(id);
+        $.ajax({
+            url:base_url+'/job_details/'+id,
+            type:'GET',
+            success:function(response){
+                // console.log(response);
+                document.getElementById('s_service_type').value = response.job_details.service_type;
+                document.getElementById('s_details').value = response.job_details.details;
+                document.getElementById('s_tools').value = response.job_details.tools;
+                document.getElementById('s_budget').value = response.job_details.budget;
+                document.getElementById('s_location').value = response.job_details.clientAddress;
+    
+                document.getElementById('s_job_id').value = response.job_details.job_id;
+                document.getElementById('s_client_id').value = response.job_details.client_id;
+                document.getElementById('s_sp_id').value = response.job_details.sp_id;
+                if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false){
+                    document.getElementById("note").innerHTML = "Kindly look through the job details and accept or reject. Thanks";
+                    document.getElementById("reject_button").style.display="block";
+                    document.getElementById("accept_button").style.display="block";
+                    document.getElementById("s_note").innerHTML = ""
+                }
+                else if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === true){
+                    document.getElementById("note").style.color = "red";
+                    document.getElementById("reject_button").style.display="none";
+                    document.getElementById("accept_button").style.display="none";
+                    document.getElementById("s_note").style.color="red";
+                    document.getElementById("s_note").innerHTML = "You rejected/canceled the Job";
+                }
+                else if(response.job_details.isTaken === true && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false){
+                    document.getElementById('accept_button').value = "Confirm you have completed the Job";
+                    document.getElementById("s_note").innerHTML = "";
+                    document.getElementById("accept_button").style.display="block";
+                    document.getElementById("accept_button").style.background = "#3EBC91";
+                }
+                else if(response.job_details.isTaken === true && response.job_details.isCompleted === true && response.job_details.isRejectedSP === false){
+                    document.getElementById("reject_button").style.display="none";
+                    document.getElementById("accept_button").style.display="none";
+                    document.getElementById("s_note").style.color = "#3EBC91";
+                    document.getElementById("s_note").innerHTML = "Completed";
+                }
+                $('#detailspModal').modal('show');
+            },
+            error:function(e){
+                document.getElementById("spinner").style.display = "none";
+                console.log(e);
+            },
+        });
+        
+    }
+
+
+// sp accept client offer update function
+$(function(){
+    $('#accept_button').on('click', function (e) {
+        e.preventDefault();
+        let button = document.getElementById("accept_button")
+        let sp_id = document.getElementById("s_sp_id").value;
+        let job_id = document.getElementById("s_job_id").value;
+        document.getElementById("spinner").style.display = "block";
+        // let client_id = document.getElementById("s_client_id").value;
+        if(button.value === "Confirm you have completed the Job"){
+            button.disabled
+            $.ajax({
+                url:base_url+'/complete_job',
+                type:'POST',
+                data:{
+                    job_id: job_id,
+                    sp_id: sp_id,
+                },
+                success:function(response){
+                    document.getElementById("spinner").style.display = "none";
+                    console.log(response);
+                    if(response.success == false){
+                        button.enabled
+                        button.value === "Confirm you have completed the Job"
+                    }
+                    if(response.success == true){
+                        token = sessionStorage.getItem("token");
+                        window.location.href = '/sp_job/'+token;       
+                    }
+                },
+                error:function(e){
+                    document.getElementById("spinner").style.display = "none";
+                    console.log(e);
+                },
+            });
+        }
+        else if(button.value === "Accept Job"){
+            $.ajax({
+                url:base_url+'/accept_job',
+                type:'POST',
+                data:{
+                    job_id: job_id,
+                    sp_id: sp_id,
+                },
+                success:function(response){
+                    document.getElementById("spinner").style.display = "none";
+                    if(response.success == false){
+                        console.log(response);
+                        button.value === "Accept Job"
+                    }
+                    if(response.success == true){
+                        token = sessionStorage.getItem("token");
+                        window.location.href = '/sp_job/'+token;       
+                    }
+                },
+                error:function(e){
+                    document.getElementById("spinner").style.display = "none";
+                    console.log(e);
+                },
+            });
+        }else{}
+    })})
+
+
+    // sp reject client offer update function
+$(function(){
+    $('#reject_button').on('click', function (e) {
+        e.preventDefault();
+        document.getElementById("spinner").style.display = "block";
+        let sp_id = document.getElementById("s_sp_id").value;
+        let job_id = document.getElementById("s_job_id").value;
+        console.log(sp_id)
+        console.log(job_id)
+        $.ajax({
+            url:base_url+'/reject_job',
+            type:'POST',
+            data:{
+                sp_id: sp_id,
+                job_id: job_id
+            },
+            success:function(response){
+                
+                document.getElementById("spinner").style.display = "none";
+                if(response.success == false){
+                    console.log(response);
+                }
+                if(response.success == true){
+                    token = sessionStorage.getItem("token");
+                    window.location.href = '/sp_job/'+token;       
+                }
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+    })})

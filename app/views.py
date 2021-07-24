@@ -102,16 +102,17 @@ def sp_profile(request, token):
     return render(request,"onboarding/login.html")
 
 def sp_job(request, token):
-    url= base_url+"/services?token="+token  
-    response = requests.get(url).text
-    json_data = json.loads(response)
-    print(response)
-    if json_data["success"] == True and  json_data["status"] == 200:
-        return_data = {
-            "token": token,
-            "data":json_data
-        }
-        return render(request,"sp/jobs.html", return_data)
+    if token:
+        url= base_url+"/services?token="+token  
+        response = requests.get(url).text
+        json_data = json.loads(response)
+        print(response)
+        if json_data["success"] == True and  json_data["status"] == 200:
+            return_data = {
+                "token": token,
+                "data":json_data
+            }
+            return render(request,"sp/jobs.html", return_data)
     return render(request,"onboarding/login.html")
 
 def client_job(request, token):
