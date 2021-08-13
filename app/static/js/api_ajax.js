@@ -109,6 +109,7 @@ $(function(){
                     sessionStorage.setItem("user_id", response.user_id);
                     token = sessionStorage.getItem("token");
                     console.log(response);
+                    // playSuccessSound();
                     if (response.role == 1){
                         window.location.href = '/client_dashboard/'+token;
                     }
@@ -749,6 +750,7 @@ function job_details(id) {
 $(function(){
     $('#request_submit_button').on('click', function (e) {
         e.preventDefault();
+        
         document.getElementById("spinner").style.display = "block";
         document.getElementById("request_submit_button").style.display = "none";
         if (document.getElementById("request_final_div").style.display = "block"){
@@ -760,40 +762,32 @@ $(function(){
             document.getElementById("sp_id").innerHTML = ""
             document.getElementById("rating_divi").innerHTML = ""
         };
-        let service_type = document.getElementById("service_type").value;
-        let details = document.getElementById("details").value;
-        let tools = document.getElementById("tools").value;
-        let budget = document.getElementById("budget").value;
-        let balance = document.getElementById("edit_balance").value;
+        let service_type = document.getElementById("service_type").value; 
+        let address = document.getElementById("address").value;
+        let service_form = document.getElementById("service_form").value;
+        let amount = 5000;
+        let payment_mode = document.getElementById("payment_mode").value;
         let phone = document.getElementById("edit_phone").value;
-
-        if ( budget === "" || budget === null ){
-            document.getElementById("spinner").style.display = "none";
-            document.getElementById("request_submit_button").style.display = "block";
-            document.getElementById("request_error").innerHTML = "Sorry! Kindly fill the budget amount to proceed";
-            setTimeout(function(){ 
-                document.getElementById("request_error").innerHTML = "";
-              }, 4000);
+        let description
+        if ( service_form === "fix" ){
+            description = "";
         }
-        else if ( parseFloat(budget) > parseFloat(balance) ){
-            document.getElementById("spinner").style.display = "none";
-            document.getElementById("request_submit_button").style.display = "block";
-            document.getElementById("request_error").innerHTML = "Sorry! you have N"+parseFloat(balance)+" and it is Insufficient to proceed. Kindly top up your balance";
-            setTimeout(function(){ 
-                document.getElementById("request_error").innerHTML = "";
-              }, 4000);
+        else if ( service_form === "build" ){
+            description = document.getElementById("description").value;
         }
         
-        else{
+        
             $.ajax({
                 url:base_url+'/request',
                 type:'POST',
                 data:{
                     service_type: service_type,
-                    details: details,
-                    tools: tools,
-                    budget: budget,
+                    service_form: service_form,
+                    address: address,
+                    amount: amount,
+                    payment_mode: payment_mode,
                     phone: phone,
+                    description:description
                 },
                 success:function(response){
                     document.getElementById("spinner").style.display = "none";
@@ -849,7 +843,7 @@ $(function(){
                     console.log(e);
                 },
             });
-        }
+        
 
     })
 });
@@ -1186,3 +1180,80 @@ $(function(){
             },
         });
     })})
+
+
+    // sound notification js
+    var context = new AudioContext();
+    // Play oscillators at certain frequency and for a certain time
+var playNote = function (frequency, startTime, duration) {
+    var osc1 = context.createOscillator(),
+        osc2 = context.createOscillator(),
+        volume = context.createGain();
+ 
+    // Set oscillator wave type
+    osc1.type = 'triangle';
+    osc2.type = 'triangle';
+ 
+    volume.gain.value = 0.1;    
+ 
+    // Set up node routing
+    osc1.connect(volume);
+    osc2.connect(volume);
+    volume.connect(context.destination);
+ 
+    // Detune oscillators for chorus effect
+    osc1.frequency.value = frequency + 1;
+    osc2.frequency.value = frequency - 2;
+ 
+    // Fade out
+    volume.gain.setValueAtTime(0.1, startTime + duration - 0.05);
+    volume.gain.linearRampToValueAtTime(0, startTime + duration);
+ 
+    // Start oscillators
+    osc1.start(startTime);
+    osc2.start(startTime);
+ 
+    // Stop oscillators
+    osc1.stop(startTime + duration);
+    osc2.stop(startTime + duration);
+};
+
+var playSuccessSound = function () {
+    // Play a 'B' now that lasts for 0.116 seconds
+    playNote(493.883, context.currentTime, 0.116);
+ 
+    // Play an 'E' just as the previous note finishes, that lasts for 0.232 seconds
+    playNote(659.255, context.currentTime + 0.116, 0.232);
+};
+
+
+    setInterval(function(){ 
+        let email = document.getElementById("edit_email").value;
+    // console.log(email)
+    user_id = sessionStorage.getItem("user_id");
+    // console.log(user_id)
+        $.ajax({
+            url:base_url+'/notification/'+email,
+            type:'GET',
+            // data:{
+            //     email: email,
+            // },
+            success:function(response){
+                
+                if(response.success == false){
+                    // console.log(response);
+                }
+                if(response.success == true){
+                    console.log(response);
+                    playSuccessSound();
+                    // setInterval(function(){ 
+                    //     playSuccessSound(); 
+                    // }, 5000);
+                }
+            },
+            error:function(e){
+                // console.log(e);
+            },
+            
+        });
+    }, 10000);

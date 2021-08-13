@@ -41,6 +41,25 @@
     {% block javascript%}
     <script>
       $(function () {
+        $("#service_form").change(function() {
+          let val = $(this).val();
+          if(val === "build") {
+            $("#service_form").hide();
+            $("#fix").hide();
+            $("#build").show();
+            $("#formo").show();
+          }
+          else if(val === "fix") {
+              $("#fix").show();
+              $("#service_form").hide();
+              $("#build").hide();
+              $("#formo").show();
+              $("#des_text").hide();
+              $("#description").hide();
+          }
+        });
+      });
+      $(function () {
         $("#role").change(function() {
           let val = $(this).val();
           if(val === "service_provider") {
@@ -342,15 +361,31 @@
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
           <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
               {% csrf_token %}
-                  <p class="text-purple">Type</p>
-                  <input type="text" id="service_type"  class="onboarding_form_input form-control mb-1" disabled>
-                  <p class="text-purple">Details</p>
-                  <textarea id="details"  class="onboarding_form_input form-control mb-1" placeholder="I need the Service Provider to create a Dinning table" style="height:120px"></textarea>
-                  <p class="text-purple">Possible tools Required</p>
-                  <textarea id="tools"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
-                  <p class="text-purple">Budget</p>
-                  <input type="text" id="budget"  class="onboarding_form_input form-control mb-1" placeholder="12000">
-                  <input type="submit" value="Submit Request" class="form-control onboarding-button mt-3" id="request_submit_button">
+              <input type="text" id="service_type"  class="onboarding_form_input form-control mb-1" disabled hidden>
+              <select id="service_form" class="onboarding_form_input form-control" style="border:0.1px solid #fff; width:100%; margin-top: 30vh;">
+                <option value="" disabled selected>SELECT SERVICE TYPE</option>
+                <option value="build" >Build</option>
+                <option value="fix">Fix</option>
+              </select>
+              <div id="formo" style="display: none;">
+                  <p class="text-purple">Address</p>
+                  <input id="address"  class="onboarding_form_input form-control mb-1" value="{{data.user_details.address}} {{data.user_details.state}}" style="height:auto"/>
+                  <p class="text-purple" id="des_text">Brief Description</p>
+                  <textarea id="description"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
+                  <p class="text-purple" id="des_text">Service Charge</p>
+                  <input type="text" value="NGN5,000.00" class="onboarding_form_input form-control mb-1" id="amount" disabled>
+                  <p class="text-purple" id="des_text">Payment mode</p>
+                  <select id="payment_mode" class="onboarding_form_input form-control">
+                    <option value="" disabled selected>Select Mode of Payment</option>
+                    <option value="cash" >Cash</option>
+                    <option value="wallet">Wallet</option>
+                    <option value="card">Card</option>
+                  </select>
+                  <!-- <p class="text-purple">Budget</p>
+                  <input type="text" id="budget"  class="onboarding_form_input form-control mb-1" placeholder="12000"> -->
+                  <input type="submit" value="Submit Request" class="form-control onboarding-button mt-3" id="request_submit_button" data-loading-text="Processing..." data-complete-text="Success!">
+              </div>
+                  
           </form>
       </div>
     </div>
