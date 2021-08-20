@@ -677,6 +677,7 @@ function sp_job(token) {
 // Client home
 function client_home(token) {
     window.location.href = '/client_dashboard/'+token;
+    // playSuccessSound();
 }
 // Client profile
 function client_profile(token) {
@@ -697,8 +698,38 @@ function signout() {
 }
 
 function request_form(id) {
-    console.log(id);
+    
     document.getElementById('service_type').value = id;
+    if (id !== "Carpentry" && id !== "AC_Technician"){
+        document.getElementById('service_form').style.display = "none";
+        document.getElementById('formo').style.display = "block";
+        document.getElementById('description').style.display = "none";
+        document.getElementById('text_amount').style.display = "none";
+        document.getElementById('amount').style.display = "none";
+        document.getElementById('des_text').style.display = "none";
+        document.getElementById('service_list').style.display = "block";
+        document.getElementById('service_list_text').style.display = "block";
+    }
+    $.ajax({
+        url:base_url+'/service_list/'+id,
+        type:'GET',
+        success:function(response){
+
+            console.log(response);
+            if(response.success == true){
+                $.each(response.list, function(x, data){
+
+                    $('#service_list').append($('<option>', {value: data.type+" - N"+data.amount, text:data.type+" - N"+data.amount}));
+     
+               });
+            }
+            
+            else{}
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
     $('#requestModal').modal('show');
 }
 
@@ -711,8 +742,8 @@ function job_details(id) {
             // console.log(response);
             document.getElementById('d_service_type').value = response.job_details.service_type;
             document.getElementById('d_details').value = response.job_details.details;
-            document.getElementById('d_tools').value = response.job_details.tools;
-            document.getElementById('d_budget').value = response.job_details.budget;
+            // document.getElementById('d_tools').value = response.job_details.tools;
+            // document.getElementById('d_budget').value = response.job_details.budget;
 
             document.getElementById('d_job_id').value = response.job_details.job_id;
             document.getElementById('d_client_id').value = response.job_details.client_id;
@@ -765,7 +796,9 @@ $(function(){
         let service_type = document.getElementById("service_type").value; 
         let address = document.getElementById("address").value;
         let service_form = document.getElementById("service_form").value;
-        let amount = 5000;
+        let specific_service = document.getElementById("service_list").value;
+        let unit = document.getElementById("unit").value;
+        let amount = unit * 5000;
         let payment_mode = document.getElementById("payment_mode").value;
         let phone = document.getElementById("edit_phone").value;
         let description
@@ -787,6 +820,8 @@ $(function(){
                     amount: amount,
                     payment_mode: payment_mode,
                     phone: phone,
+                    specific_service: specific_service,
+                    unit: unit,
                     description:description
                 },
                 success:function(response){
@@ -1038,11 +1073,27 @@ $(function(){
             url:base_url+'/job_details/'+id,
             type:'GET',
             success:function(response){
-                // console.log(response);
+                console.log(response);
+                // console.log(response.job_details.unit)
                 document.getElementById('s_service_type').value = response.job_details.service_type;
-                document.getElementById('s_details').value = response.job_details.details;
-                document.getElementById('s_tools').value = response.job_details.tools;
-                document.getElementById('s_budget').value = response.job_details.budget;
+                
+                if (response.job_details.unit !== null){
+                    document.getElementById('s_unit').value = response.job_details.unit;
+                }
+                
+                else{
+                    document.getElementById('s_unit').value = 1;
+                }
+                if (response.job_details.details !== null || ""){
+                    document.getElementById('s_details').value = response.job_details.details;
+                }
+                else{
+                    document.getElementById('s_service_list').value = response.job_details.specific_service;
+                    document.getElementById('s_details').style.display="none";
+                    document.getElementById('s_service_list').style.display="block";
+                }
+                // document.getElementById('s_unit').value = 1;
+                document.getElementById('s_phone').value = response.job_details.client_phone;
                 document.getElementById('s_location').value = response.job_details.clientAddress;
     
                 document.getElementById('s_job_id').value = response.job_details.job_id;
@@ -1229,15 +1280,10 @@ var playSuccessSound = function () {
 
     setInterval(function(){ 
         let email = document.getElementById("edit_email").value;
-    // console.log(email)
-    user_id = sessionStorage.getItem("user_id");
-    // console.log(user_id)
+        user_id = sessionStorage.getItem("user_id");
         $.ajax({
             url:base_url+'/notification/'+email,
             type:'GET',
-            // data:{
-            //     email: email,
-            // },
             success:function(response){
                 
                 if(response.success == false){
@@ -1245,7 +1291,9 @@ var playSuccessSound = function () {
                 }
                 if(response.success == true){
                     console.log(response);
+                    
                     playSuccessSound();
+                    $('#notificationModal').modal('show');
                     // setInterval(function(){ 
                     //     playSuccessSound(); 
                     // }, 5000);
@@ -1256,4 +1304,4 @@ var playSuccessSound = function () {
             },
             
         });
-    }, 10000);
+    }, 2000);

@@ -40,6 +40,17 @@
     <div id="spinner"></div> 
     {% block javascript%}
     <script>
+      function myChangeFunction(unit) {
+        let serv = document.getElementById('service_list').value;
+        let amout =  serv.split('- N')[1];
+        let specific_amount = document.getElementById('specific_amount');
+        specific_amount.value = unit * amout;
+        if (specific_amount.value !== "" || null){
+          
+          document.getElementById('text_amount_total').style.display = "block"
+          document.getElementById('specific_amount').style.display = "block"
+        }
+      }
       $(function () {
         $("#service_form").change(function() {
           let val = $(this).val();
@@ -364,7 +375,7 @@
               <input type="text" id="service_type"  class="onboarding_form_input form-control mb-1" disabled hidden>
               <select id="service_form" class="onboarding_form_input form-control" style="border:0.1px solid #fff; width:100%; margin-top: 30vh;">
                 <option value="" disabled selected>SELECT SERVICE TYPE</option>
-                <option value="build" >Build</option>
+                <option value="build" >Build/Install</option>
                 <option value="fix">Fix</option>
               </select>
               <div id="formo" style="display: none;">
@@ -372,17 +383,29 @@
                   <input id="address"  class="onboarding_form_input form-control mb-1" value="{{data.user_details.address}} {{data.user_details.state}}" style="height:auto"/>
                   <p class="text-purple" id="des_text">Brief Description</p>
                   <textarea id="description"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
-                  <p class="text-purple" id="des_text">Service Charge</p>
+                  <p class="text-purple" id="text_amount">Service Charge/Unit</p>
                   <input type="text" value="NGN5,000.00" class="onboarding_form_input form-control mb-1" id="amount" disabled>
-                  <p class="text-purple" id="des_text">Payment mode</p>
+                  <p class="text-purple" id="service_list_text" style="display:none;"> Service List</p>
+                  <select id="service_list" class="onboarding_form_input form-control" style="display:none;">
+                    <option value="" disabled selected>Select specific service</option>
+                    <!-- <option value="cash" >One</option>
+                    <option value="wallet">Two</option>
+                    <option value="card">Three</option> -->
+                  </select>
+                  <!-- <input type="text" id="specific_amount"/> -->
+                  <p class="text-purple" >Number of Service Units required</p>
+                  <input type="number"  class="onboarding_form_input form-control mb-1" id="unit" onchange="myChangeFunction(this.value)">
+                  <p class="text-purple" id="text_amount_total" style="display: none;">Total Amount</p>
+                  <input type="text" class="onboarding_form_input form-control mb-1" id="specific_amount" style="display: none;" disabled>
+                  <p class="text-purple" >Payment Mode</p>
                   <select id="payment_mode" class="onboarding_form_input form-control">
                     <option value="" disabled selected>Select Mode of Payment</option>
                     <option value="cash" >Cash</option>
                     <option value="wallet">Wallet</option>
                     <option value="card">Card</option>
                   </select>
-                  <!-- <p class="text-purple">Budget</p>
-                  <input type="text" id="budget"  class="onboarding_form_input form-control mb-1" placeholder="12000"> -->
+                  <!-- <p class="text-purple">Total</p>
+                  <input type="text" id="total"  class="onboarding_form_input form-control mb-1" placeholder="12000" disabled> -->
                   <input type="submit" value="Submit Request" class="form-control onboarding-button mt-3" id="request_submit_button" data-loading-text="Processing..." data-complete-text="Success!">
               </div>
                   
@@ -407,10 +430,10 @@
                   <input type="text" id="d_service_type"  class="onboarding_form_input form-control mb-1" disabled>
                   <p class="text-purple">Details</p>
                   <textarea id="d_details"  class="onboarding_form_input form-control mb-1" placeholder="I need the Service Provider to create a Dinning table" style="height:auto"></textarea>
-                  <p class="text-purple">Possible tools Required</p>
-                  <textarea id="d_tools"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:auto"></textarea>
-                  <p class="text-purple">Budget</p>
-                  <input type="text" id="d_budget"  class="onboarding_form_input form-control mb-1" placeholder="12000">
+                  <!-- <p class="text-purple">Possible tools Required</p>
+                  <textarea id="d_tools"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:auto"></textarea> -->
+                  <!-- <p class="text-purple">Budget</p>
+                  <input type="text" id="d_budget"  class="onboarding_form_input form-control mb-1" placeholder="12000"> -->
                   <div class="rating_div mt-3" id="star_div" style="display: none;">
                     <span id="star_one" class="fa fa-star fa-2x" style="color:#d8d5ce;"></span>
                     <span id="star_two" class="fa fa-star fa-2x" style="color:#d8d5ce;"></span>
@@ -443,12 +466,16 @@
               {% csrf_token %}
                   <p class="text-purple">Type</p>
                   <input type="text" id="s_service_type"  class="onboarding_form_input form-control mb-1" disabled>
-                  <p class="text-purple">Details</p>
+                  <p class="text-purple" >Service List/Details</p>
                   <textarea id="s_details"  class="onboarding_form_input form-control mb-1" style="height:auto"></textarea>
-                  <p class="text-purple">Possible tools Required</p>
-                  <textarea id="s_tools"  class="onboarding_form_input form-control mb-1"  style="height:auto"></textarea>
-                  <p class="text-purple">Budget</p>
-                  <input type="text" id="s_budget"  class="onboarding_form_input form-control mb-1" >
+                  <input type="text" id="s_service_list"  class="onboarding_form_input form-control mb-1" disabled style="display:none;">
+                 
+                  <p class="text-purple">Number of Units</p>
+                  <input type="text" id="s_unit"  class="onboarding_form_input form-control mb-1" disabled>
+                  <p class="text-purple">Client Phone Number</p>
+                  <input type="text" id="s_phone"  class="onboarding_form_input form-control mb-1" >
+                  <!-- <p class="text-purple">Total Amount</p>
+                  <input type="text" id="s_budget"  class="onboarding_form_input form-control mb-1" > -->
                   <p class="text-purple">Location</p>
                   <input type="text" id="s_location"  class="onboarding_form_input form-control mb-1" >
                   <p id="s_note" class="mt-3 text-center"></p>
@@ -462,6 +489,28 @@
     </div>
   </div>
 </div>
+
+<!-- Notification Modal -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="notificationModal">
+  <div class="modal-dialog modal-sm" style="margin:0">
+    <div class="modal-content" style="height:100vh; padding: 0 10%;">
+      <p style="margin-top:45vh">You have a new Job/Service Request</p>
+      <button id="{{token}}" onClick="sp_job(this.id)" class="form-control onboarding-button" style="margin-top:5vh">
+        go to job section
+      </button>
+    </div>
+  </div>
+</div>
+<!-- <div  style="width:100%; height:100vh; background-color: #4B1378;"></div> -->
+<!-- <div class="" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #fff;">
+  <div class="modal-dialog" role="document" style="margin:0;">
+    <a id="{{token}}" onClick="sp_job(this.id)">
+      <i class="fas fa-briefcase fa-2x "></i>
+      go to job section
+    </a>
+  </div>
+</div> -->
+
 <script>
   function getAmount(input1) {
     var input2 = document.getElementById('tt_amount');
