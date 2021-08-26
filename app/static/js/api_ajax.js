@@ -115,12 +115,12 @@ $(function(){
                     sessionStorage.setItem("token", response.token);
                     sessionStorage.setItem("user_id", response.user_id);
                     token = sessionStorage.getItem("token");
-                    // console.log(response);
+                    console.log(response);
                     // playSuccessSound();
                     if (response.role == 1 && token !== ''){
                         window.location.href = '/client_dashboard/'+token;
                     }
-                    if (response.role == 0 && token !== ''){
+                    else if (response.role == 0 && token !== ''){
                         window.location.href = '/sp_dashboard/'+token;
                     }
                     else{
@@ -792,7 +792,12 @@ function job_details(id) {
         success:function(response){
             // console.log(response);
             document.getElementById('d_service_type').value = response.job_details.service_type;
-            document.getElementById('d_details').value = response.job_details.details;
+            if (response.job_details.details !== null){
+                document.getElementById('d_details').value = response.job_details.details;
+            }
+            else{
+                document.getElementById('d_details').style.display= "none";
+            }
             // document.getElementById('d_tools').value = response.job_details.tools;
             // document.getElementById('d_budget').value = response.job_details.budget;
 
@@ -828,13 +833,42 @@ function job_details(id) {
     });
     
 }
+// sp collected cash
+
+$(function(){
+    $('#s_cash_button').on('click', function (e) {
+        e.preventDefault();
+        let email = document.getElementById("edit_email").value;
+        document.getElementById("s_cash_button").disabled = true;
+        let job_id = document.getElementById("s_job_id").value;
+        console.log(job_id)
+        $.ajax({
+            url:base_url+'/cash_collected/'+job_id,
+            type:'POST',
+            success:function(response){
+                // document.getElementById("spinner").style.display = "none";
+                console.log(response);
+                if(response.success == false){
+                    document.getElementById("s_cash_button").disabled = false;
+                }
+                
+                else{
+                    document.getElementById("s_cash_button").text= "Thank you!"
+                }
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+    })
+})
 // job request function
 $(function(){
     $('#request_submit_button').on('click', function (e) {
         e.preventDefault();
         
         document.getElementById("spinner").style.display = "block";
-        document.getElementById("request_submit_button").style.display = "none";
+        // document.getElementById("request_submit_button").style.display = "none";
         if (document.getElementById("request_final_div").style.display = "block"){
             document.getElementById("request_final_div").style.display = "none";
             document.getElementById("r_success_div").style.display = "none"; 
@@ -849,7 +883,8 @@ $(function(){
         let service_form = document.getElementById("service_form").value;
         let specific_service = document.getElementById("service_list").value;
         let unit = document.getElementById("unit").value;
-        let amount = unit * 5000;
+        let specific_amount = document.getElementById("specific_amount").value;
+        let amount = unit * specific_amount;
         let payment_mode = document.getElementById("payment_mode").value;
         let phone = document.getElementById("edit_phone").value;
         let description
@@ -1087,7 +1122,7 @@ $(function(){
         }
         else if(button.value === "Confirm Job Completed"){
             let ratings = document.getElementById("d_rating").value;
-            button.value === "Confirming Job Completion ..."
+            button.text === "Confirming Job Completion ..."
             $.ajax({
                 url:base_url+'/client_confirm',
                 type:'POST',
@@ -1143,6 +1178,10 @@ $(function(){
                     document.getElementById('s_details').style.display="none";
                     document.getElementById('s_service_list').style.display="block";
                 }
+                if(response.job_details.payment_mode === 'cash' && response.job_details.isTaken == true){
+                    document.getElementById('s_cash_button').style.display="block";
+                    document.getElementById('s_cash_button').value="I collected Cash sum of "+"(N"+response.job_details.amount+")";
+                }
                 // document.getElementById('s_unit').value = 1;
                 document.getElementById('s_phone').value = response.job_details.client_phone;
                 document.getElementById('s_location').value = response.job_details.clientAddress;
@@ -1196,7 +1235,7 @@ $(function(){
         document.getElementById("spinner").style.display = "block";
         // let client_id = document.getElementById("s_client_id").value;
         if(button.value === "Confirm you have completed the Job"){
-            button.disabled
+            button.disabled = true;
             $.ajax({
                 url:base_url+'/complete_job',
                 type:'POST',

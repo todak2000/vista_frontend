@@ -44,11 +44,28 @@
         let serv = document.getElementById('service_list').value;
         let amout =  serv.split('- N')[1];
         let specific_amount = document.getElementById('specific_amount');
+        let edit_balanceCheck = document.getElementById("edit_balance").value;
         specific_amount.value = unit * amout;
+        let mode = document.getElementById("payment_mode").value
         if (specific_amount.value !== "" || null){
           
-          document.getElementById('text_amount_total').style.display = "block"
-          document.getElementById('specific_amount').style.display = "block"
+          
+          if(edit_balanceCheck < specific_amount.value && mode ==="wallet"){
+            document.getElementById("bal_text").innerHTML = "Sorry! you have insufficient balance. Kindly top up your wallet balance or pick cash payment option";
+            document.getElementById("request_submit_button").disabled = true;
+            document.getElementById('text_amount_total').style.display = "block"
+            document.getElementById('specific_amount').style.display = "block"
+          }
+          else if(edit_balanceCheck < specific_amount.value && mode !=="wallet"){
+            document.getElementById("bal_text").innerHTML = "";
+            document.getElementById("request_submit_button").disabled = false;
+            document.getElementById('text_amount_total').style.display = "block"
+            document.getElementById('specific_amount').style.display = "block"
+          }
+          else{
+            // document.getElementById('text_amount_total').style.display = "block"
+            // document.getElementById('specific_amount').style.display = "block"
+          }
         }
       }
       $(function () {
@@ -65,6 +82,8 @@
               $("#service_form").hide();
               $("#build").hide();
               $("#formo").show();
+              $("#service_list_text").show();
+            $("#service_list").show();
               $("#des_text").hide();
               $("#description").hide();
           }
@@ -379,6 +398,7 @@
                 <option value="fix">Fix</option>
               </select>
               <div id="formo" style="display: none;">
+                <p id="bal_text" style="color:#C91B30; text-align: center;"></p>
                   <p class="text-purple" style="margin-bottom:-0.2rem;">Address</p>
                   <input id="address"  class="onboarding_form_input form-control mb-2" value="{{data.user_details.address}} {{data.user_details.state}}" style="height:auto"/>
                   <p class="text-purple" id="des_text" style="margin-bottom:-0.2rem;">Brief Description</p>
@@ -388,21 +408,18 @@
                   <p class="text-purple" id="service_list_text" style="display:none; margin-bottom: -0.2rem;"> Service List</p>
                   <select id="service_list" class="onboarding_form_input form-control" style="display:none;">
                     <option value="" disabled selected>Select specific service</option>
-                    <!-- <option value="cash" >One</option>
-                    <option value="wallet">Two</option>
-                    <option value="card">Three</option> -->
                   </select>
-                  <!-- <input type="text" id="specific_amount"/> -->
-                  <p class="text-purple" style="margin-bottom:-0.2rem;" >Number of Service Units required</p>
-                  <input type="number"  class="onboarding_form_input form-control mb-2" id="unit" onchange="myChangeFunction(this.value)">
-                  <p class="text-purple" id="text_amount_total" style="display: none; margin-bottom: -0.3rem;">Total Amount</p>
-                  <input type="text" class="onboarding_form_input form-control mb-2" id="specific_amount" style="display: none;" disabled>
+                  
                   <p class="text-purple" style="margin-bottom:-0.2rem;">Payment Mode</p>
                   <select id="payment_mode" class="onboarding_form_input form-control">
                     <option value="" disabled selected>Select Mode of Payment</option>
                     <option value="cash" >Cash</option>
                     <option value="wallet">Wallet</option>
                   </select>
+                  <p class="text-purple" style="margin-bottom:-0.2rem;" >Number of Service Units required</p>
+                  <input type="number"  class="onboarding_form_input form-control mb-2" id="unit" oninput="myChangeFunction(this.value)">
+                  <p class="text-purple" id="text_amount_total" style="display: none; margin-bottom: -0.3rem;">Total Amount</p>
+                  <input type="text" class="onboarding_form_input form-control mb-2" id="specific_amount" style="display: none;" disabled>
                   <!-- <p class="text-purple">Total</p>
                   <input type="text" id="total"  class="onboarding_form_input form-control mb-1" placeholder="12000" disabled> -->
                   <input type="submit" value="Submit Request" class="form-control onboarding-button mt-3" id="request_submit_button" data-loading-text="Processing..." data-complete-text="Success!">
@@ -425,10 +442,10 @@
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
           <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
               {% csrf_token %}
-                  <p class="text-purple">Type</p>
-                  <input type="text" id="d_service_type"  class="onboarding_form_input form-control mb-1" disabled>
-                  <p class="text-purple">Details</p>
-                  <textarea id="d_details"  class="onboarding_form_input form-control mb-1" placeholder="I need the Service Provider to create a Dinning table" style="height:auto"></textarea>
+                  <p class="text-purple" style="margin-bottom: -0.2rem;">Type</p>
+                  <input type="text" id="d_service_type"  class="onboarding_form_input form-control mb-2" disabled>
+                  <p class="text-purple" style="margin-bottom: -0.2rem;">Details</p>
+                  <textarea id="d_details"  class="onboarding_form_input form-control mb-2" placeholder="I need the Service Provider to create a Dinning table" style="height:auto"></textarea>
                   <!-- <p class="text-purple">Possible tools Required</p>
                   <textarea id="d_tools"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:auto"></textarea> -->
                   <!-- <p class="text-purple">Budget</p>
@@ -463,25 +480,27 @@
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
           <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
               {% csrf_token %}
-                  <p class="text-purple">Type</p>
-                  <input type="text" id="s_service_type"  class="onboarding_form_input form-control mb-1" disabled>
-                  <p class="text-purple" >Service List/Details</p>
-                  <textarea id="s_details"  class="onboarding_form_input form-control mb-1" style="height:auto"></textarea>
-                  <input type="text" id="s_service_list"  class="onboarding_form_input form-control mb-1" disabled style="display:none;">
+                  <p class="text-purple" style="margin-bottom: -0.2rem;">Type</p>
+                  <input type="text" id="s_service_type"  class="onboarding_form_input form-control mb-2" disabled>
+                  <p class="text-purple" style="margin-bottom: -0.2rem;">Service List/Details</p>
+                  <textarea id="s_details"  class="onboarding_form_input form-control mb-2" style="height:auto"></textarea>
+                  <input type="text" id="s_service_list"  class="onboarding_form_input form-control mb-2" disabled style="display:none;">
                  
-                  <p class="text-purple">Number of Units</p>
-                  <input type="text" id="s_unit"  class="onboarding_form_input form-control mb-1" disabled>
-                  <p class="text-purple">Client Phone Number</p>
-                  <input type="text" id="s_phone"  class="onboarding_form_input form-control mb-1" >
+                  <p class="text-purple" style="margin-bottom: -0.2rem;">Number of Units</p>
+                  <input type="text" id="s_unit"  class="onboarding_form_input form-control mb-2" disabled>
+                  <p class="text-purple" style="margin-bottom: -0.2rem;">Client Phone Number</p>
+                  <input type="text" id="s_phone"  class="onboarding_form_input form-control mb-2" >
                   <!-- <p class="text-purple">Total Amount</p>
                   <input type="text" id="s_budget"  class="onboarding_form_input form-control mb-1" > -->
-                  <p class="text-purple">Location</p>
-                  <input type="text" id="s_location"  class="onboarding_form_input form-control mb-1" >
-                  <p id="s_note" class="mt-3 text-center"></p>
+                  <p class="text-purple" style="margin-bottom: -0.2rem;">Location</p>
+                  <input type="text" id="s_location"  class="onboarding_form_input form-control mb-2" >
                   <input type="text" id="s_job_id" hidden >
+                  <p id="s_note" class="mt-3 text-center"></p>
                   <input type="text" id="s_client_id" hidden>
                   <input type="text" id="s_sp_id" hidden >
                   <input type="submit" value="Accept Job"  class="form-control onboarding-button mt-3" id="accept_button" style="display: none;">
+                  
+                  <input type="submit"   class="form-control onboarding-button mt-3" id="s_cash_button" style="display: none;">
                   <input type="submit" value="Reject Job"   class="form-control onboarding-button mt-3" id="reject_button" style="display: none; background-color: #C91B30;">
           </form>
       </div>

@@ -2,11 +2,11 @@ body{
     font-family: 'Poppins';
 }
 .footer{
-    height: 50px!important;
+    height: 80px!important;
     background-color: #fff;
     width: 100%;
     position: fixed;
-    bottom: 4vh;
+    bottom: 1vh;
     display: flex;
     line-height: 90px;
     justify-content: space-evenly;
@@ -149,6 +149,7 @@ body{
 }
 .trans_p{
     font-weight: bold;
+    font-size:0.85rem;
 }
 .down{
     margin-top:-1.2rem;
