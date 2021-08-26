@@ -1178,7 +1178,7 @@ $(function(){
                     document.getElementById('s_details').style.display="none";
                     document.getElementById('s_service_list').style.display="block";
                 }
-                if(response.job_details.payment_mode === 'cash' && response.job_details.isTaken == true){
+                if(response.job_details.payment_mode === 'cash' && response.job_details.isTaken == true && response.job_details.isCompleted == false){
                     document.getElementById('s_cash_button').style.display="block";
                     document.getElementById('s_cash_button').value="I collected Cash sum of "+"(N"+response.job_details.amount+")";
                 }
@@ -1324,6 +1324,14 @@ $(function(){
 
 
     // sound notification js
+ 
+    // function playSound() {
+    //     console.log("sound hu")
+    //     let url = "https://drive.google.com/file/d/1Ders--xfDkmkuOpQ-laQRQHBPZNKVz6T/view?usp=sharing"
+    //     const audio = new Audio(url);
+    //     audio.play();
+    //   }
+
     var context = new AudioContext();
     // Play oscillators at certain frequency and for a certain time
 var playNote = function (frequency, startTime, duration) {
@@ -1369,6 +1377,7 @@ var playSuccessSound = function () {
 
 
     setInterval(function(){ 
+        // console.clear();
         let email = document.getElementById("edit_email").value;
         user_id = sessionStorage.getItem("user_id");
         $.ajax({
@@ -1383,6 +1392,7 @@ var playSuccessSound = function () {
                     console.log(response);
                     
                     playSuccessSound();
+                    // playSound()
                     $('#notificationModal').modal('show');
                     // setInterval(function(){ 
                     //     playSuccessSound(); 
