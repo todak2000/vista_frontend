@@ -1,4 +1,11 @@
 let base_url = "https://vista-api.herokuapp.com/api/v1"
+
+
+$(function(){
+    $('#back_form').on('click', function (e) {
+        window.location.reload();
+    
+    })});
 // SIGN UP API
 $(function(){
     $('#signup_submit_button').on('click', function (e) {
@@ -108,13 +115,16 @@ $(function(){
                     sessionStorage.setItem("token", response.token);
                     sessionStorage.setItem("user_id", response.user_id);
                     token = sessionStorage.getItem("token");
-                    console.log(response);
+                    // console.log(response);
                     // playSuccessSound();
-                    if (response.role == 1){
+                    if (response.role == 1 && token !== ''){
                         window.location.href = '/client_dashboard/'+token;
                     }
-                    else{
+                    if (response.role == 0 && token !== ''){
                         window.location.href = '/sp_dashboard/'+token;
+                    }
+                    else{
+                        window.location.href = '/signin';
                     }
                     document.getElementById("spinner").style.display = "none";
                     
@@ -664,32 +674,73 @@ $(function(){
 
 // SP home
 function sp_home(token) {
-    window.location.href = '/sp_dashboard/'+token;
+    if (token){
+        window.location.href = '/sp_dashboard/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
+    // window.location.href = '/sp_dashboard/'+token;
 }
 // SP Profile
 function sp_profile(token) {
-    window.location.href = '/sp_profile/'+token;
+    if (token){
+        window.location.href = '/sp_profile/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
+    // window.location.href = '/sp_profile/'+token;
 }
 // SP Jobs
 function sp_job(token) {
-    window.location.href = '/sp_job/'+token;
+    if (token){
+        window.location.href = '/sp_job/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
+    // window.location.href = '/sp_job/'+token;
 }
 // Client home
 function client_home(token) {
-    window.location.href = '/client_dashboard/'+token;
+    if (token){
+        window.location.href = '/client_dashboard/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
     // playSuccessSound();
 }
 // Client profile
 function client_profile(token) {
-    window.location.href = '/client_profile/'+token;
+    if (token){
+        window.location.href = '/client_profile/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
+    // window.location.href = '/client_profile/'+token;
 }
 // Client Wallet
 function client_wallet(token) {
-    window.location.href = '/client_wallet/'+token;
+    if (token){
+        window.location.href = '/client_wallet/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
+    // window.location.href = '/client_wallet/'+token;
 } 
 // Client Job
 function client_job(token) {
-    window.location.href = '/client_job/'+token;
+    if (token){
+        window.location.href = '/client_job/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
+    // window.location.href = '/client_job/'+token;
 } 
 
 function signout() {
@@ -833,7 +884,7 @@ $(function(){
                         document.getElementById("r_failure_div").style.display = "block";
                         setTimeout(function(){ 
                             window.location.reload();
-                        }, 3000);
+                        }, 5000);
                     }
                     else if(response.success == true && response.message){
                         document.getElementById("map_search").style.display = "block";

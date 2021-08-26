@@ -367,7 +367,7 @@
             <p style="font-size: 1.1rem;" id="r_message"></p>
           </div>
         </div>
-        <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left " style="color:#464646;" data-dismiss="modal"></i></div>
+        <div style="width:100%; text-align:left; padding: 0.2rem 0.4rem;" id="back_form"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" ></i></div>
         <h5 class="text-center" id="request-header"> Service Request Form</h5>
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
           <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
@@ -379,13 +379,13 @@
                 <option value="fix">Fix</option>
               </select>
               <div id="formo" style="display: none;">
-                  <p class="text-purple">Address</p>
-                  <input id="address"  class="onboarding_form_input form-control mb-1" value="{{data.user_details.address}} {{data.user_details.state}}" style="height:auto"/>
-                  <p class="text-purple" id="des_text">Brief Description</p>
-                  <textarea id="description"  class="onboarding_form_input form-control mb-1" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
-                  <p class="text-purple" id="text_amount">Service Charge/Unit</p>
-                  <input type="text" value="NGN5,000.00" class="onboarding_form_input form-control mb-1" id="amount" disabled>
-                  <p class="text-purple" id="service_list_text" style="display:none;"> Service List</p>
+                  <p class="text-purple" style="margin-bottom:-0.2rem;">Address</p>
+                  <input id="address"  class="onboarding_form_input form-control mb-2" value="{{data.user_details.address}} {{data.user_details.state}}" style="height:auto"/>
+                  <p class="text-purple" id="des_text" style="margin-bottom:-0.2rem;">Brief Description</p>
+                  <textarea id="description"  class="onboarding_form_input form-control mb-2" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
+                  <p class="text-purple" id="text_amount" style="margin-bottom:-0.2rem;">Service Charge/Unit</p>
+                  <input type="text" value="NGN5,000.00" class="onboarding_form_input form-control mb-2" id="amount" disabled>
+                  <p class="text-purple" id="service_list_text" style="display:none; margin-bottom: -0.2rem;"> Service List</p>
                   <select id="service_list" class="onboarding_form_input form-control" style="display:none;">
                     <option value="" disabled selected>Select specific service</option>
                     <!-- <option value="cash" >One</option>
@@ -393,16 +393,15 @@
                     <option value="card">Three</option> -->
                   </select>
                   <!-- <input type="text" id="specific_amount"/> -->
-                  <p class="text-purple" >Number of Service Units required</p>
-                  <input type="number"  class="onboarding_form_input form-control mb-1" id="unit" onchange="myChangeFunction(this.value)">
-                  <p class="text-purple" id="text_amount_total" style="display: none;">Total Amount</p>
-                  <input type="text" class="onboarding_form_input form-control mb-1" id="specific_amount" style="display: none;" disabled>
-                  <p class="text-purple" >Payment Mode</p>
+                  <p class="text-purple" style="margin-bottom:-0.2rem;" >Number of Service Units required</p>
+                  <input type="number"  class="onboarding_form_input form-control mb-2" id="unit" onchange="myChangeFunction(this.value)">
+                  <p class="text-purple" id="text_amount_total" style="display: none; margin-bottom: -0.3rem;">Total Amount</p>
+                  <input type="text" class="onboarding_form_input form-control mb-2" id="specific_amount" style="display: none;" disabled>
+                  <p class="text-purple" style="margin-bottom:-0.2rem;">Payment Mode</p>
                   <select id="payment_mode" class="onboarding_form_input form-control">
                     <option value="" disabled selected>Select Mode of Payment</option>
                     <option value="cash" >Cash</option>
                     <option value="wallet">Wallet</option>
-                    <option value="card">Card</option>
                   </select>
                   <!-- <p class="text-purple">Total</p>
                   <input type="text" id="total"  class="onboarding_form_input form-control mb-1" placeholder="12000" disabled> -->

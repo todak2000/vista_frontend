@@ -53,13 +53,14 @@ def client_dashboard(request, token):
     url= base_url+"/dashboard?token="+token  
     response = requests.get(url).text
     json_data = json.loads(response)
-    print(response)
+    # print(response)
     if json_data["success"] == True and  json_data["status"] == 200:
         return_data = {
             "token": token,
             "data":json_data
         } 
         return render(request,"client/home.html", return_data)
+        
     return render(request,"onboarding/login.html")
 
 def sp_dashboard(request, token):
