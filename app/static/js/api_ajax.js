@@ -751,7 +751,7 @@ function signout() {
 function request_form(id) {
     
     document.getElementById('service_type').value = id;
-    if (id !== "Carpentry" && id !== "AC_Technician"){
+    if (id !== "Carpentry"){
         document.getElementById('service_form').style.display = "none";
         document.getElementById('formo').style.display = "block";
         document.getElementById('description').style.display = "none";
