@@ -40,6 +40,23 @@
     <div id="spinner"></div> 
     {% block javascript%}
     <script>
+      $(document).ready(function() { 
+        // window.navigator.geolocation.getCurrentPosition(function(pos) { 
+        //   // console.log(pos); 
+        //   var lat = pos.coords.latitude;
+        //   var lon = pos.coords.longitude;
+        //   console.log("latitude: ", lat)
+        //   console.log("longitude: ", lon)
+        // })
+        if(document.getElementById("unit").value == "" || document.getElementById("service_list").value == "" || document.getElementById("payment_mode").value == ""){
+          document.getElementById("request_submit_button").disabled = true;
+        }
+        else{
+          document.getElementById("request_submit_button").disabled = false;
+        }
+        
+       });
+
       function myChangeFunction(unit) {
         let serv = document.getElementById('service_list').value;
         let amout =  serv.split('- N')[1];
@@ -47,16 +64,29 @@
         let edit_balanceCheck = document.getElementById("edit_balance").value;
         specific_amount.value = unit * amout;
         let mode = document.getElementById("payment_mode").value
+        if(unit === 0){
+          specific_amount.style.display = "none";
+          document.getElementById('text_amount_total').style.display = "none"
+          document.getElementById("unit").value = "";
+        }
+        else if(serv === ""){
+          document.getElementById("bal_text").innerHTML = "Kindly enter specific service required";
+        }
+        else if(mode === ""){
+          document.getElementById("bal_text").innerHTML = "Kindly enter mode of payment";
+        }
+        else{
+
         if (specific_amount.value !== "" || null){
           
-          
+          console.log(specific_amount.value)
           if(edit_balanceCheck < specific_amount.value && mode ==="wallet"){
             document.getElementById("bal_text").innerHTML = "Sorry! you have insufficient balance. Kindly top up your wallet balance or pick cash payment option";
             document.getElementById("request_submit_button").disabled = true;
             document.getElementById('text_amount_total').style.display = "block"
             document.getElementById('specific_amount').style.display = "block"
           }
-          else if(edit_balanceCheck < specific_amount.value && mode !=="wallet"){
+          else if(edit_balanceCheck < specific_amount.value && mode ==="cash"){
             document.getElementById("bal_text").innerHTML = "";
             document.getElementById("request_submit_button").disabled = false;
             document.getElementById('text_amount_total').style.display = "block"
@@ -66,6 +96,7 @@
             // document.getElementById('text_amount_total').style.display = "block"
             // document.getElementById('specific_amount').style.display = "block"
           }
+        }
         }
       }
       $(function () {
@@ -403,15 +434,15 @@
                   <input id="address"  class="onboarding_form_input form-control mb-2" value="{{data.user_details.address}} {{data.user_details.state}}" style="height:auto"/>
                   <p class="text-purple" id="des_text" style="margin-bottom:-0.2rem;">Brief Description</p>
                   <textarea id="description"  class="onboarding_form_input form-control mb-2" placeholder="eg: Service Provider would require to use his professional tools such as Hammer, Saw etc" style="height:120px"></textarea>
-                  <p class="text-purple" id="text_amount" style="margin-bottom:-0.2rem;">Service Charge/Unit</p>
-                  <input type="text" value="NGN5,000.00" class="onboarding_form_input form-control mb-2" id="amount" disabled>
+                  <!-- <p class="text-purple" id="text_amount" style="margin-bottom:-0.2rem;">Service Charge/Unit</p>
+                  <input type="text" value="NGN5,000.00" class="onboarding_form_input form-control mb-2" id="amount" disabled> -->
                   <p class="text-purple" id="service_list_text" style="display:none; margin-bottom: -0.2rem;"> Service List</p>
-                  <select id="service_list" class="onboarding_form_input form-control" style="display:none;">
+                  <select id="service_list" class="onboarding_form_input form-control" style="display:none;" onchange="myChangeFunction(0)">
                     <option value="" disabled selected>Select specific service</option>
                   </select>
                   
                   <p class="text-purple" style="margin-bottom:-0.2rem;">Payment Mode</p>
-                  <select id="payment_mode" class="onboarding_form_input form-control">
+                  <select id="payment_mode" class="onboarding_form_input form-control" onchange="myChangeFunction(0)">
                     <option value="" disabled selected>Select Mode of Payment</option>
                     <option value="cash" >Cash</option>
                     <option value="wallet">Wallet</option>

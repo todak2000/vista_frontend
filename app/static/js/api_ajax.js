@@ -1,6 +1,35 @@
 let base_url = "https://vista-api.herokuapp.com/api/v1"
 
+$(document).ready(function() { 
+    window.navigator.geolocation.getCurrentPosition(function(pos) { 
+      // console.log(pos); 
+      let lat = pos.coords.latitude;
+      let lon = pos.coords.longitude;
+      let edit_email = document.getElementById('edit_email').value
+      console.log("latitude: ", lat)
+      console.log("longitude: ", lon)
+      let data={
+        latitude: lat,
+        longitude: lon,
+        email: edit_email
+    }
+      $.ajax({
+        url:base_url+'/location',
+        type:'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data:JSON.stringify(data),
+        success:function(response){
+  
+            console.log(response);
+        },
+        error:function(e){
+            console.log(e);
 
+        },
+    });
+    })
+});
 $(function(){
     $('#back_form').on('click', function (e) {
         window.location.reload();
@@ -751,12 +780,12 @@ function signout() {
 function request_form(id) {
     
     document.getElementById('service_type').value = id;
-    if (id !== "Carpentry"){
+    if (id !== "Carpentry-"){
         document.getElementById('service_form').style.display = "none";
         document.getElementById('formo').style.display = "block";
         document.getElementById('description').style.display = "none";
-        document.getElementById('text_amount').style.display = "none";
-        document.getElementById('amount').style.display = "none";
+        // document.getElementById('text_amount').style.display = "none";
+        // document.getElementById('amount').style.display = "none";
         document.getElementById('des_text').style.display = "none";
         document.getElementById('service_list').style.display = "block";
         document.getElementById('service_list_text').style.display = "block";
@@ -866,8 +895,8 @@ $(function(){
 $(function(){
     $('#request_submit_button').on('click', function (e) {
         e.preventDefault();
-        
         document.getElementById("spinner").style.display = "block";
+        
         // document.getElementById("request_submit_button").style.display = "none";
         if (document.getElementById("request_final_div").style.display = "block"){
             document.getElementById("request_final_div").style.display = "none";
@@ -940,6 +969,10 @@ $(function(){
                         document.getElementById("map_search").style.display = "block";
                         document.getElementById("map_search_h1").style.display = "block";
                         document.getElementById("request_final_div").style.display = "block";
+                        response.serviceProviders.reduce(function(prev, curr) {
+                            return prev.distance < curr.distance ? prev : curr;
+                        });
+                        console.log(response.serviceProviders)
                         setTimeout(function(){ 
                             document.getElementById("map_search_h1").style.display = "none";
                             document.getElementById("map_search").style.display = "none";
