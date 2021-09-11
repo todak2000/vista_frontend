@@ -1,6 +1,7 @@
 let base_url = "https://vista-api.herokuapp.com/api/v1"
 
 $(document).ready(function() { 
+    playSuccessSound2();
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
       // console.log(pos); 
       let lat = pos.coords.latitude;
@@ -1400,12 +1401,20 @@ var playNote = function (frequency, startTime, duration) {
     osc2.stop(startTime + duration);
 };
 
-var playSuccessSound = function () {
+var playSuccessSoundOld = function () {
     // Play a 'B' now that lasts for 0.116 seconds
     playNote(493.883, context.currentTime, 0.116);
  
     // Play an 'E' just as the previous note finishes, that lasts for 0.232 seconds
     playNote(659.255, context.currentTime + 0.116, 0.232);
+};
+
+var playSuccessSound = function () {
+    // Play a 'B' now that lasts for 0.116 seconds
+    playNote(890, context.currentTime, 0.116);
+ 
+    // Play an 'E' just as the previous note finishes, that lasts for 0.232 seconds
+    playNote(990, context.currentTime + 0.116, 0.232);
 };
 
 

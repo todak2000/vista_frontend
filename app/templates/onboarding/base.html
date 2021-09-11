@@ -39,15 +39,10 @@
     {% endblock %}
     <div id="spinner"></div> 
     {% block javascript%}
+
     <script>
       $(document).ready(function() { 
-        // window.navigator.geolocation.getCurrentPosition(function(pos) { 
-        //   // console.log(pos); 
-        //   var lat = pos.coords.latitude;
-        //   var lon = pos.coords.longitude;
-        //   console.log("latitude: ", lat)
-        //   console.log("longitude: ", lon)
-        // })
+
         if(document.getElementById("unit").value == "" || document.getElementById("service_list").value == "" || document.getElementById("payment_mode").value == ""){
           document.getElementById("request_submit_button").disabled = true;
         }
