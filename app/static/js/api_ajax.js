@@ -1,7 +1,8 @@
 let base_url = "https://vista-api.herokuapp.com/api/v1"
 
 $(document).ready(function() { 
-    playSuccessSound2();
+    // playSuccessSound2();
+    // playSound("powerup")
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
       // console.log(pos); 
       let lat = pos.coords.latitude;
@@ -1433,7 +1434,8 @@ var playSuccessSound = function () {
                 if(response.success == true){
                     console.log(response);
                     
-                    playSuccessSound();
+                    // playSuccessSound();
+                    playSound("powerup")
                     // playSound()
                     $('#notificationModal').modal('show');
                     // setInterval(function(){ 
