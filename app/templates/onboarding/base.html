@@ -59,7 +59,7 @@
         let amout =  serv.split('- N')[1];
         let specific_amount = document.getElementById('specific_amount');
         let edit_balanceCheck = document.getElementById("edit_balance").value;
-        specific_amount.value = unit * amout;
+        specific_amount.value = parseFloat(unit * amout).toFixed(2);
         let mode = document.getElementById("payment_mode").value
         if(unit === 0){
           specific_amount.style.display = "none";
@@ -75,15 +75,30 @@
         else{
 
         if (specific_amount.value !== "" || null){
-          
-          console.log(specific_amount.value)
-          if(edit_balanceCheck < specific_amount.value && mode ==="wallet"){
+          let diff = edit_balanceCheck-specific_amount.value
+          if(diff <=0 && mode ==="wallet"){
+            console.log(edit_balanceCheck-specific_amount.value)
+            console.log("balance: ", edit_balanceCheck)
+            console.log("service charge: ", specific_amount.value)
             document.getElementById("bal_text").innerHTML = "Sorry! you have insufficient balance. Kindly top up your wallet balance or pick cash payment option";
             document.getElementById("request_submit_button").disabled = true;
             document.getElementById('text_amount_total').style.display = "block"
             document.getElementById('specific_amount').style.display = "block"
           }
-          else if(edit_balanceCheck < specific_amount.value && mode ==="cash"){
+          else if(diff >0 && mode ==="wallet"){
+            console.log(diff)
+            document.getElementById("bal_text").innerHTML = "";
+            document.getElementById("request_submit_button").disabled = false;
+            document.getElementById('text_amount_total').style.display = "block"
+            document.getElementById('specific_amount').style.display = "block"
+          }
+          else if(diff >0 && mode ==="cash"){
+            document.getElementById("bal_text").innerHTML = "";
+            document.getElementById("request_submit_button").disabled = false;
+            document.getElementById('text_amount_total').style.display = "block"
+            document.getElementById('specific_amount').style.display = "block"
+          }
+          else if(diff <=0 && mode ==="cash"){
             document.getElementById("bal_text").innerHTML = "";
             document.getElementById("request_submit_button").disabled = false;
             document.getElementById('text_amount_total').style.display = "block"
