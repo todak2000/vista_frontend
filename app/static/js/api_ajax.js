@@ -37,6 +37,11 @@ $(function(){
         window.location.reload();
     
     })});
+$(function(){
+    $('#cancel').on('click', function (e) {
+        window.location.reload();
+    
+    })});
 // SIGN UP API
 $(function(){
     $('#signup_submit_button').on('click', function (e) {
