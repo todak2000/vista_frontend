@@ -915,21 +915,21 @@ $(function(){
             document.getElementById("rating_divi").innerHTML = ""
         };
         let service_type = document.getElementById("service_type").value; 
-        let address = document.getElementById("address").value;
-        let service_form = document.getElementById("service_form").value;
-        let specific_service = document.getElementById("service_list").value;
-        let unit = document.getElementById("unit").value;
-        let specific_amount = document.getElementById("specific_amount").value;
-        let amount = unit * specific_amount;
-        let payment_mode = document.getElementById("payment_mode").value;
+        // let address = document.getElementById("address").value;
+        // let service_form = document.getElementById("service_form").value;
+        // let specific_service = document.getElementById("service_list").value;
+        // let unit = document.getElementById("unit").value;
+        // let specific_amount = document.getElementById("specific_amount").value;
+        // let amount = unit * specific_amount;
+        // let payment_mode = document.getElementById("payment_mode").value;
         let phone = document.getElementById("edit_phone").value;
-        let description
-        if ( service_form === "fix" ){
-            description = "";
-        }
-        else if ( service_form === "build" ){
-            description = document.getElementById("description").value;
-        }
+        // let description
+        // if ( service_form === "fix" ){
+        //     description = "";
+        // }
+        // else if ( service_form === "build" ){
+        //     description = document.getElementById("description").value;
+        // }
         
         
             $.ajax({
@@ -937,14 +937,14 @@ $(function(){
                 type:'POST',
                 data:{
                     service_type: service_type,
-                    service_form: service_form,
-                    address: address,
-                    amount: amount,
-                    payment_mode: payment_mode,
+                    // service_form: service_form,
+                    // address: address,
+                    // amount: amount,
+                    // payment_mode: payment_mode,
                     phone: phone,
-                    specific_service: specific_service,
-                    unit: unit,
-                    description:description
+                    // specific_service: specific_service,
+                    // unit: unit,
+                    // description:description
                 },
                 success:function(response){
                     document.getElementById("spinner").style.display = "none";
@@ -993,7 +993,7 @@ $(function(){
                                 $('.rating_div').append($('<span class="fa fa-star" style="color:#FFDF8C;"></span>')); 
                             }
                             document.getElementById("r_success_div").style.display = "block"; 
-                            document.getElementById("request_submit_button").style.display = "block";
+                            document.getElementById("request_submit_button").style.display = "none";
                             document.getElementById("request_submit_button").value = "Find Another" 
                         }, 5000);
                                  
@@ -1015,15 +1015,43 @@ $(function(){
         e.preventDefault();
         document.getElementById("spinner").style.display = "block";
         let sp_id = document.getElementById("sp_id").value;
-        let job_id = document.getElementById("job_id").value;
+        let service_type = document.getElementById("service_type").value; 
+        let address = document.getElementById("address").value;
+        let service_form = document.getElementById("service_form").value;
+        let specific_service = document.getElementById("service_list").value;
+        let unit = document.getElementById("unit").value;
+        let specific_amount = document.getElementById("specific_amount").value;
+        let amount = unit * specific_amount;
+        let payment_mode = document.getElementById("payment_mode").value;
+        let phone = document.getElementById("edit_phone").value;
+        let description
+        if ( service_form === "fix" ){
+            description = "";
+        }
+        else if ( service_form === "build" ){
+            description = document.getElementById("description").value;
+        }
+        else{
+            description = "No description given";
+        }
+        // let job_id = document.getElementById("job_id").value;
         console.log(sp_id)
-        console.log(job_id)
+        // console.log(job_id)
         $.ajax({
             url:base_url+'/accept_sp',
             type:'POST',
             data:{
                 sp_id: sp_id,
-                job_id: job_id
+                service_type: service_type,
+                service_form: service_form,
+                address: address,
+                amount: amount,
+                payment_mode: payment_mode,
+                phone: phone,
+                specific_service: specific_service,
+                unit: unit,
+                description:description
+                // job_id: job_id
             },
             success:function(response){
                 
