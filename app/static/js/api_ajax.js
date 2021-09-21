@@ -902,7 +902,7 @@ $(function(){
 $(function(){
     $('#request_submit_button').on('click', function (e) {
         e.preventDefault();
-        document.getElementById("spinner").style.display = "block";
+        document.getElementById("spinner").style.display = "block"; 
         
         // document.getElementById("request_submit_button").style.display = "none";
         if (document.getElementById("request_final_div").style.display = "block"){
