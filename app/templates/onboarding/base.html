@@ -395,34 +395,46 @@
         <div id="request_final_div" style="display:none; width:100%; height:90vh; background-color: #fff; position:fixed; left:0" class="pt-4"> 
           <img src="{% static 'img/map_search.gif' %}" class="img-fluid" style="display: none;" id="map_search"/>
           <h3 style="display: none; text-align: center; margin-top:3rem;" id="map_search_h1">Searching</h3>
-          <div id="r_success_div" style="text-align: center; display:none; padding: 50% 10%;">
+          <div id="r_success_div" style="text-align: center; display:none;">
             <!-- sp list -->
             <div class="cards" style="margin-bottom: 20vh;" >
               <div class="outer">
                 <div class="card" id="client_accept_sp_submiti_buttoni">
                   <div class="content">
-                    <div class="img">
-                      <i class="fas fa-user fa-3xap mt-3"></i>
-                    </div>
-                    <div class="details">
-                      <span class="name" id="sp_name"></span>
-                      <p id="sp_address"></p>
-                      <p id="sp_phone" style="color:#dde0d3"></p>
-                      <div id="fled">
-                        <div class="rating_div" id="rating_divi">
+                    <div class="flexi">
+                      <div class="img">
+                        <i class="fas fa-user fa-3xap mt-3"></i>
+                      </div>
+                      <div class="details">
+                        <span class="name" id="sp_name"></span>
+                        
+                        <p id="sp_phone" style="color:#dde0d3; text-align: left;"></p>
+                        <div id="fled">
+                          <div class="rating_div" id="rating_divi">
+                          </div>
+                          <input id="sp_id" type="text" hidden/>
+                          <input id="job_id" type="number" hidden/>
+                          
+                          <a id="show_details">Show Gallery</a>
                         </div>
-                        <input id="sp_id" type="text" hidden/>
-                        <input id="job_id" type="number" hidden/>
-                        <a id="client_accept_sp_submit_button">Accept</a>
+                        <div class="flexi">
+                          <a id="client_accept_sp_submit_button" class="mt-2" style="background: #17a2b8!important; border:0;padding:0.5rem 2rem;">Accept</a>
+                          <a class="mt-2" id="cancel" style="background: #d4834d!important; border:0;padding:0.5rem 2rem;">Cancel </a>
+                        </div>
+                        <!-- sds -->
                       </div>
                     </div>
                   </div>
+                  <div id="show-details-div" style="display: none; margin-top:2rem;">
+                    <div class="work_div2" id="work_div2">
+                  </div>
+                 </div>
                   <!-- <input type="submit" value="Accept" class="form-control onboarding-button mt-3" id="client_accept_sp_submit_button"> -->
                 </div>
               </div>
             </div>
             <!-- sp list ends -->
-            <a class="form-control onboarding-button mt-5" id="cancel" style="background-color: #e48fae;">Cancel </a>
+            <!-- <a class="form-control onboarding-button mt-5" id="cancel" style="background-color: #e48fae;">Cancel </a> -->
           </div>
           <div id="r_failure_div" style="text-align: center; display:none; padding: 30% 10%;">
             <i class="fas fa-times-circle  fa-5x" style="color: #C91B30;" ></i>

@@ -909,7 +909,7 @@ $(function(){
             document.getElementById("request_final_div").style.display = "none";
             document.getElementById("r_success_div").style.display = "none"; 
             document.getElementById("sp_name").innerHTML = "";
-            document.getElementById("sp_address").innerHTML = ""
+            // document.getElementById("sp_address").innerHTML = ""
             document.getElementById("sp_phone").innerHTML = ""
             document.getElementById("sp_id").innerHTML = ""
             document.getElementById("rating_divi").innerHTML = ""
@@ -984,7 +984,7 @@ $(function(){
                             document.getElementById("map_search_h1").style.display = "none";
                             document.getElementById("map_search").style.display = "none";
                             document.getElementById("sp_name").innerHTML = response.serviceProviders[0].sp_firstname +" "+ response.serviceProviders[0].sp_lastname ;
-                            document.getElementById("sp_address").innerHTML = response.serviceProviders[0].sp_address+", "+response.serviceProviders[0].sp_state
+                            // document.getElementById("sp_address").innerHTML = response.serviceProviders[0].sp_address+", "+response.serviceProviders[0].sp_state
                             document.getElementById("sp_phone").innerHTML = response.serviceProviders[0].sp_phone
                             document.getElementById("sp_id").value = response.serviceProviders[0].sp_id
                             document.getElementById("job_id").value = response.job_id
@@ -1482,3 +1482,42 @@ var playSuccessSound = function () {
             
         });
     }, 2000);
+
+    $(function(){
+        $('#show_details').on('click', function (e) {
+            let user_id = document.getElementById("sp_id").value;
+            console.log(user_id)
+            $.ajax({
+                url:base_url+'/get_gallery/'+user_id,
+                type:'GET',
+                success:function(response){
+                    
+                    if(response.success == false){
+                        console.log(response);
+                    }
+                    if(response.success == true){
+                        console.log(response);
+                        
+                        if(response.gallery.length > 0){
+                            response.gallery.forEach((element) => {
+                                $('#work_div2').append(
+                                            '<img src='+element.imageUrl+' width="100" height="100" style="height:auto; width:99%; margin-bottom:0.5rem;"/>'
+                                );
+                                
+                            });
+                        }
+                        else{
+                            $('#show-details-div').append(
+                                '<p style="color:#fff">No Images availble from this Provider. Please check later</p>'
+                            );
+                        }
+                    }
+                },
+                error:function(e){
+                    // console.log(e);
+                },
+                
+            });
+            $("#show-details-div").toggle();
+        
+        })});
