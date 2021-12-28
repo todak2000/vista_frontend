@@ -66,6 +66,22 @@
     
     justify-content: center;
 }
+.faGreen{
+  color: greenyellow;
+}
+.faPurple{
+  color: #4B1378;
+}
+.faRed{
+  color: red;
+}
+#galleryForm{
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+}
   .details p{
       margin:0;
       color:#F6AC56;

@@ -1520,4 +1520,237 @@ var playSuccessSound = function () {
             });
             $("#show-details-div").toggle();
         
-        })});
+    })});
+
+    function showUploadForm(){
+        let msgDiv = document.getElementById("another");
+        let mssg = document.getElementById("mssg");
+        let galleryForm = document.getElementById("galleryForm");
+        galleryForm.style.display ="flex"
+        msgDiv.style.display ="none"
+        mssg.innerHTML="";
+    }
+function testClick() {
+    document.getElementById("labelUpload").innerHTML="Uploading ..."
+    user_id = sessionStorage.getItem("user_id");
+    let mssg = document.getElementById("mssg");
+    let msgDiv = document.getElementById("another");
+    let galleryForm = document.getElementById("galleryForm");
+    
+    form = document.getElementById("galleryForm")
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    let files = $('#pics_id')[0].files;
+    let formData = new FormData(form);
+    formData.append('gallery',files[0]);
+    $.ajax({
+        url: base_url+'/gallery/'+user_id,
+        type: 'POST',
+        headers:{"X-CSRFToken": $crf_token},
+        data: formData,
+        success: function (response) {
+            document.getElementById("labelUpload").innerHTML="Click the image icon to upload samples of past jobs/work individually"
+            console.log(response)
+            msgDiv.style.display ="block"
+            galleryForm.style.display ="none"
+            mssg.innerHTML=response.message;
+        },
+        error:function(e){
+            console.log(e);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
+
+function passClick() {
+    document.getElementById("passLabel").innerHTML="Uploading ..."
+    user_id = sessionStorage.getItem("user_id");
+    let passImg = document.getElementById("passImg");
+    form = document.getElementById("passportForm")
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    let files = $('#passport')[0].files;
+    let formData = new FormData(form);
+    formData.append('passport',files[0]);
+    $.ajax({
+        url: base_url+'/passport/'+user_id,
+        type: 'POST',
+        headers:{"X-CSRFToken": $crf_token},
+        data: formData,
+        success: function (response) {
+            document.getElementById("passLabel").innerHTML="Photo Passport"
+            console.log(response)
+            if (response.status == 200){
+                passImg.classList.remove("fa-upload");
+                passImg.classList.remove("faPurple");
+                passImg.classList.add("fa-check-circle");
+                passImg.classList.add("faGreen");
+            }
+            else{
+                passImg.classList.remove("fa-upload");
+                passImg.classList.add("fa-times-circle");
+                passImg.classList.add("faRed");
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
+
+function idClick() {
+    document.getElementById("idLabel").innerHTML="Uploading ..."
+    user_id = sessionStorage.getItem("user_id");
+    let passImg = document.getElementById("idImg");
+    form = document.getElementById("idForm")
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    let files = $('#identity_card')[0].files;
+    let formData = new FormData(form);
+    formData.append('identity_card',files[0]);
+    $.ajax({
+        url: base_url+'/identity/'+user_id,
+        type: 'POST',
+        headers:{"X-CSRFToken": $crf_token},
+        data: formData,
+        success: function (response) {
+            document.getElementById("idLabel").innerHTML="Identity Card"
+            console.log(response)
+            if (response.status == 200){
+                passImg.classList.remove("fa-upload");
+                passImg.classList.remove("faPurple");
+                passImg.classList.add("fa-check-circle");
+                passImg.classList.add("faGreen");
+            }
+            else{
+                passImg.classList.remove("fa-upload");
+                passImg.classList.add("fa-times-circle");
+                passImg.classList.add("faRed");
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
+
+function addressClick() {
+    document.getElementById("addressLabel").innerHTML="Uploading ..."
+    user_id = sessionStorage.getItem("user_id");
+    let passImg = document.getElementById("addressImg");
+    form = document.getElementById("addressForm")
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    let files = $('#address_id')[0].files;
+    let formData = new FormData(form);
+    formData.append('address',files[0]);
+    $.ajax({
+        url: base_url+'/address/'+user_id,
+        type: 'POST',
+        headers:{"X-CSRFToken": $crf_token},
+        data: formData,
+        success: function (response) {
+            document.getElementById("addressLabel").innerHTML="Proof of Office/Work Address"
+            console.log(response)
+            if (response.status == 200){
+                passImg.classList.remove("fa-upload");
+                passImg.classList.remove("faPurple");
+                passImg.classList.add("fa-check-circle");
+                passImg.classList.add("faGreen");
+            }
+            else{
+                passImg.classList.remove("fa-upload");
+                passImg.classList.add("fa-times-circle");
+                passImg.classList.add("faRed");
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
+
+function bvnClick() {
+    // document.getElementById("addressLabel").innerHTML="Uploading ..."
+    user_id = sessionStorage.getItem("user_id");
+    let passImg = document.getElementById("bvnImg");
+    let bvn = document.getElementById("bvn").value;
+    let form = document.getElementById("bvnForm").value
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    // let files = $('#bvn')[0].files;
+    let formData = new FormData(form);
+    formData.append('bvn',bvn);
+    $.ajax({
+        url: base_url+'/bvn/'+user_id,
+        type: 'POST',
+        headers:{"X-CSRFToken": $crf_token},
+        data: formData,
+        success: function (response) {
+            // document.getElementById("addressLabel").innerHTML="Proof of Office/Work Address"
+            console.log(response)
+            if (response.status == 200){
+                passImg.classList.remove("fa-paper-plane");
+                passImg.classList.remove("faPurple");
+                passImg.classList.add("fa-check-circle");
+                passImg.classList.add("faGreen");
+            }
+            else{
+                passImg.classList.remove("fa-upload");
+                passImg.classList.add("fa-times-circle");
+                passImg.classList.add("faRed");
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
+
+function ninClick() {
+    // document.getElementById("addressLabel").innerHTML="Uploading ..."
+    user_id = sessionStorage.getItem("user_id");
+    let passImg = document.getElementById("ninImg");
+    let nin = document.getElementById("nin").value;
+    let form = document.getElementById("ninForm").value
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    // let files = $('#bvn')[0].files;
+    let formData = new FormData(form);
+    formData.append('bvn',nin);
+    $.ajax({
+        url: base_url+'/nin/'+user_id,
+        type: 'POST',
+        headers:{"X-CSRFToken": $crf_token},
+        data: formData,
+        success: function (response) {
+            // document.getElementById("addressLabel").innerHTML="Proof of Office/Work Address"
+            console.log(response)
+            if (response.status == 200){
+                passImg.classList.remove("fa-paper-plane");
+                passImg.classList.remove("faPurple");
+                passImg.classList.add("fa-check-circle");
+                passImg.classList.add("faGreen");
+            }
+            else{
+                passImg.classList.remove("fa-upload");
+                passImg.classList.add("fa-times-circle");
+                passImg.classList.add("faRed");
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}

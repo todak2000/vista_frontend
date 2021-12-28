@@ -362,7 +362,7 @@
           
           <div id="verification_div" style="display:none; width:100%; height:80vh; background-color: #fff; position:fixed; top:10vh; left:0" class="pt-4">
             <form style="padding:0 5vh;">{% csrf_token %}
-            <!-- <input id="tt_id" value="{{user_id}}" hidden/> -->
+            <!--  -->
             <input id="tt_amount" type="text" hidden/>
             <input type="button" value="click to Verify your Payment" class="form-control onboarding-button" id="verify_payment_button" style="margin-top: 30vh;">
             </form>   
@@ -574,17 +574,150 @@
     </div>
   </div>
 </div>
-<!-- <div  style="width:100%; height:100vh; background-color: #4B1378;"></div> -->
-<!-- <div class="" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #fff;">
-  <div class="modal-dialog" role="document" style="margin:0;">
-    <a id="{{token}}" onClick="sp_job(this.id)">
-      <i class="fas fa-briefcase fa-2x "></i>
-      go to job section
-    </a>
-  </div>
-</div> -->
 
+<!-- Upload Gallery Modal -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="galleryModal">
+  <div class="modal-dialog modal-sm" style="margin:0">
+    <div class="modal-content" style="height:100vh; padding: 0 10%;">
+      <div style="width:100%; text-align:left; margin-top:1rem;" >
+        <i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i>
+      </div>
+      
+      <div style="width:100%; text-align:center; margin-top:9rem;" id="msgDiv">
+        <p id="mssg" ></p>
+        <p class="btn btn-outline-primary" onclick="showUploadForm()" id="another" style="display: none;">Upload another</p>
+      </div>
+        
+      <!-- </div> -->
+      <form class="form" method="post" enctype="multipart/form-data" id="galleryForm">
+        {% csrf_token %}
+        <label class="lb" id="labelUpload">Click the image icon to upload samples of past jobs/work individually</label><br>
+          <label for="pics_id" style="width: 100%;">
+          <div class="">
+              <div style="display: flex; justify-content: center; width:100%;">
+                  <input type="text" 
+              class="form-input" 
+              name="pics_display_id" 
+              id="pics_display_id"
+              readonly
+              placeholder="Add File"
+              style="display: none;"
+              />
+              <i class="fas fa-upload fa-3x" ></i>
+              <input type="file" id="pics_id" name="pics_id" style="display: none" accept="image/gif,image/jpeg,image/jpg,image/png" multiple="" data-original-title="upload photos" oninput="testClick()">
+              </div>
+          </div>
+        </label>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Verification Gallery Modal -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="verificationModal">
+  <div class="modal-dialog modal-sm" style="margin:0">
+    <div class="modal-content" style="height:100vh; padding: 0 10%;">
+      <div style="width:100%; text-align:left; margin-top:1rem;" >
+        <i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i>
+      </div>
+      <p class="text-center">Click on icon beside each document to upload the document</p>
+      {% if data.verification_data.passport == "1" %}
+      <form class="form" method="post" enctype="multipart/form-data" id="passportForm">
+        {% csrf_token %}
+          <label for="passport" style="width: 100%;">
+          <div class="">
+              <div style="display: flex; justify-content: space-between; width:100%;">
+                <label class="lb" id="passLabel">Photo Passport</label>
+              <i class="fas fa-upload faPurple fa-2x" id="passImg"></i>
+              <input type="file" id="passport" name="passport" style="display: none" accept="image/gif,image/jpeg,image/jpg,image/png" multiple="" data-original-title="upload photos" oninput="passClick()">
+              </div>
+          </div>
+        </label>
+        </form>
+      {% else %}
+      <div style="display: flex; justify-content: space-between; width:100%;" class="mt-3">
+        <p style="font-size: 0.75rem;">Photo Passport Uploaded </p>
+        <i class="fas fa-check-circle faGreen fa-2x ml-5" ></i>
+      </div>   
+      {% endif %}
+
+      {% if data.verification_data.idCard == "1" %}
+        <form class="form" method="post" enctype="multipart/form-data" id="idForm">
+          {% csrf_token %}
+        <label for="identity_card" style="width: 100%;">
+        <div class="">
+            <div style="display: flex; justify-content: space-between; width:100%;">
+              <label class="lb" id="idLabel">Identity Card</label>
+            <i class="fas fa-upload faPurple fa-2x" id="idImg"></i>
+            <input type="file" id="identity_card" name="identity_card" style="display: none" accept="image/gif,image/jpeg,image/jpg,image/png" multiple="" data-original-title="upload photos" oninput="idClick()">
+            </div>
+        </div>
+      </label>
+      </form>
+      {% else %}
+      <div style="display: flex; justify-content: space-between; width:100%;" class="mt-3">
+        <p style="font-size: 0.75rem;">Identity Card Uploaded </p>
+        <i class="fas fa-check-circle faGreen fa-2x ml-5" ></i>
+      </div> 
+      {% endif %}
+
+      {% if data.verification_data.proofOfAddress == "1" %}
+      <form class="form" method="post" enctype="multipart/form-data" id="addressForm">
+        {% csrf_token %}
+      <label for="address_id" style="width: 100%;">
+      <div class="">
+          <div style="display: flex; justify-content: space-between; width:100%;">
+            <label class="lb" id="addressLabel">Proof of Work Address</label>
+          <i class="fas fa-upload faPurple fa-2x" id="addressImg"></i>
+          <input type="file" id="address_id" name="address_id" style="display: none" accept="image/gif,image/jpeg,image/jpg,image/png" multiple="" data-original-title="upload photos" oninput="addressClick()">
+          </div>
+      </div>
+    </label>
+    </form>
+      {% else %}
+      <div style="display: flex; justify-content: space-between; width:100%;" class="mt-3">
+        <p style="font-size: 0.75rem;">Proof of Address Uploaded </p>
+        <i class="fas fa-check-circle faGreen fa-2x ml-5" ></i>
+      </div>
+       
+      {% endif %}
+
+      {% if data.verification_data.bvn == "1" %}
+        <form class="form mt-3" method="post" id="bvnForm" enctype="multipart/form-data" >
+          {% csrf_token %}
+            <div style="display: flex; justify-content: left; width:100%;">
+            <input type="text" class="form-control " placeholder="Enter your BVN " id="bvn" name="bvn" />
+            <i class="fas fa-paper-plane faPurple fa-2x" id="bvnImg" style="margin-left:-2.5rem;padding: 0.3rem;" onclick="bvnClick()"></i>
+            </div>
+      </form>
+      {% else %}
+      <div style="display: flex; justify-content: left; width:100%;" class="mt-3">
+        <input type="text" class="form-control " value="{{data.verification_data.bvn}}" readonly/>
+        <i class="fas fa-check-circle faGreen fa-2x" style="margin-left:-2.5rem;padding: 0.3rem;"></i>
+        </div>
+      {% endif %}
+
+      {% if data.verification_data.nin == "1" %}
+        <form class="form mt-3" method="post" id="ninForm" enctype="multipart/form-data" >
+          {% csrf_token %}
+            <div style="display: flex; justify-content: left; width:100%;">
+            <input type="text" class="form-control " placeholder="Enter your NIN " id="nin" name="nin" />
+            <i class="fas fa-paper-plane faPurple fa-2x" id="ninImg" style="margin-left:-2.5rem;padding: 0.3rem;" onclick="ninClick()"></i>
+            </div>
+      </form>
+      {% else %}
+      <div style="display: flex; justify-content: left; width:100%;" class="mt-3">
+        <input type="text" class="form-control " value="{{data.verification_data.nin}}" readonly/>
+        <i class="fas fa-check-circle faGreen fa-2x" style="margin-left:-2.5rem;padding: 0.3rem;"></i>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 <script>
+
+
+
   function getAmount(input1) {
     var input2 = document.getElementById('tt_amount');
     input2.value = input1.value;
@@ -624,6 +757,8 @@ function payWithPaystack(){
     handler.openIframe();
     
   }
+
+  
 </script>
 </body>
 </html>

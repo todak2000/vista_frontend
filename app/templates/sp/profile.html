@@ -31,6 +31,20 @@
             <p class="purple_p" data-toggle="modal" data-target="#accountModal">Add Account Details</p> 
             {% endif %}
     </div>
+    <h5 class="text-left mt-3">Gallery</h5>
+    <div class="flexi">    
+        <i class="fas fa-upload fa-3xar mr-5" ></i>
+        <p class="purple_p" data-toggle="modal" data-target="#galleryModal">Upload to Gallery</p> 
+    </div>
+    <h5 class="text-left mt-3">Verification</h5>
+    <div class="flexi">    
+        <i class="fas fa-upload fa-3xar mr-5" ></i>
+        {% if data.user_details.isVerified == True %}
+            <p class="purple_p" style="text-decoration: none;" >Data Verified</p> 
+        {% else %}
+            <p class="purple_p" data-toggle="modal" data-target="#verificationModal">Upload Documents</p>  
+        {% endif %}
+    </div>
     <h5 class="text-left mt-3">Security</h5>
     <div class="flexi">
         <i class="fas fa-key fa-3xar mr-5"></i>
