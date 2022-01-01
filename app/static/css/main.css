@@ -187,8 +187,23 @@ body{
     background-color: #4B1378;
 }
 .profile_circle{
-    width: 15vh;
-    height: 15vh;
+    /* width: 15vh;
+    height: 15vh; */
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #4B1378;
+    background-color: #fff;
+    color: #4B1378;
+    z-index: 1000;
+    position: absolute;
+    display: flex;
+    top: 13vh;
+    justify-content: center;
+    left: calc((100% - 15vh)/2);
+}
+.profile_circle2{
+    width: 100px;
+    height: 100px;
     align-items: center;
     border-radius: 50%;
     border: 1px solid #4B1378;

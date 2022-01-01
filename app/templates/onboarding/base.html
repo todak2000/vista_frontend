@@ -591,7 +591,7 @@
       <!-- </div> -->
       <form class="form" method="post" enctype="multipart/form-data" id="galleryForm">
         {% csrf_token %}
-        <label class="lb" id="labelUpload">Click the image icon to upload samples of past jobs/work individually</label><br>
+        <label class="lb mb-3" id="labelUpload" style="text-align: center; font-size: 0.85rem;">Click the image icon to upload samples of past jobs/work individually</label><br>
           <label for="pics_id" style="width: 100%;">
           <div class="">
               <div style="display: flex; justify-content: center; width:100%;">
@@ -621,7 +621,7 @@
         <i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i>
       </div>
       <p class="text-center">Click on icon beside each document to upload the document</p>
-      {% if data.verification_data.passport == "1" %}
+      {% if data.verification_data.passport == "1" or data.verification_data.passport is none %}
       <form class="form" method="post" enctype="multipart/form-data" id="passportForm">
         {% csrf_token %}
           <label for="passport" style="width: 100%;">
@@ -641,7 +641,7 @@
       </div>   
       {% endif %}
 
-      {% if data.verification_data.idCard == "1" %}
+      {% if data.verification_data.idCard == "1" or data.verification_data.idCard is none %}
         <form class="form" method="post" enctype="multipart/form-data" id="idForm">
           {% csrf_token %}
         <label for="identity_card" style="width: 100%;">
@@ -661,7 +661,7 @@
       </div> 
       {% endif %}
 
-      {% if data.verification_data.proofOfAddress == "1" %}
+      {% if data.verification_data.proofOfAddress == "1" or data.verification_data.proofOfAddress is none %}
       <form class="form" method="post" enctype="multipart/form-data" id="addressForm">
         {% csrf_token %}
       <label for="address_id" style="width: 100%;">
@@ -682,13 +682,14 @@
        
       {% endif %}
 
-      {% if data.verification_data.bvn == "1" %}
+      {% if data.verification_data.bvn == "1" or data.verification_data.bvn is none %}
         <form class="form mt-3" method="post" id="bvnForm" enctype="multipart/form-data" >
           {% csrf_token %}
             <div style="display: flex; justify-content: left; width:100%;">
             <input type="text" class="form-control " placeholder="Enter your BVN " id="bvn" name="bvn" />
             <i class="fas fa-paper-plane faPurple fa-2x" id="bvnImg" style="margin-left:-2.5rem;padding: 0.3rem;" onclick="bvnClick()"></i>
             </div>
+            
       </form>
       {% else %}
       <div style="display: flex; justify-content: left; width:100%;" class="mt-3">
@@ -697,7 +698,7 @@
         </div>
       {% endif %}
 
-      {% if data.verification_data.nin == "1" %}
+      {% if data.verification_data.nin == "1" or data.verification_data.nin is none %}
         <form class="form mt-3" method="post" id="ninForm" enctype="multipart/form-data" >
           {% csrf_token %}
             <div style="display: flex; justify-content: left; width:100%;">
