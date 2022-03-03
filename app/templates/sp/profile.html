@@ -65,7 +65,7 @@
         <p class="text-danger">Yet to be verified</p>
     </div> -->
 </section>
-
+{% if data.user_details.isActivated == True %}
 <footer class="footer">
     <a id="{{token}}" onClick="sp_job(this.id)">
         <i class="fas fa-briefcase fa-2x "></i>
@@ -80,5 +80,13 @@
         <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
     </a>
 </footer>
-
+{% else %}
+<footer class="footer">
+    <a id="{{token}}" onClick="sp_home(this.id)">
+        <i class="fas fa-th-large fa-2x  "></i>
+        <p style="margin-top:-60px; color:#4B1378;">Home</p>
+    </a>
+</footer>
+    
+{% endif %}
 {% endblock %}

@@ -59,7 +59,7 @@
         {% endif %}
     </div>
     {% else %}
-    <div class='text-center' style="margin-top:35vh; color:red">Your account has not been activated. Kindly reach out to info@meta-craft after 24 hours if its not yet activated</div>
+    <div class='text-center' style="margin-top:35vh; color:red">Your account has not been activated. Kindly upload your documents at the profile page to activate your account. Thanks</div>
     {% endif %}
 </section>
 {% if data.user_details.isActivated == True %}
@@ -74,10 +74,16 @@
     </a>
     <a id="{{token}}" onClick="sp_profile(this.id)">
         <i class="fas fa-user fa-2x "></i>
-        <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
+        <p style="margin-top:-60px; color:#4B137830;">Profile</p>
     </a>
 </footer>
 {% else %}
+<footer class="footer">
+    <a id="{{token}}" onClick="sp_profile(this.id)">
+        <i class="fas fa-user fa-2x "></i>
+        <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
+    </a>
+</footer>
     
 {% endif %}
 
