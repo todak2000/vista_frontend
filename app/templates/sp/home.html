@@ -5,6 +5,8 @@
 {% block body%}
 <section class="onboarding-background">
     <p class="sp_top_p text-left">Welcome! {{data.user_details.firstname}}</p>
+    {% if data.user_details.isActivated == True %}
+    
     <div id="sp_top_div">
         <i class="fas fa-building fa-3xa mt-2"></i>
         <div>
@@ -23,6 +25,7 @@
         <div id="circle_red" data-toggle="modal" data-target="#withdrawModal"><i class="fas fa-arrow-down fa-2x"></i></div>
         <div id="circle_green" data-toggle="modal" data-target="#fundModal"><i class="fas fa-arrow-up fa-2x"></i></div>
     </div>
+
     <p class="text-left mt-3">Transactions</p>
     <div id="transaction_sp_div">
         {% if data.transaction %}
@@ -55,8 +58,11 @@
         <div class='text-center text-purple' style="margin-top:50px;">There is no Transaction yet!</div>
         {% endif %}
     </div>
-
+    {% else %}
+    <div class='text-center' style="margin-top:35vh; color:red">Your account has not been activated. Kindly reach out to info@meta-craft after 24 hours if its not yet activated</div>
+    {% endif %}
 </section>
+{% if data.user_details.isActivated == True %}
 <footer class="footer">
     <a id="{{token}}" onClick="sp_job(this.id)">
         <i class="fas fa-briefcase fa-2x "></i>
@@ -71,5 +77,8 @@
         <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
     </a>
 </footer>
+{% else %}
+    
+{% endif %}
 
 {% endblock %}
