@@ -1451,7 +1451,7 @@ var playSuccessSound = function () {
     playNote(990, context.currentTime + 0.116, 0.232);
 };
 
-
+// notification api
     setInterval(function(){ 
         // console.clear();
         let email = document.getElementById("edit_email").value;
@@ -1467,8 +1467,8 @@ var playSuccessSound = function () {
                 if(response.success == true){
                     console.log(response);
                     
-                    // playSuccessSound();
-                    playSound("powerup")
+                    playSuccessSound();
+                    // playSound("powerup")
                     // playSound()
                     $('#notificationModal').modal('show');
                     // setInterval(function(){ 

@@ -10,7 +10,7 @@
     <div id="sp_top_div">
         <i class="fas fa-building fa-3xa mt-2"></i>
         <div>
-            <h2>34</h2>
+            <h2>{{data.user_details.jobDone}}</h2>
             <p>Jobs Done</p>
         </div>
     </div>
@@ -74,14 +74,14 @@
     </a>
     <a id="{{token}}" onClick="sp_profile(this.id)">
         <i class="fas fa-user fa-2x "></i>
-        <p style="margin-top:-60px; color:#4B137830;">Profile</p>
+        <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
     </a>
 </footer>
 {% else %}
 <footer class="footer">
     <a id="{{token}}" onClick="sp_profile(this.id)">
         <i class="fas fa-user fa-2x "></i>
-        <!-- <p style="margin-top:-60px; color:#4B137830;">Profile</p> -->
+        <p style="margin-top:-60px; color:#4B137830;">Profile</p>
     </a>
 </footer>
     
