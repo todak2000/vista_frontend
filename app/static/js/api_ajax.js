@@ -1462,7 +1462,7 @@ var playSuccessSound = function () {
             success:function(response){
                 
                 if(response.success == false){
-                    // console.log(response);
+                    console.log(response);
                 }
                 if(response.success == true){
                     console.log(response);
