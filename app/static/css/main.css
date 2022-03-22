@@ -11,6 +11,9 @@ body{
     line-height: 90px;
     justify-content: space-evenly;
 }
+/* p{
+    margin:0;
+} */
 
 .footer>a{
     color:#4B137830!important;
@@ -83,7 +86,7 @@ body{
     border-radius: 1rem;
     padding:1rem;
     width: 8rem;
-    height: 8rem;
+    height: 9rem;
     color:#fff;
     /* background-color: #4B137850; */
 }

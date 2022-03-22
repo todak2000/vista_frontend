@@ -787,7 +787,8 @@ function signout() {
 function request_form(id) {
     
     document.getElementById('service_type').value = id;
-    if (id !== "Carpentry-"){
+    if (id === "Barbing" || id === "Makeup" || id === "Cleaners" || id === "AC_Technician"){
+        console.log(id)
         document.getElementById('service_form').style.display = "none";
         document.getElementById('formo').style.display = "block";
         document.getElementById('description').style.display = "none";
@@ -826,7 +827,7 @@ function job_details(id) {
         url:base_url+'/job_details/'+id,
         type:'GET',
         success:function(response){
-            // console.log(response);
+            console.log(response);
             document.getElementById('d_service_type').value = response.job_details.service_type;
             if (response.job_details.details !== null){
                 document.getElementById('d_details').value = response.job_details.details;
@@ -1008,6 +1009,63 @@ $(function(){
 
     })
 });
+
+// job request function 2 for direct requests
+$(function(){
+    $('#request_submit_but').on('click', function (e) {
+        e.preventDefault();
+        document.getElementById("spinner").style.display = "block"; 
+        
+        if (document.getElementById("request_final_div").style.display = "block"){
+            document.getElementById("request_final_div").style.display = "none";
+            document.getElementById("r_success_div").style.display = "none"; 
+            document.getElementById("sp_name").innerHTML = "";
+            document.getElementById("sp_phone").innerHTML = ""
+            document.getElementById("sp_id").innerHTML = ""
+            document.getElementById("rating_divi").innerHTML = ""
+        };
+        let service_type = document.getElementById("service_type").value; 
+        let description = document.getElementById("special_description").value;
+        
+        let phone = document.getElementById("edit_phone").value;
+            $.ajax({
+                url:base_url+'/special_request',
+                type:'POST',
+                data:{
+                    service_type: service_type,
+                    phone: phone,
+                    description:description
+                },
+                success:function(response){
+                    document.getElementById("spinner").style.display = "none";
+                    console.log(response);
+                    if(response.success == false){
+                        document.getElementById("request_final_div").style.display = "block";
+                        document.getElementById("r_message").innerHTML = response.message;
+                        document.getElementById("r_failure_div").style.display = "block";
+                        setTimeout(function(){ 
+                            window.location.reload();
+                        }, 5000);
+                    }
+                    else if(response.success == true && response.status == 200){
+                        document.getElementById("spec").style.display = "flex";
+                        setTimeout(function(){ 
+                            // document.getElementById("spec").style.display = "none";
+                            window.location.reload();
+                        }, 5000);
+                                 
+                    }
+                    else{}
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+        
+
+    })
+});
+
 
 // client accept sp update function
 $(function(){
