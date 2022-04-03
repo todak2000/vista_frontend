@@ -6,21 +6,21 @@ $(document).ready(function() {
     token = sessionStorage.getItem("token");
     role = sessionStorage.getItem("role");
     count = 0;
-    if(token && role){
-        if (role == 1 && token !== '' && count == 0){
-            window.location.href = '/client_dashboard/'+token;
-            count = count + 1;
-        }
-        else if (role == 0 && token !== '' && count == 0){
-            window.location.href = '/sp_dashboard/'+token;
-            count = count + 1;
+    // if(token && role){
+    //     if (role == 1 && token !== '' && count == 0){
+    //         window.location.href = '/client_dashboard/'+token;
+    //         count = count + 1;
+    //     }
+    //     else if (role == 0 && token !== '' && count == 0){
+    //         window.location.href = '/sp_dashboard/'+token;
+    //         count = count + 1;
             
-        }
-        else{
-            // window.location.href = '/signin';
-        }
+    //     }
+    //     else{
+    //         // window.location.href = '/signin';
+    //     }
 
-    }
+    // }
     console.log(count, "count")
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
       // console.log(pos); 
@@ -51,6 +51,7 @@ $(document).ready(function() {
     });
     })
 });
+
 $(function(){
     $('#back_form').on('click', function (e) {
         window.location.reload();
@@ -1608,10 +1609,8 @@ var playSuccessSound = function () {
 
 // notification api
     setInterval(function(){ 
-        // console.clear();
         let email = document.getElementById("edit_email").value;
         user_id = sessionStorage.getItem("user_id");
-        // console.log(email)
         $.ajax({
             url:base_url+'/notification/'+email,
             type:'GET',
@@ -1622,14 +1621,8 @@ var playSuccessSound = function () {
                 }
                 if(response.success == true){
                     console.log(response);
-                    
                     playSuccessSound();
-                    // playSound("powerup")
-                    // playSound()
                     $('#notificationModal').modal('show');
-                    // setInterval(function(){ 
-                    //     playSuccessSound(); 
-                    // }, 5000);
                 }
             },
             error:function(e){
