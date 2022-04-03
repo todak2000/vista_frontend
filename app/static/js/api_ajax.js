@@ -5,17 +5,17 @@ $(document).ready(function() {
     // playSound("powerup")
     token = sessionStorage.getItem("token");
     role = sessionStorage.getItem("role");
-    // if(token && role){
-    if (role == 1 && token !== ''){
-        window.location.href = '/client_dashboard/'+token;
+    if(token && role){
+        if (role == 1 && token !== ''){
+            window.location.href = '/client_dashboard/'+token;
+        }
+        else if (role == 0 && token !== ''){
+            window.location.href = '/sp_dashboard/'+token;
+        }
+        else{
+            window.location.href = '/signin';
+        }
     }
-    else if (role == 0 && token !== ''){
-        window.location.href = '/sp_dashboard/'+token;
-    }
-    else{
-        window.location.href = '/signin';
-    }
-    // }
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
       // console.log(pos); 
       let lat = pos.coords.latitude;
