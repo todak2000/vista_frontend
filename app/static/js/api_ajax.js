@@ -14,11 +14,14 @@ $(document).ready(function() {
         else if (role == 0 && token !== '' && count == 0){
             window.location.href = '/sp_dashboard/'+token;
             count = count + 1;
+            
         }
         else{
             // window.location.href = '/signin';
         }
+
     }
+    console.log(count, "count")
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
       // console.log(pos); 
       let lat = pos.coords.latitude;
