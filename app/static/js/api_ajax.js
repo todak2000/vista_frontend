@@ -1625,7 +1625,8 @@ var playSuccessSound = function () {
                     if(response.success == true){
                         console.log(response);
                         playSuccessSound();
-                        $('#notificationModal').modal('show');
+                        // $('#notificationModal').modal('show');
+                        document.getElementById('notiff2').style.display= "inline-block"
                     }
                 },
                 error:function(e){
@@ -1654,7 +1655,8 @@ setInterval(function(){
                     if(response.success == true){
                         console.log(response);
                         playSuccessSound();
-                        $('#specialNotificationModal').modal('show');
+                        document.getElementById('notiff').style.display= "inline-block"
+                        // $('#specialNotificationModal').modal('show');
                     }
                 },
                 error:function(e){

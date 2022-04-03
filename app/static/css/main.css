@@ -267,3 +267,10 @@ body{
 .completed-job{
     color:#3EBC91;
 }
+.notif{
+    margin-left: -0.8rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    font-size: 1rem;
+}
