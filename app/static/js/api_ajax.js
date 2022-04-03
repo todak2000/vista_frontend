@@ -3,6 +3,19 @@ let base_url = "https://vista-api.herokuapp.com/api/v1"
 $(document).ready(function() { 
     // playSuccessSound2();
     // playSound("powerup")
+    token = sessionStorage.getItem("token");
+    role = sessionStorage.getItem("role");
+    // if(token && role){
+    if (role == 1 && token !== ''){
+        window.location.href = '/client_dashboard/'+token;
+    }
+    else if (role == 0 && token !== ''){
+        window.location.href = '/sp_dashboard/'+token;
+    }
+    else{
+        window.location.href = '/signin';
+    }
+    // }
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
       // console.log(pos); 
       let lat = pos.coords.latitude;
@@ -150,6 +163,7 @@ $(function(){
                 if(response.success == true && response.status == 200){
                     sessionStorage.setItem("token", response.token);
                     sessionStorage.setItem("user_id", response.user_id);
+                    sessionStorage.setItem("role", response.role);
                     token = sessionStorage.getItem("token");
                     console.log(response);
                     // playSuccessSound();
