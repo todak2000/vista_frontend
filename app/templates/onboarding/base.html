@@ -295,9 +295,10 @@
           <form class="onboarding_form mt-2"   method="POST" autocomplete="off">
               {% csrf_token %}
               <input type="text" id="withdraw_amount"  class="onboarding_form_input form-control mb-3" placeholder="Enter Amount eg. 10000">
-              {% if data.user_details.role == '1' %}
+              
+            
               <input class="onboarding_form_input form-control mb-3" style="background-color: #C91B3010;" type="text" id="withdraw_accountname_filled" value="{{data.user_details.accountname}}" hidden/>
-                {% if data.user_details.bank != 'Bank' %}
+                {% if data.user_details.bank != 'Bank' and  data.user_details.accountname != "Account Name"%}
                   <p class="mb-3">Kindly Confirm payment should be made to:</p>
                   <p style="margin:0" >Account Name</p>
                   <input class="onboarding_form_input form-control mb-3" style="background-color: #C91B3010;" type="text"  value="{{data.user_details.accountname}}" disabled/>
@@ -344,8 +345,7 @@
                     <p class="ml-2" style="font-size: 0.8rem; padding-top:2px; width: 80%;">I want my account details saved</p>
                 </div>
                 {% endif %}
-              {% else %}
-              {% endif %}
+              
               <input type="submit" value="Withdraw Now" class="form-control onboarding-button mt-5" id="withdraw_submit_button">
           </form>
       </div>
@@ -442,8 +442,12 @@
             <p style="font-size: 1.1rem;" id="r_message"></p>
           </div>
         </div>
-        <div style="width:100%; text-align:left; padding: 0.2rem 0.4rem;" id="back_form"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" ></i></div>
-        <h5 class="text-center" id="request-header"> Service Request Form</h5>
+        <!-- <div style="width:100%; text-align:left; padding: 0.2rem 0.4rem;" id="back_form"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" ></i></div>
+        <h5 class="text-center" id="request-header"> Service Request Form</h5> -->
+        <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top:1.5rem">
+          <div style="width:20%; text-align:left;" id="back_img"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i></div>
+          <h5 class="text-left" id="request-header" style="width: 80%;"> Service Request Form</h5>
+        </div>
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
           <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
               {% csrf_token %}
@@ -501,10 +505,13 @@
     <div class="modal-content" style="height:100vh; border-radius:0;">
       <div class="modal-body">
         
-        <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i></div>
-        <h5 class="text-center" id="request-header"> Job Details</h5>
+        <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top:1.5rem">
+          <div style="width:40%; text-align:left;" id="back_img"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i></div>
+          <h5 class="text-left" id="request-header" style="width: 60%;"> Job Details</h5>
+        </div>
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
-          <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
+          <p class="py-1 text-center" id="request_error1" role="alert"></p> 
+          <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;" id="job_details_form">
               {% csrf_token %}
                   <p class="text-purple" style="margin-bottom: -0.2rem;">Type</p>
                   <input type="text" id="d_service_type"  class="onboarding_form_input form-control mb-2" disabled>
@@ -526,7 +533,11 @@
                   <input type="text" id="d_job_id" hidden >
                   <input type="text" id="d_client_id" hidden >
                   <input type="text" id="d_sp_id" hidden >
+
+                  <input type="text" id="x_amount"  class="onboarding_form_input form-control mb-2" placeholder="Enter Amount e.g. 5000" style="display: none;" disabled>
                   <input type="submit"  class="form-control onboarding-button mt-3" id="request_details_button">
+                  <input type="submit"  class="form-control onboarding-button mt-3" id="special_request_payment_button" value="Make payment" style="display: none;">
+                  <p class="py-1 text-center" id="request_error2" role="alert" style="font-size: 0.8rem; color:red;"></p> 
           </form>
       </div>
     </div>
@@ -539,8 +550,10 @@
     <div class="modal-content" style="height:100vh; border-radius:0;">
       <div class="modal-body">
         
-        <div style="width:100%; text-align:left;" id="back_img"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i></div>
-        <h5 class="text-center" id="request-header"> Job Details</h5>
+        <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top:1.5rem">
+          <div style="width:40%; text-align:left;" id="back_img"><i class="fas fa-chevron-left fa-2x" style="color:#464646;" data-dismiss="modal"></i></div>
+          <h5 class="text-left" id="request-header" style="width: 60%;"> Job Details</h5>
+        </div>
           <div class="text-danger server_message_error py-1 text-center" id="request_error" role="alert"></div> 
           <form class="onboarding_form"   method="POST" autocomplete="off" style="background-color: #fff;">
               {% csrf_token %}

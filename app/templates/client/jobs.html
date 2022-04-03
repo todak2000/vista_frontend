@@ -9,7 +9,12 @@
     <div id="job-div">
         {% for u in data.userServices %}
 
-            {% if u.isTaken == False and u.isCompleted == False and u.isRejectedSP == False %}
+            {% if u.isTaken == False and u.isCompleted == False and u.isRejectedSP == False and u.isSpecialRequest == True and u.hasPaid == False %}
+            <div id="{{u.job_id}}" class="each_jobs pending-job" onClick="job_details(this.id)">
+                <p class="job_p">{{u.service_type}}</p>
+                <p class="job_p">Awaiting Admin Approval</p>
+            </div>
+            {% elif u.isTaken == False and u.isCompleted == False and u.isRejectedSP == False %}
             <div id="{{u.job_id}}" class="each_jobs pending-job" onClick="job_details(this.id)">
                 <p class="job_p">{{u.service_type}}</p>
                 <p class="job_p">Pending</p>
@@ -18,6 +23,16 @@
             <div id="{{u.job_id}}" class="each_jobs declined-job" onClick="job_details(this.id)">
                 <p class="job_p">{{u.service_type}}</p>
                 <p class="job_p">Declined</p>
+            </div>
+            {% elif u.isTaken == True and u.isCompleted == False and u.isRejectedSP == False and u.isSpecialRequest == True and u.hasPaid == True %}
+            <div id="{{u.job_id}}" class="each_jobs ongoing-job" onClick="job_details(this.id)">
+                <p class="job_p">{{u.service_type}}</p>
+                <p class="job_p">Ongoing</p>
+            </div>
+            {% elif u.isTaken == False and u.isCompleted == False and u.isRejectedSP == False and u.isSpecialRequest == True and u.hasPaid == True %}
+            <div id="{{u.job_id}}" class="each_jobs ongoing-job" onClick="job_details(this.id)">
+                <p class="job_p">{{u.service_type}}</p>
+                <p class="job_p">Ongoing</p>
             </div>
             {% elif u.isTaken == True and u.isCompleted == False and u.isRejectedSP == False %}
             <div id="{{u.job_id}}" class="each_jobs ongoing-job" onClick="job_details(this.id)">

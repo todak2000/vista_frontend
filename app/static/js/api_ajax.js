@@ -562,9 +562,9 @@ $(function(){
         
         let withdraw_accountname_filled = document.getElementById("withdraw_accountname_filled").value;
         if (withdraw_accountname_filled === "Account Name"){
-            withdraw_accountname = document.getElementById("withdraw_accountname").value;
-            withdraw_accountno = document.getElementById("withdraw_accountno").value;
-            withdraw_bank = document.getElementById("withdraw_bank").value;
+            withdraw_accountname = document.getElementById("withdraw_accountname").value || "";
+            withdraw_accountno = document.getElementById("withdraw_accountno").value || "";
+            withdraw_bank = document.getElementById("withdraw_bank").value || "";
             save_bank_details = document.getElementById("save_bank_details");
             if (save_bank_details.checked == true && withdraw_accountname == "" || withdraw_accountno == "" || withdraw_bank == ""){
                 document.getElementById("withdraw_submit_button").style.display = "block";
@@ -841,10 +841,38 @@ function job_details(id) {
             document.getElementById('d_job_id').value = response.job_details.job_id;
             document.getElementById('d_client_id').value = response.job_details.client_id;
             document.getElementById('d_sp_id').value = response.job_details.sp_id;
-            if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false){
+            
+            if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false && response.job_details.isSpecialRequest == false){
                 document.getElementById('request_details_button').value = "Cancel";
                 document.getElementById("note").innerHTML = "Kindly wait for the Service Provider to Accept the Job";
                 document.getElementById("request_details_button").style.background = "red";
+                document.getElementById("special_request_payment_button").style.display = "none";
+                document.getElementById('request_details_button').style.display = "block";
+                document.getElementById("x_amount").style.display = "none"
+                console.log(response.job_details)
+            }
+            else if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false && response.job_details.isSpecialRequest == true && response.job_details.hasPaid == false){
+                let amount = document.getElementById("x_amount")
+                console.log(response.job_details)
+                if (!response.job_details.amount || response.job_details.amount == ""){
+                    document.getElementById("note").innerHTML = "Kindly make payment as soon as agreement is reached with Admin";
+                    document.getElementById('request_details_button').style.display = "none";
+                }
+                else{
+                    
+                    amount.value = response.job_details.amount
+                    amount.style.display = "block"
+                    document.getElementById('request_details_button').style.display = "none";
+                    document.getElementById("note").innerHTML = "Kindly make payment of the exact amount below to proceed. Thanks!";
+                    document.getElementById("special_request_payment_button").style.display = "block";
+                    document.getElementById("special_request_payment_button").style.background = "#F0F";
+                }
+                
+            }
+            else if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false && response.job_details.isSpecialRequest == true && response.job_details.hasPaid == true){
+                document.getElementById('request_details_button').style.display = "none";
+                document.getElementById("note").innerHTML = "Kindly wait to be paired with a verified Service Provider";
+                console.log(response.job_details)
             }
             else if(response.job_details.isTaken === false && response.job_details.isCompleted === false && response.job_details.isRejectedSP === true){
                 document.getElementById("request_details_button").style.display = "none";
@@ -852,6 +880,12 @@ function job_details(id) {
                 document.getElementById("note").innerHTML = "Sorry, the job has been rejected/canceled by the Service Provider";
             }
             else if(response.job_details.isTaken === true && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false){
+                document.getElementById('request_details_button').value = "Confirm Job Completed";
+                document.getElementById("note").innerHTML = "";
+                document.getElementById("star_div").style.display = "flex";
+                document.getElementById("request_details_button").style.background = "#3EBC91";
+            }
+            else if(response.job_details.isTaken === true && response.job_details.isCompleted === false && response.job_details.isRejectedSP === false && response.job_details.isSpecialRequest == true && response.job_details.hasPaid == true){
                 document.getElementById('request_details_button').value = "Confirm Job Completed";
                 document.getElementById("note").innerHTML = "";
                 document.getElementById("star_div").style.display = "flex";
@@ -1277,6 +1311,49 @@ $(function(){
         }else{}
     })})
 
+        // special request payment function
+$(function(){
+    $('#special_request_payment_button').on('click', function (e) {
+        e.preventDefault();
+        let button = document.getElementById("special_request_payment_button")
+        let amount = document.getElementById("x_amount").value;
+        let job_id = document.getElementById("d_job_id").value;
+        let client_id = document.getElementById("d_client_id").value;
+        document.getElementById("spinner").style.display = "block";
+        $.ajax({
+            url:base_url+'/special_request_payment',
+            type:'POST',
+            data:{
+                amount: amount,
+                job_id: job_id,
+                client_id: client_id,
+            },
+            success:function(response){
+                document.getElementById("spinner").style.display = "none";
+                
+                console.log(response);
+                if(response.success == false){
+                    button.enabled
+                    
+                    document.getElementById("request_error2").innerText = response.message;
+
+                    // button.value === "Cancel"
+                }
+                if(response.success == true){
+                    document.getElementById("job_details_form").style.display = "none";
+                    document.getElementById("request_error1").style.marginTop = "50%";
+                    document.getElementById("request_error1").innerHTML = "Thank you! your payment is confirmed. A verified Service Provider would be matched to your request immediately.";
+                    // token = sessionStorage.getItem("token");
+                    // window.location.href = '/client_job/'+token;       
+                }
+            },
+            error:function(e){
+                console.log(e);
+                document.getElementById("spinner").style.display = "none";
+            },
+        });
+    })})
+
     // create sp job details from job details funtion above
 
     function sp_job_details(id) {
@@ -1514,6 +1591,7 @@ var playSuccessSound = function () {
         // console.clear();
         let email = document.getElementById("edit_email").value;
         user_id = sessionStorage.getItem("user_id");
+        // console.log(email)
         $.ajax({
             url:base_url+'/notification/'+email,
             type:'GET',
@@ -1541,6 +1619,7 @@ var playSuccessSound = function () {
         });
     }, 2000);
 
+    
     $(function(){
         $('#show_details').on('click', function (e) {
             let user_id = document.getElementById("sp_id").value;

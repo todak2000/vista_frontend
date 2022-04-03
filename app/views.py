@@ -80,7 +80,7 @@ def client_profile(request, token):
     url= base_url+"/profile?token="+token  
     response = requests.get(url).text
     json_data = json.loads(response)
-    print(response)
+    # print(response)
     if json_data["success"] == True and  json_data["status"] == 200:
         return_data = {
             "token": token,
