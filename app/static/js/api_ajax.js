@@ -1605,33 +1605,66 @@ var playSuccessSound = function () {
  
     // Play an 'E' just as the previous note finishes, that lasts for 0.232 seconds
     playNote(990, context.currentTime + 0.116, 0.232);
+    console.log("playsound")
 };
 
 // notification api
     setInterval(function(){ 
         let email = document.getElementById("edit_email").value;
         user_id = sessionStorage.getItem("user_id");
-        $.ajax({
-            url:base_url+'/notification/'+email,
-            type:'GET',
-            success:function(response){
+        role = sessionStorage.getItem("role");
+        if (role == 0){
+            $.ajax({
+                url:base_url+'/notification/'+email,
+                type:'GET',
+                success:function(response){
+                    
+                    if(response.success == false){
+                        console.log(response);
+                    }
+                    if(response.success == true){
+                        console.log(response);
+                        playSuccessSound();
+                        $('#notificationModal').modal('show');
+                    }
+                },
+                error:function(e){
+                    // console.log(e);
+                },
                 
-                if(response.success == false){
-                    console.log(response);
-                }
-                if(response.success == true){
-                    console.log(response);
-                    playSuccessSound();
-                    $('#notificationModal').modal('show');
-                }
-            },
-            error:function(e){
-                // console.log(e);
-            },
-            
-        });
+            });
+        }
+        
     }, 2000);
 
+// special notification api
+setInterval(function(){ 
+    let email = document.getElementById("edit_email").value;
+    user_id = sessionStorage.getItem("user_id");
+    role = sessionStorage.getItem("role");
+        if (role == 1){
+            $.ajax({
+                url:base_url+'/special_request_notification/'+email,
+                type:'GET',
+                success:function(response){
+                    
+                    if(response.success == false){
+                        console.log(response);
+                    }
+                    if(response.success == true){
+                        console.log(response);
+                        playSuccessSound();
+                        $('#specialNotificationModal').modal('show');
+                    }
+                },
+                error:function(e){
+                    // console.log(e);
+                },
+                
+            });
+        }
+    
+}, 2000);
     
     $(function(){
         $('#show_details').on('click', function (e) {

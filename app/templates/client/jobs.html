@@ -10,9 +10,9 @@
         {% for u in data.userServices %}
 
             {% if u.isTaken == False and u.isCompleted == False and u.isRejectedSP == False and u.isSpecialRequest == True and u.hasPaid == False %}
-            <div id="{{u.job_id}}" class="each_jobs pending-job" onClick="job_details(this.id)">
+            <div id="{{u.job_id}}" class="each_jobs pending-job2" onClick="job_details(this.id)">
                 <p class="job_p">{{u.service_type}}</p>
-                <p class="job_p">Awaiting Admin Approval</p>
+                <p class="job_p" style="font-size:0.85rem;">Awaiting Approval</p>
             </div>
             {% elif u.isTaken == False and u.isCompleted == False and u.isRejectedSP == False %}
             <div id="{{u.job_id}}" class="each_jobs pending-job" onClick="job_details(this.id)">
