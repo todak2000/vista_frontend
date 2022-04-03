@@ -6,12 +6,12 @@ $(document).ready(function() {
     token = sessionStorage.getItem("token");
     role = sessionStorage.getItem("role");
     count = 0;
-    if(token && role && count == 0){
-        if (role == 1 && token !== ''){
+    if(token && role){
+        if (role == 1 && token !== '' && count == 0){
             window.location.href = '/client_dashboard/'+token;
             count = count + 1;
         }
-        else if (role == 0 && token !== ''){
+        else if (role == 0 && token !== '' && count == 0){
             window.location.href = '/sp_dashboard/'+token;
             count = count + 1;
         }
