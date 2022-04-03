@@ -5,15 +5,18 @@ $(document).ready(function() {
     // playSound("powerup")
     token = sessionStorage.getItem("token");
     role = sessionStorage.getItem("role");
-    if(token && role){
+    count = 0;
+    if(token && role && count == 0){
         if (role == 1 && token !== ''){
             window.location.href = '/client_dashboard/'+token;
+            count = count + 1;
         }
         else if (role == 0 && token !== ''){
             window.location.href = '/sp_dashboard/'+token;
+            count = count + 1;
         }
         else{
-            window.location.href = '/signin';
+            // window.location.href = '/signin';
         }
     }
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
