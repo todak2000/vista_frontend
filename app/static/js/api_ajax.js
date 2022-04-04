@@ -3,17 +3,17 @@ let base_url = "https://vista-api.herokuapp.com/api/v1"
 $(document).ready(function() { 
     // playSuccessSound2();
     // playSound("powerup")
-    token = sessionStorage.getItem("token");
-    role = sessionStorage.getItem("role");
-    count = 0;
-    // if(token && role){
-    //     if (role == 1 && token !== '' && count == 0){
+    // token = sessionStorage.getItem("token");
+    // role = sessionStorage.getItem("role");
+    // count = sessionStorage.getItem("count");;
+    // if(token && role && count == 0){
+    //     if (role == 1 && token !== '' ){
     //         window.location.href = '/client_dashboard/'+token;
-    //         count = count + 1;
+    //         // count = count + 1;
     //     }
-    //     else if (role == 0 && token !== '' && count == 0){
+    //     else if (role == 0 && token !== ''){
     //         window.location.href = '/sp_dashboard/'+token;
-    //         count = count + 1;
+    //         // count = count + 1;
             
     //     }
     //     else{
@@ -21,7 +21,6 @@ $(document).ready(function() {
     //     }
 
     // }
-    console.log(count, "count")
     window.navigator.geolocation.getCurrentPosition(function(pos) { 
       // console.log(pos); 
       let lat = pos.coords.latitude;
@@ -171,6 +170,7 @@ $(function(){
                     sessionStorage.setItem("token", response.token);
                     sessionStorage.setItem("user_id", response.user_id);
                     sessionStorage.setItem("role", response.role);
+                    sessionStorage.setItem("count", 1);
                     token = sessionStorage.getItem("token");
                     console.log(response);
                     // playSuccessSound();
@@ -733,6 +733,7 @@ $(function(){
 function sp_home(token) {
     if (token){
         window.location.href = '/sp_dashboard/'+token;
+        sessionStorage.setItem("count", 1);
     }
     else{
         window.location.href = '/signin';
@@ -743,6 +744,7 @@ function sp_home(token) {
 function sp_profile(token) {
     if (token){
         window.location.href = '/sp_profile/'+token;
+        sessionStorage.setItem("count", 1);
     }
     else{
         window.location.href = '/signin';
@@ -753,6 +755,7 @@ function sp_profile(token) {
 function sp_job(token) {
     if (token){
         window.location.href = '/sp_job/'+token;
+        sessionStorage.setItem("count", 1);
     }
     else{
         window.location.href = '/signin';
@@ -763,6 +766,7 @@ function sp_job(token) {
 function client_home(token) {
     if (token){
         window.location.href = '/client_dashboard/'+token;
+        sessionStorage.setItem("count", 1);
     }
     else{
         window.location.href = '/signin';
@@ -773,6 +777,7 @@ function client_home(token) {
 function client_profile(token) {
     if (token){
         window.location.href = '/client_profile/'+token;
+        sessionStorage.setItem("count", 1);
     }
     else{
         window.location.href = '/signin';
@@ -783,6 +788,7 @@ function client_profile(token) {
 function client_wallet(token) {
     if (token){
         window.location.href = '/client_wallet/'+token;
+        sessionStorage.setItem("count", 1);
     }
     else{
         window.location.href = '/signin';
@@ -793,6 +799,7 @@ function client_wallet(token) {
 function client_job(token) {
     if (token){
         window.location.href = '/client_job/'+token;
+        sessionStorage.setItem("count", 1);
     }
     else{
         window.location.href = '/signin';
@@ -1637,6 +1644,7 @@ var playSuccessSound = function () {
         }
         
     }, 2000);
+
 
 // special notification api
 setInterval(function(){ 
