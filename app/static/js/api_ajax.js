@@ -1645,6 +1645,35 @@ var playSuccessSound = function () {
         
     }, 2000);
 
+// notification  sp special request api
+setInterval(function(){ 
+    let email = document.getElementById("edit_email").value;
+    user_id = sessionStorage.getItem("user_id");
+    role = sessionStorage.getItem("role");
+    if (role == 0){
+        $.ajax({
+            url:base_url+'/special_request_notification_sp/'+email,
+            type:'GET',
+            success:function(response){
+                
+                if(response.success == false){
+                    console.log(response);
+                }
+                if(response.success == true){
+                    console.log(response);
+                    playSuccessSound();
+                    // $('#notificationModal').modal('show');
+                    document.getElementById('notiff2').style.display= "inline-block"
+                }
+            },
+            error:function(e){
+                // console.log(e);
+            },
+            
+        });
+    }
+    
+}, 2000);
 
 // special notification api
 setInterval(function(){ 
