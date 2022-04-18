@@ -54,6 +54,7 @@ body{
     margin-left:0.9rem;
     text-align: left;
     margin-bottom:0;
+    line-height: 1.5rem;
 }
 #home_address{
     color:#fff;
@@ -235,7 +236,7 @@ body{
 .job-background{
     height:60vh;
     width: 90%;
-    margin:auto;
+    margin:7vh auto;
     font-family: poppins;
 }
 .each_jobs{
@@ -273,4 +274,7 @@ body{
     width: 1.5rem;
     border-radius: 50%;
     font-size: 1rem;
+}
+.modal-content{
+    padding-top:5vh !important;
 }
