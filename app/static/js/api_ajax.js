@@ -809,7 +809,7 @@ function client_job(token) {
 
 function signout() {
     sessionStorage.clear()
-    window.location.href = '/signin';
+    window.location.href = '/signout';
 }
 
 function request_form(id) {

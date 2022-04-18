@@ -14,15 +14,40 @@ import requests
 base_url = config("base_url")
 
 def index(request):
-    return render(request,"onboarding/splashscreen.html") 
+    # x = request.session['token']
+    x = request.session.get('token', 'red')
+    print(x, "xxx_____________-------")
+    if x != 'red':
+        token = request.session['token']
+        url= base_url+"/dashboard?token="+token  
+        response = requests.get(url).text
+        json_data = json.loads(response)
+        request.session['token'] = token
+        print(token, "token_____________-------")
+        if json_data["success"] == True and  json_data["status"] == 200 and json_data["user_details"]["role"] == "0":
+            return_data = {
+                "token": token,
+                "data":json_data
+            }
+            return render(request,"sp/home.html", return_data)
+        elif json_data["success"] == True and  json_data["status"] == 200 and json_data["user_details"]["role"] == "1":
+            return_data = {
+                "token": token,
+                "data":json_data
+            } 
+            return render(request,"client/home.html", return_data)
+    else:
+        # return render(request,"onboarding/splashscreen.html") 
+        return render(request,"onboarding/login.html") 
 
 def register_page(request):
     return render(request,"onboarding/register.html")
 
 def logout_page(request):
-    if 'user_id' in request.session:
-        del request.session['user_id']
-    return redirect('/login')
+    if 'token' in request.session:
+        del request.session['token']
+        print("token deleted_____________-------")
+    return redirect('/signin')
 
 def login_page(request):
     return render(request,"onboarding/login.html") 
@@ -53,6 +78,8 @@ def client_dashboard(request, token):
     url= base_url+"/dashboard?token="+token  
     response = requests.get(url).text
     json_data = json.loads(response)
+    request.session['token'] = token
+    print(token, "token_____________-------")
     # print(response)
     if json_data["success"] == True and  json_data["status"] == 200:
         return_data = {
@@ -67,7 +94,8 @@ def sp_dashboard(request, token):
     url= base_url+"/dashboard?token="+token  
     response = requests.get(url).text
     json_data = json.loads(response)
-    print(response)
+    request.session['token'] = token
+    print(token, "token_____________-------")
     if json_data["success"] == True and  json_data["status"] == 200:
         return_data = {
             "token": token,
