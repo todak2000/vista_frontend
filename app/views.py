@@ -36,9 +36,9 @@ def index(request):
                 "data":json_data
             } 
             return render(request,"client/home.html", return_data)
-    else:
+    # else:
         # return render(request,"onboarding/splashscreen.html") 
-        return render(request,"onboarding/login.html") 
+    return render(request,"onboarding/login.html") 
 
 def register_page(request):
     return render(request,"onboarding/register.html")
