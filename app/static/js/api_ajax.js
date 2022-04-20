@@ -1662,7 +1662,7 @@ setInterval(function(){
                 if(response.success == true){
                     console.log(response);
                     playSuccessSound();
-                    // $('#notificationModal').modal('show');
+                    $('#notificationModal').modal('show');
                     document.getElementById('notiff2').style.display= "inline-block"
                 }
             },
