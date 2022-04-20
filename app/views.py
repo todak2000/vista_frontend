@@ -25,17 +25,19 @@ def index(request):
         request.session['token'] = token
         print(token, "token_____________-------")
         if json_data["success"] == True and  json_data["status"] == 200 and json_data["user_details"]["role"] == "0":
-            return_data = {
-                "token": token,
-                "data":json_data
-            }
-            return render(request,"sp/home.html", return_data)
+            # return_data = {
+            #     "token": token,
+            #     "data":json_data
+            # }
+            # return render(request,"sp/home.html", return_data)
+            return redirect('/sp_dashboard/'+token)
         elif json_data["success"] == True and  json_data["status"] == 200 and json_data["user_details"]["role"] == "1":
-            return_data = {
-                "token": token,
-                "data":json_data
-            } 
-            return render(request,"client/home.html", return_data)
+            # return_data = {
+            #     "token": token,
+            #     "data":json_data
+            # } 
+            # return render(request,"client/home.html", return_data)
+            return redirect('/client_dashboard/'+token)
     # else:
         # return render(request,"onboarding/splashscreen.html") 
     return render(request,"onboarding/login.html") 
