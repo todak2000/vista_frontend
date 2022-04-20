@@ -16,7 +16,7 @@ base_url = config("base_url")
 def index(request):
     # x = request.session['token']
     x = request.session.get('token', 'red')
-    print(x, "xxx_____________-------")
+    print(x, "xxx_dfdsf")
     if x != 'red':
         token = request.session['token']
         url= base_url+"/dashboard?token="+token  
