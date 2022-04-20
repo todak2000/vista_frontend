@@ -30,7 +30,8 @@ def index(request):
             #     "data":json_data
             # }
             # return render(request,"sp/home.html", return_data)
-            return redirect('/sp_dashboard/'+token)
+            # return redirect('/sp_dashboard/'+token)
+            return render(request,"onboarding/login.html") 
         elif json_data["success"] == True and  json_data["status"] == 200 and json_data["user_details"]["role"] == "1":
             # return_data = {
             #     "token": token,
