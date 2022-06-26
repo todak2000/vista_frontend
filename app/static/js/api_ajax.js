@@ -820,8 +820,7 @@ function request_form(id) {
         document.getElementById('service_form').style.display = "none";
         document.getElementById('formo').style.display = "block";
         document.getElementById('description').style.display = "none";
-        // document.getElementById('text_amount').style.display = "none";
-        // document.getElementById('amount').style.display = "none";
+        document.getElementById('des_text').style.display = "none";
         document.getElementById('des_text').style.display = "none";
         document.getElementById('service_list').style.display = "block";
         document.getElementById('service_list_text').style.display = "block";
